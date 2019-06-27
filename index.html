@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<title>Infoleht</title>
+	<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+	<style>
+		html{
+			margin: 0px;
+			background-color: black;
+			color: white;
+		}
+		body{
+			margin: inherit;
+			background-color: inherit;
+			color: inherit;
+		}
+		header{
+			margin: 0px 0px 15px 0px;
+			padding-top: 10px;
+			padding-bottom: 10px;
+
+			border-style: solid;
+			border-width: 0px 0px 3px 0px;
+			border-color: teal;
+			/*box-shadow: 0px 0px 10px 10px teal;*/
+			box-shadow: inset 0 -7px 25px -7px teal;
+
+			text-align: center;
+			font-size: 22px;
+		}
+		div{
+			margin-left: 5px;
+		}
+
+		.flex-container {
+		    display: flex;
+		    flex-wrap: wrap;
+		    flex-direction: row;
+		    align-content: flex-start;
+		}
+
+		.btn {
+			margin: 0;
+			font-size: 12px;
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+	</style>
+	<script>
+		function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for(var i = 0; i <ca.length; i++) {
+				var c = ca[i];
+		    	while (c.charAt(0) == ' ') {
+		    		c = c.substring(1);
+		    	}
+		    	if (c.indexOf(name) == 0) {
+		    		return c.substring(name.length, c.length);
+		    	}
+		  	}
+			return "";
+		}
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			var expires = "expires="+d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+
+		function changeTheme(color) {
+			document.getElementsByTagName("html")[0].style.backgroundColor = color;
+			document.getElementsByTagName("html")[0].style.color = color == "white" ? "black" : "white";
+			setCookie("bg-color", color, 365);
+		}
+		window.onload = function() {
+			var links = document.getElementsByTagName("a");
+			for (var i=0; i<links.length; i++) {
+				if (links[i].href.indexOf("youtu") > -1) {
+					var yt_icon = new Image(); //document.createElement("img");
+					yt_icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
+					yt_icon.alt = "yt_icon";
+					yt_icon.style = "margin-right: 5px;"
+					links[i].insertAdjacentElement("beforebegin", yt_icon);
+				}
+			}
+			if (getCookie("bg-color") != ""){
+				changeTheme(getCookie("bg-color"));
+			}
+		}
+	</script>
+</head>
+
+<body>
+<header>
+	Üritan siia koguda huvitavaid infoallikaid. Võib-olla täiendan aja jooksul.
+	<div style="text-align:left;font-size:14px;">
+		Sätted:
+		<button class="btn" type=button onclick="changeTheme('white')">Hele</button>
+		<button class="btn" type=button onclick="changeTheme('black')">Tume</button>
+	</div>
+</header>
+
+<div>Terry A. Davis ja TempleOS asjade väike loend
+	<div class="flex-container">
+	<ul>
+		<li><a href="https://www.templeos.org/" target="_blank">TempleOS koduleht</a></li>
+		<li><a href="https://youtu.be/7uLzaKlZSQQ" target="_blank">TempleOS Hardest Question in Programming</a></li>
+		<li><a href="https://youtu.be/rBaEvjtyEmE" target="_blank">Terry elevant</a></li>
+		<li><a href="https://youtu.be/ZXn4njGgfkE" target="_blank">TempleOS "After Egypt"</a></li>
+		<li><a href="https://youtu.be/B5YokNW7tIs" target="_blank">Telefonikõne</a></li>
+		<li><a href="https://youtu.be/w2rpHdtj_Ic" target="_blank">Intervjuu</a></li>
+		<li><a href="https://youtu.be/h1OjlzRxp-M" target="_blank">Hümn "Material"</a></li>
+		<li><a href="https://youtu.be/XRshwDVXopA" target="_blank">Hümn "Risen" (natuke muudetud)</a></li>
+		<li><a href="https://youtu.be/Y6gjWaSP_vY" target="_blank">Hümnikogu</a></li>
+		<li><a href="https://youtu.be/mfkSHQvwI5I" target="_blank">Terry saab drummikomplekti</a></li>
+		<li><a href="https://youtu.be/4z1kcn4iOWQ" target="_blank">Terry läheb poodi I</a></li>
+		<li><a href="https://youtu.be/2C97fGBIrEg" target="_blank">Terry läheb poodi II</a></li>
+		<li><a href="https://youtu.be/KBtkHMdh_V8" target="_blank">Terry läheb piknikule</a></li>
+		<li><a href="https://youtu.be/5NARiAo5OZI" target="_blank">Terry aias</a></li>
+		<li><a href="https://youtu.be/RqFgtYrw4J8" target="_blank">Kompilatsioon Terry videotest</a></li>
+		<li><a href="https://youtu.be/Y6eKMuY7kB4" target="_blank">Terry Davis reaalsusest</a></li>
+		<li><a href="https://www.youtube.com/channel/UCb7QIjtg8b7_pCBhcHmnEAw/videos?view=0&sort=p&flow=grid" target="_blank">Üks kogumik Terry asju</a></li>
+	</ul>
+	<img style="margin-left:5%;align-self:center;" src="https://archive-media-0.nyafuu.org/news/thumb/1536/51/1536516323440s.jpg" alt="Terry wanted"/>
+	</div>
+</div>
+
+<div>Principia Discordia
+	<ul>
+		<li><a href="https://principiadiscordia.com/" target="_blank">Kust lugeda</a></li>
+		<li><a href="https://www.kriso.ee/db/9781500578541.html" target="_blank">Kust osta</a></li>
+		<li><a href="https://gopher.tildeverse.org/gopher.libraryoferis.org/1/" target="_blank">Muud diskordiaanliku</a></li>
+	</ul>
+</div>
+
+<div>"Vabanemine teadaolevast" - J. Krishnamurti
+	<ul>
+		<li><a href="http://raulpage.org/vabane/" target="_blank">Eestikeelne</a></li>
+		<li><a href="Jiddu_Krishnamurt_Freedom_from_the_Known.pdf" target="_blank">Ingliskeelne</a></li>
+	</ul>
+</div>
+
+<div>Muud raamatud
+	<ul>
+		<li><a href="https://www.apollo.ee/hinge-valede-noiaring.html" target="_blank">Hinge valede nõiaring</a> - Eesti autor, mitmed erinevad teemad...</li>
+		<li><a href="peter-j-carroll-liber-null-psychonaut.pdf" target="_blank">Liber Null</a> - raamat kaosemaagiast</li>
+		<li><a href="https://archive.org/details/AstralDynamicsANEWApproachToOutOfBodyExperiences" target="_blank">Astral Dynamics</a> - üks kiidetud raamat astraalrändamisest</li>
+	</ul>
+</div>
+
+<div>Randonauting - mingi kohamaagia
+	<ul>
+		<li><a href="https://sublunar.space/2019-05-quantum-geomancy.html" target="_blank">Selgitav artikkel</a></li>
+		<li><a href="https://www.reddit.com/r/randonauts/" target="_blank">Vastav Reddit</a></li>
+		<li><a href="http://qrng.anu.edu.au/Lucky.php" target="_blank">Kvantsuvaliste arvude generaator</a></li>
+	</ul>
+</div>
+
+<div>Muud
+	<ul>
+		<li><a href="https://www.youtube.com/channel/UCAhmDfQ1LfOYECmNNWgXJ7Q" target="_blank">David Icke</a> on jätkuvalt lahe.</li>
+		<li><a href="https://www.youtube.com/results?search_query=alan+watts" target="_blank">Alan Wattsi loengud</a> - väga mõnus kuulata.</li>
+		<li><i>Sadhguru ja Osho linke praegu ei pane siia, aga nad on ka väärt guugeldamist</i></li>
+		<li><a href="https://www.erowid.org/" target="_blank">erowid.org</a> - kasulikku infot psühhedeelsete taimede ja ainete kohta</li>
+		<li><a href="https://in5d.com/todays-live-schumann-resonance-charts-and-resources/" target="_blank">in5D</a> - lisan selle ka, sest vahel on seal huvitavat infot, näiteks Schumanni resonantsi kohta.</li>
+		<li><a href="http://www.sacred-texts.com/eso/index.htm#" target="_blank">Müstika/okultismi tekstide arhiiv</a></li>
+		<li><a href="http://www.freegrab.net/pinealgland.htm" target="_blank">Sun gazing</a></li>
+	</ul>
+</div>
+</body>
+</html>
