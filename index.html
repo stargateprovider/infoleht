@@ -1,132 +1,13 @@
 <!DOCTYPE html>
 <html lang="et">
-<head>
+<head w3-include-html="resources/head.html">
 	<title>Infoleht</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="msapplication-TileColor" content="#999999" />
-	<meta name="msapplication-TileImage" content="resources/mstile-144x144.png" />
-	<link rel="icon" type="image/png" href="resources/icon32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="resources/icon16.png" sizes="16x16" />
-	<style>
-		:root {
-			--main_bg_color: white;
-			--main_elem_color: black;
-			--main_border_color: teal;
-		}
-		html{
-			margin: 0px;
-			background-color: var(--main_bg_color);
-			color: var(--main_elem_color);
-		}
-		body{
-			margin: inherit;
-			background-color: inherit;
-			color: inherit;
-		}
-		header{
-			margin: 0px 0px 20px 0px;
-			padding-top: 10px;
-			padding-bottom: 10px;
-
-			border-style: solid;
-			border-width: 0px 0px 3px 0px;
-			border-color: var(--main_border_color);
-			/*box-shadow: 0px 0px 25px 0px var(--main_border_color);*/
-			box-shadow: inset 0 -7px 25px -7px var(--main_border_color);
-
-			text-align: center;
-			font-family: 'Arial';
-			font-size: 22px;
-		}
-		footer{
-			margin: 10px 0px 0px 0px;
-			padding: 10px 10px 5px 10px;
-
-			border-style: solid;
-			border-width: 2px 0px 0px 0px;
-			border-color: var(--main_border_color);
-			box-shadow: inset 0 7px 15px -7px var(--main_border_color);
-
-			color: grey;
-		}
-		div{
-			margin-left: 5px;
-		}
-
-		.flex-container{
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
-			align-content: flex-start;
-		}
-
-		.btn{
-			margin: 0;
-			font-size: 12px;
-			padding-bottom: 0;
-			padding-top: 0;
-		}
-	</style>
-	<script>
-		function getCookie(cname) {
-			var name = cname + "=";
-			var decodedCookie = decodeURIComponent(document.cookie);
-			var ca = decodedCookie.split(';');
-			for(var i = 0; i <ca.length; i++) {
-				var c = ca[i];
-				while (c.charAt(0) == ' ') {
-					c = c.substring(1);
-				}
-				if (c.indexOf(name) == 0) {
-					return c.substring(name.length, c.length);
-				}
-			}
-			return "";
-		}
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			var expires = "expires="+d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
-
-		function changeTheme(color) {
-			let root = document.documentElement;
-			root.style.setProperty('--main_bg_color', color);
-			root.style.setProperty('--main_elem_color', color=="white" ? "black" : "white");
-			setCookie("bg-color", color, 365);
-		}
-		window.onload = function() {
-			var links = document.getElementsByTagName("a");
-			for (var i=0; i<links.length; i++) {
-				if (links[i].href.indexOf("youtu") > -1) {
-					var yt_icon = new Image(); //document.createElement("img");
-					yt_icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
-					yt_icon.alt = "yt_icon";
-					yt_icon.style = "margin-right: 5px;"
-					links[i].insertAdjacentElement("beforebegin", yt_icon);
-				}
-			}
-			if (getCookie("bg-color") != ""){
-				changeTheme(getCookie("bg-color"));
-			}
-			var x = document.lastModified;
-			document.getElementsByTagName("footer")[0].innerHTML = "Viimati muudetud " + x
-		}
-	</script>
+	<script src="resources/main.js"></script>
 </head>
 
 <body>
-<header>
+<header w3-include-html="resources/header.html">
 	Üritan siia koguda huvitavaid asju. Võib-olla täiendan aja jooksul.
-	<div style="text-align:left;font-size:14px;">
-		|<a href="index.html">Kodu</a>
-		|<a href="charts.html">Schumanni resonants</a>
-		|Sätted:
-		<button class="btn" type=button onclick="changeTheme('white')">Hele</button>
-		<button class="btn" type=button onclick="changeTheme('black')">Tume</button>
-	</div>
 </header>
 
 <div>Terry A. Davis ja TempleOS asjade väike loend
@@ -199,4 +80,5 @@
 </div>
 <footer></footer>
 </body>
+<script>includeHTML()</script>
 </html>
