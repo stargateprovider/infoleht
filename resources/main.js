@@ -54,6 +54,7 @@ function includeHTML() {
 	}
 }
 window.onload = function() {
+	// Add youtube icons next to youtube links
 	var links = document.getElementsByTagName("a");
 	for (var i=0; i<links.length; i++) {
 		if (links[i].href.indexOf("youtu") > -1) {
@@ -64,9 +65,22 @@ window.onload = function() {
 			links[i].insertAdjacentElement("beforebegin", yt_icon);
 		}
 	}
+
+	// Add picture inside <a class="picture_link"></a>
+	var links = document.getElementsByClassName("picture_link");
+	for (var i=0; i<links.length; i++) {
+		var link = links[i].href;
+		links[i].innerHTML = '<picture><source media="(max-width: 767px)" sizes="35px" srcset="' +
+			link + ' 768w"/><source media="(min-width: 768px)" sizes="100px" srcset="' +
+			link + ' 768w"/><img src="' + link +'"/></picture>';
+	}
+
+	// Load theme based on cookies
 	if (getCookie("bg-color") != ""){
 		changeTheme(getCookie("bg-color"));
 	}
+
+	// Add last modified date to footer
 	var x = document.lastModified;
 	document.getElementsByTagName("footer")[0].innerHTML = "Viimati muudetud " + x
 }
