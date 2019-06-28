@@ -2,13 +2,17 @@
 <html lang="et">
 <head>
 	<title>Infoleht</title>
-	<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<style>
+		:root {
+			--main_bg_color: white;
+			--main_elem_color: black;
+		}
 		html{
 			margin: 0px;
-			background-color: white;
-			color: black;
+			background-color: var(--main_bg_color);
+			color: var(--main_elem_color);
 		}
 		body{
 			margin: inherit;
@@ -23,24 +27,35 @@
 			border-style: solid;
 			border-width: 0px 0px 3px 0px;
 			border-color: teal;
-			/*box-shadow: 0px 0px 10px 10px teal;*/
+			/*box-shadow: 0px 0px 25px 0px teal;*/
 			box-shadow: inset 0 -7px 25px -7px teal;
 
 			text-align: center;
 			font-size: 22px;
 		}
+		footer{
+			margin: 10px 0px 0px 0px;
+			padding: 10px 10px 5px 10px;
+
+			border-style: solid;
+			border-width: 2px 0px 0px 0px;
+			border-color: teal;
+			box-shadow: inset 0 7px 15px -7px teal;
+
+			color: grey;
+		}
 		div{
 			margin-left: 5px;
 		}
 
-		.flex-container {
-		    display: flex;
-		    flex-wrap: wrap;
-		    flex-direction: row;
-		    align-content: flex-start;
+		.flex-container{
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			align-content: flex-start;
 		}
 
-		.btn {
+		.btn{
 			margin: 0;
 			font-size: 12px;
 			padding-bottom: 0;
@@ -54,13 +69,13 @@
 			var ca = decodedCookie.split(';');
 			for(var i = 0; i <ca.length; i++) {
 				var c = ca[i];
-		    	while (c.charAt(0) == ' ') {
-		    		c = c.substring(1);
-		    	}
-		    	if (c.indexOf(name) == 0) {
-		    		return c.substring(name.length, c.length);
-		    	}
-		  	}
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
 			return "";
 		}
 		function setCookie(cname, cvalue, exdays) {
@@ -71,8 +86,9 @@
 		}
 
 		function changeTheme(color) {
-			document.getElementsByTagName("html")[0].style.backgroundColor = color;
-			document.getElementsByTagName("html")[0].style.color = color == "white" ? "black" : "white";
+			let root = document.documentElement;
+			root.style.setProperty('--main_bg_color', color);
+			root.style.setProperty('--main_elem_color', color=="white" ? "black" : "white");
 			setCookie("bg-color", color, 365);
 		}
 		window.onload = function() {
@@ -89,6 +105,8 @@
 			if (getCookie("bg-color") != ""){
 				changeTheme(getCookie("bg-color"));
 			}
+			var x = document.lastModified;
+			document.getElementsByTagName("footer")[0].innerHTML = "Viimati muudetud " + x
 		}
 	</script>
 </head>
@@ -124,7 +142,7 @@
 		<li><a href="https://youtu.be/Y6eKMuY7kB4" target="_blank">Terry Davis reaalsusest</a></li>
 		<li><a href="https://www.youtube.com/channel/UCb7QIjtg8b7_pCBhcHmnEAw/videos?view=0&sort=p&flow=grid" target="_blank">Üks kogumik Terry asju</a></li>
 	</ul>
-	<img style="margin-left:5%;margin-bottom:2%;align-self:center;" src="https://archive-media-0.nyafuu.org/news/thumb/1536/51/1536516323440s.jpg" alt="Terry wanted"/>
+	<img style="margin-left:5%;margin-bottom:5px;align-self:center;" src="https://archive-media-0.nyafuu.org/news/thumb/1536/51/1536516323440s.jpg" alt="Terry wanted"/>
 	</div>
 </div>
 
@@ -139,7 +157,7 @@
 <div>"Vabanemine teadaolevast" - J. Krishnamurti
 	<ul>
 		<li><a href="http://raulpage.org/vabane/" target="_blank">Eestikeelne</a></li>
-		<li><a href="Jiddu_Krishnamurt_Freedom_from_the_Known.pdf" target="_blank">Ingliskeelne</a></li>
+		<li><a href="https://selfdefinition.org/krishnamurti/Jiddu_Krishnamurt_Freedom_from_the_Known.pdf" target="_blank">Ingliskeelne</a></li>
 	</ul>
 </div>
 
@@ -168,6 +186,7 @@
 		<li><a href="https://in5d.com/todays-live-schumann-resonance-charts-and-resources/" target="_blank">in5D</a> - lisan selle ka, sest vahel on seal huvitavat infot, näiteks Schumanni resonantsi kohta.</li>
 		<li><a href="http://www.sacred-texts.com/eso/index.htm#" target="_blank">Müstika/okultismi tekstide arhiiv</a></li>
 		<li><a href="http://www.freegrab.net/pinealgland.htm" target="_blank">Sun gazing</a></li>
+		<li><a href="http://www.fourmilab.ch/rpkp/experiments/" target="_blank">Retropsychokinesis</a> - katsetamiseks</li>
 	</ul>
 </div>
 </body>
