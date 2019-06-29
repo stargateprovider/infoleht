@@ -54,15 +54,29 @@ function includeHTML() {
 	}
 }
 window.onload = function() {
-	// Add youtube icons next to youtube links
+	// Add youtube, telegram, in5D icons next to their links
 	var links = document.getElementsByTagName("a");
 	for (var i=0; i<links.length; i++) {
 		if (links[i].href.indexOf("youtu") > -1) {
-			var yt_icon = new Image(); //document.createElement("img");
-			yt_icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
-			yt_icon.alt = "yt_icon";
-			yt_icon.style = "margin-right: 5px;"
-			links[i].insertAdjacentElement("beforebegin", yt_icon);
+			var icon = new Image(); //document.createElement("img");
+			icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
+			icon.alt = "yt_icon";
+			icon.style = "margin-right:5px;max-width:16px;"
+			links[i].insertAdjacentElement("beforebegin", icon);
+		}
+		else if (links[i].href.indexOf("telegram") > -1) {
+			var icon = new Image();
+			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico"
+			icon.alt = "telegram_icon";
+			icon.style = "margin-right:5px;max-width:16px;"
+			links[i].insertAdjacentElement("beforebegin", icon);
+		}
+		else if (links[i].href.indexOf("in5d") > -1) {
+			var icon = new Image();
+			icon.src = "http://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
+			icon.alt = "in5d_icon";
+			icon.style = "margin-right:5px;max-width:16px;"
+			links[i].insertAdjacentElement("beforebegin", icon);
 		}
 	}
 
