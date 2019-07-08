@@ -7,15 +7,16 @@ html{
 	margin: 0px;
 	background-color: var(--main_bg_color);
 	color: var(--main_elem_color);
-	width: 100vw;
+	width: 100%;
 }
 body{
 	margin: inherit;
 	background-color: inherit;
 	color: inherit;
+	width: 100%
 }
 header{
-	width: 100vw;
+	width: 100%;
 	margin: 0px 0px 20px 0px;
 	padding-top: 10px;
 	padding-bottom: 5px;
