@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="et">
+<head w3-include-html="resources/head.html">
+	<meta charset="UTF-8">
+	<title>Tsitaadid</title>
+	<script src="resources/main.js"></script>
+</head>
+
+<body>
+<header w3-include-html="resources/header.html">Kogutud tsitaadid</header>
+<!-- Start page specific tags -->
+<script>
+	function readTextFileOld(file)
+	{
+	    var rawFile = new XMLHttpRequest();
+	    rawFile.open("GET", file);
+	    rawFile.onreadystatechange = function ()
+	    {
+	        if(rawFile.readyState === 4)
+	        {
+	            if(rawFile.status === 200 || rawFile.status == 0)
+	            {
+	                var allText = rawFile.responseText;
+	                alert(allText);
+	            }
+	        }
+	    }
+	    rawFile.send();
+	}
+
+	function readTextFile(file)
+	{
+		fetch(file)
+			.then(response => response.arrayBuffer())
+			.then((data) => {
+				var enc = new TextDecoder("iso-8859-1");
+				var text = enc.decode(data);
+				var regexp = new RegExp('[\\"“][\\S\\s]+?[\\"”]\\s+[\\-~–] ?.+', "gm");
+				var regexp2 = new RegExp('^([\\"“][\\S\\s]+?[\\"”])\\s+[\\-~–] ?(.+)');
+				var array = text.match(regexp);
+
+				for (var i in array){
+					array[i] = array[i].split(regexp2);
+					console.log(i,array[i][1],i,array[i][2]);
+					document.getElementById("quotesDiv").innerHTML += array[i][1] + "<br />~ " + array[i][2] +  "<br /><br />"
+				}
+				//console.log(array);
+			})
+			//document.getElementById("quotesDiv").innerHTML
+	}
+	//window.onload = function(){
+	//	readTextFile("resources/tsitaadid.txt");
+	//}
+	readTextFile("resources/tsitaadid.txt");
+
+</script>
+<!-- End page specific tags -->
+<div id="quotesDiv"></div>
+<footer></footer>
+</body>
+<script>includeHTML()</script>
+</html>

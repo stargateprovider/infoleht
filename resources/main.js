@@ -55,7 +55,7 @@ function includeHTML() {
 }
 window.onload = function() {
 	// Add youtube, telegram, in5D icons next to their links
-	var links = document.getElementsByTagName("a");
+	var links = document.querySelectorAll("li > a");
 	for (var i=0; i<links.length; i++) {
 		if (links[i].href.indexOf("youtu") > -1) {
 			var icon = new Image(); //document.createElement("img");
@@ -80,14 +80,15 @@ window.onload = function() {
 		}
 	}
 
-	// Add picture inside <a class="picture_link"></a>
+/*	// Add img inside <a class="picture_link"></a>
 	var links = document.getElementsByClassName("picture_link");
 	for (var i=0; i<links.length; i++) {
 		var link = links[i].href;
-		links[i].innerHTML = '<picture><source media="(max-width: 767px)" sizes="35px" srcset="' +
-			link + ' 768w"/><source media="(min-width: 768px)" sizes="100px" srcset="' +
-			link + ' 768w"/><img src="' + link +'"/></picture>';
-	}
+		var img = new Image();
+		img.srcset = link
+		img.srcset = ""
+		img.alt = "picture_link " + i.toString();
+	}*/
 
 	// Load theme based on cookies
 	if (getCookie("bg-color") != ""){
