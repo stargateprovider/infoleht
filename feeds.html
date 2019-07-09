@@ -15,13 +15,15 @@ rssfeed_url = new Array();
 rssfeed_url[0]="https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ"; rssfeed_url[1]="http://www.telegram.ee/feed"; rssfeed_url[2]="http://in5d.com/feed/";
 if(screen.width < 800) {
 	rssfeed_frame_width=window.outerWidth;
+	rssfeed_frame_height=window.outerHeight
 } else {
 	rssfeed_frame_width=window.innerWidth;
+	rssfeed_frame_height=window.innerHeight
 }
 var headHeight=47//document.getElementsByTagName('header')[0].getBoundingClientRect().height;
-var footHeight=62;
+var footHeight=61;
 console.log(window.innerHeight, headHeight, footHeight);
-rssfeed_frame_height=window.innerHeight - headHeight - footHeight;
+rssfeed_frame_height -= headHeight + footHeight + 20;
 rssfeed_scroll="off";
 rssfeed_scroll_step="6";
 rssfeed_scroll_bar="on";
