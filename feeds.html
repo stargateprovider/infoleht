@@ -18,8 +18,8 @@ if(screen.width < 800) {
 } else {
 	rssfeed_frame_width=window.innerWidth-15;
 }
-var headHeight=document.getElementsByTag('header')[0].getBoundingClientRect().height;
-var footHeight=document.getElementsByTag('footer')[0].getBoundingClientRect().height;
+var headHeight=document.getElementsByTagName('header')[0].getBoundingClientRect().height;
+var footHeight=document.getElementsByTagName('footer')[0].getBoundingClientRect().height;
 rssfeed_frame_height=window.innerheight - headHeight - footHeight;
 rssfeed_scroll="off";
 rssfeed_scroll_step="6";
