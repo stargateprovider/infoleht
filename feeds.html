@@ -20,7 +20,10 @@ window.addEventListener('resize', function(){
 		frame.width=window.innerWidth;
 		frame.height=window.innerHeight;
 	}
-	rssfeed_frame_height-=47+61+5;
+	var headHeight=document.getElementsByTagName('header')[0].getBoundingClientRect().height;
+	var divHeight=document.getElementsByTagName('div')[0].getBoundingClientRect().height;
+	var footHeight=document.getElementsByTagName('footer')[0].getBoundingClientRect().height;
+	frame.height-=headHeight+divHeight+footHeight+3;
 }, true);
 
 rssfeed_url = new Array();
