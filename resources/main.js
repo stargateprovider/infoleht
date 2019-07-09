@@ -98,4 +98,9 @@ window.onload = function() {
 	// Add last modified date to footer
 	var x = document.lastModified;
 	document.getElementsByTagName("footer")[0].innerHTML = "Viimati muudetud " + x
+	try{
+		floadRSS();
+	} catch(err) {
+		return;
+	}
 }

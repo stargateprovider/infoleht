@@ -11,7 +11,8 @@
 <!-- start sw-rss-feed code -->
 <script type="text/javascript">
 <!--
-rssfeed_url = new Array();
+document.addEventListener('readystatechange',event=>{if(event.target.readyState==="complete"){
+rssfeed_url=new Array();
 rssfeed_url[0]="https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ"; rssfeed_url[1]="http://www.telegram.ee/feed"; rssfeed_url[2]="http://in5d.com/feed/";
 if(screen.width < 800) {
 	rssfeed_frame_width=window.outerWidth;
@@ -19,7 +20,8 @@ if(screen.width < 800) {
 	rssfeed_frame_width=window.innerWidth;
 }
 var headHeight=document.getElementsByTagName('header')[0].getBoundingClientRect().height;
-var footHeight=62;
+var footHeight=document.getElementsByTagName('footer')[0].getBoundingClientRect().height+document.getElementsByTagName('div')[0].getBoundingClientRect().height;
+console.log(window.innerHeight, headHeight, footHeight);
 rssfeed_frame_height=window.innerHeight - headHeight - footHeight;
 rssfeed_scroll="off";
 rssfeed_scroll_step="6";
@@ -53,6 +55,7 @@ rssfeed_item_description_link_color="#333";
 rssfeed_item_description_tag="off";
 rssfeed_no_items="0";
 rssfeed_cache = "2c6c9195b46d99ff04b9e3cb9d87bf0f";
+}});
 //-->
 </script>
 <script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script>
