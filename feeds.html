@@ -11,6 +11,18 @@
 <!-- start sw-rss-feed code -->
 <script type="text/javascript">
 <!--
+window.addEventListener('resize', function(){
+	frame = document.getElementsByTagName('iframe')[0]
+	if(screen.width<800){
+		frame.width=window.outerWidth;
+		frame.height=window.outerHeight;
+	}else{
+		frame.width=window.innerWidth;
+		frame.height=window.innerHeight;
+	}
+	rssfeed_frame_height-=47+61+5;
+}, true);
+
 rssfeed_url = new Array();
 rssfeed_url[0]="https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ"; rssfeed_url[1]="http://www.telegram.ee/feed"; rssfeed_url[2]="http://in5d.com/feed/";
 if(screen.width<800){
