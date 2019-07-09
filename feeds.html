@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="et">
-<head w3-include-html="resources/head.html">
+<head>
 	<meta charset="UTF-8">
 	<title>RSS-vood</title>
 	<script src="resources/main.js"></script>
 </head>
 
 <body>
-<header w3-include-html="resources/header.html" style="margin-bottom: 0!important;"></header>
+<header style="margin-bottom: 0!important;"></header>
 <!-- start sw-rss-feed code -->
 <script type="text/javascript">
 <!--
@@ -28,6 +28,7 @@ window.addEventListener('resize', function(){
 
 rssfeed_url = new Array();
 rssfeed_url[0]="https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ"; rssfeed_url[1]="http://www.telegram.ee/feed"; rssfeed_url[2]="http://in5d.com/feed/";
+
 if(screen.width<800){
 	rssfeed_frame_width=window.outerWidth;
 	rssfeed_frame_height=window.outerHeight;
@@ -35,7 +36,7 @@ if(screen.width<800){
 	rssfeed_frame_width=window.innerWidth;
 	rssfeed_frame_height=window.innerHeight;
 }
-rssfeed_frame_height-=47+61+5;
+rssfeed_frame_height-=37+61+5;
 rssfeed_scroll="off";
 rssfeed_scroll_step="6";
 rssfeed_scroll_bar="on";
@@ -76,5 +77,4 @@ rssfeed_cache = "2c6c9195b46d99ff04b9e3cb9d87bf0f";
 <!-- end sw-rss-feed code -->
 <footer style="margin-top:0!important;"></footer>
 </body>
-<script>includeHTML()</script>
 </html>

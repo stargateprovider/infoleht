@@ -53,6 +53,26 @@ function includeHTML() {
 		}
 	}
 }
+function includeTemplate() {
+	var elements = ["head", "header", "footer"];
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4) {
+			if (this.status == 200) {
+				for(i in elements){
+					docElement = document.getElementsByTagName(elements[i])[0];
+					importElement = this.responseXML.getElementsByTagName(elements[i])[0];
+					docElement.innerHTML += importElement.innerHTML;
+				}
+			} else {
+				console.error("Failed to import template.html.");
+			}
+		}
+	}
+	xhttp.open("GET", "resources/template.html", true);
+	xhttp.send();
+	return;
+}
 window.onload = function() {
 	// Add youtube, telegram, in5D icons next to their links
 	var links = document.querySelectorAll("li > a");
@@ -80,15 +100,8 @@ window.onload = function() {
 		}
 	}
 
-/*	// Add img inside <a class="picture_link"></a>
-	var links = document.getElementsByClassName("picture_link");
-	for (var i=0; i<links.length; i++) {
-		var link = links[i].href;
-		var img = new Image();
-		img.srcset = link
-		img.srcset = ""
-		img.alt = "picture_link " + i.toString();
-	}*/
+	// Bring in template
+	includeTemplate();
 
 	// Load theme based on cookies
 	if (getCookie("bg-color") != ""){
@@ -97,10 +110,5 @@ window.onload = function() {
 
 	// Add last modified date to footer
 	var x = document.lastModified;
-	document.getElementsByTagName("footer")[0].innerHTML = "Viimati muudetud " + x
-	try{
-		floadRSS();
-	} catch(err) {
-		return;
-	}
+	document.getElementsByTagName("footer")[0].innerHTML += "Viimati muudetud " + x;
 }
