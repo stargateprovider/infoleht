@@ -73,7 +73,7 @@ function includeTemplate() {
 			console.error("Failed to import template.html.");
 		}
 	}
-	xhttp.open("GET", "resources/template.html", true);
+	xhttp.open("GET", "resources/template.html", false);
 	xhttp.send();
 	return;
 }
