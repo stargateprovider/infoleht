@@ -56,9 +56,9 @@ function includeHTML() {
 function includeTemplate() {
 	var elements = ["head", "header", "footer"];
 	var xhttp = new XMLHttpRequest();
-	xttp.responseType = 'document';
+	xhttp.responseType = 'document';
 	// Force the response to be parsed as XML
-	xttp.overrideMimeType('text/xml');
+	xhttp.overrideMimeType('text/xml');
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			for(var i in elements){
