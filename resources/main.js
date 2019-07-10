@@ -60,7 +60,7 @@ function includeTemplate() {
 		if (this.readyState == 4) {
 			if (this.status == 200) {
 				for(var i in elements){
-					console.log(elements[i], this.response);
+					console.log(this.responseXML.getElementsByTagName(elements[i]));
 					docElement = document.getElementsByTagName(elements[i])[0];
 					importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 					docElement.innerHTML += importElement.innerHTML;
