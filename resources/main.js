@@ -61,14 +61,14 @@ function includeTemplate() {
 	xhttp.responseType = 'document';
 	xhttp.overrideMimeType('text/html');
 
-	xhttp.onreadystatechange = function() {
+	xhttp.onload = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			for(var i in elements){
 				docElement = document.getElementsByTagName(elements[i])[0];
 				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 				docElement.innerHTML += importElement.innerHTML;
 			}
-		}
+		} else { console.log(this.readyState, this.status);}
 	}
 	xhttp.open("GET", "resources/template.html", true);
 	xhttp.send();
