@@ -57,7 +57,7 @@ function includeTemplate() {
 	var elements = ["head", "header", "footer"];
 	var xhttp = new XMLHttpRequest();
 
-	// Force the response to be parsed as XML
+	// Force the response to be parsed as HTML
 	xhttp.responseType = 'document';
 	xhttp.overrideMimeType('text/html');
 
@@ -68,12 +68,9 @@ function includeTemplate() {
 				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 				docElement.innerHTML += importElement.innerHTML;
 			}
-		} else {
-			console.log(this.readyState, this.status, this.responseXML);
-			console.error("Failed to import template.html.");
 		}
 	}
-	xhttp.open("GET", "resources/template.html", false);
+	xhttp.open("GET", "resources/template.html", true);
 	xhttp.send();
 	return;
 }
