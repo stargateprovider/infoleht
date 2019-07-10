@@ -59,7 +59,8 @@ function includeTemplate() {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4) {
 			if (this.status == 200) {
-				for(i in elements){
+				for(var i in elements){
+					console.log(elements[i]);
 					docElement = document.getElementsByTagName(elements[i])[0];
 					importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 					docElement.innerHTML += importElement.innerHTML;
