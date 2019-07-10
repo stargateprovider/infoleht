@@ -56,18 +56,20 @@ function includeHTML() {
 function includeTemplate() {
 	var elements = ["head", "header", "footer"];
 	var xhttp = new XMLHttpRequest();
-	xhttp.responseType = 'document';
+
 	// Force the response to be parsed as XML
-	xhttp.overrideMimeType('text/xml');
+	xhttp.responseType = 'document';
+	xhttp.overrideMimeType('text/html');
+
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			for(var i in elements){
-				console.log(this.responseType, this.responseXML);
 				docElement = document.getElementsByTagName(elements[i])[0];
 				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 				docElement.innerHTML += importElement.innerHTML;
 			}
 		} else {
+			console.log(this.readyState, this.status, this.responseXML);
 			console.error("Failed to import template.html.");
 		}
 	}
