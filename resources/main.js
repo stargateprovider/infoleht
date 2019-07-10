@@ -94,7 +94,7 @@ window.onload = function() {
 		}
 		else if (links[i].href.indexOf("in5d") > -1) {
 			var icon = new Image();
-			icon.src = "http://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
+			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
 			icon.alt = "in5d_icon";
 			icon.style = "margin-right:5px;max-width:16px;"
 			links[i].insertAdjacentElement("beforebegin", icon);
