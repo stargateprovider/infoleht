@@ -61,12 +61,18 @@ Converting from Pale Moon bookmarks (using Sublime Text replace function):
 -->
 <details open>
 <summary>Raamatud</summary>
+
 <div>
 	Autor: <input id="input_author" type="text"/>
 	Pealkiri: <input id="input_name" type="text"/>
 	<input id="input_lang_eng" type="checkbox" value="eng"/>Inglise
 	<button onclick="searchESTER();">Otsi ESTER-ist</button>
 </div>
+<form action="https://www.goodreads.com/search">
+	Otsing: <input type="text" name="q"/>
+	<input type="submit" value="Otsi Goodreads-ist"/>
+</form>
+
 <ul>
 	<li>Maailma silm / Robert Jordan</li>
 	<li>Spider Robinson</li>
