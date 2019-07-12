@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" href="https://cdn4.iconfinder.com/data/icons/iready-multimedia-vol-2/28/001_067_clipboard_copy_todo1x-128.png"/>
+	<base target="_blank" />
+	<title>Todo</title>
+	<style type="text/css">
+		html{
+			background-color: lightgrey;
+			color: auto;
+		}
+		details{
+			border-bottom: solid 1px;
+		}
+		body > ul{
+			margin: 1px;
+			padding-left: 12px;
+		}
+	</style>
+	<script>
+function searchESTER() {
+	var link = "https://www.ester.ee/search*est/X?SEARCH=";
+	var author = document.getElementById("input_author").value;
+	var name = document.getElementById("input_name").value;
+
+	if (author){
+		link += "a:("+author+")";
+	}
+	if (name){
+		if (author) {link += "+and+";}
+		link += "t:("+name+")";
+	}
+	link += "&searchscope=1&m=a&l=est";
+	if (document.getElementById("input_lang_eng").value){
+		link += "&l=eng";
+	}
+	window.open(link, name="_blank");
+}
+window.onload = function() {
+	// Add favicons next to links
+	var i, request, favicon;
+	var links = document.querySelectorAll("li > a");
+
+	for (i=0; i<links.length; i++) {
+		var icon = new Image();
+		icon.src = "https://www.google.com/s2/favicons?domain=" + links[i].href;
+		icon.alt = "icon_" + i.toString();
+		icon.style = "margin-right:5px;max-width:16px;"
+		links[i].insertAdjacentElement("beforebegin", icon);
+	}
+}
+	</script>
+</head>
+<body>
+<!--
+Converting from Pale Moon bookmarks (using Sublime Text replace function):
+	search:		[\S\s]+?<A.+?HREF="(.+?)".+?>(.+?)</A>[\S\s]
+	replace:	<li><a href="$1">$2</a></li>\n
+-->
+<details open>
+<summary>Raamatud</summary>
+<div>
+	Autor: <input id="input_author" type="text"/>
+	Pealkiri: <input id="input_name" type="text"/>
+	<input id="input_lang_eng" type="checkbox" value="eng"/>Inglise
+	<button onclick="searchESTER();">Otsi ESTER-ist</button>
+</div>
+<ul>
+	<li>Maailma silm / Robert Jordan</li>
+	<li>Spider Robinson</li>
+	<li>The Sparrow / Mary Doria Russell</li>
+	<li>Olaf Stapledon</li>
+	<li>Stanislaw Lem (nt "Ijon Tichy kosmoserändude päevikud" on Paepealses)</li>
+	<li>Poul Anderson (antuid pole, aga muud on Paepealses)
+		<ul>
+			<li><a href="https://www.goodreads.com/book/show/1228336.The_Night_Face">The Night Face</a></li>
+			<li><a href="https://www.goodreads.com/book/show/1410692.The_Enemy_Stars">The Enemy Stars</a></li>
+		</ul>
+	</li>
+	<li>Anne McCaffrey (antuid pole)
+		<ul>
+			<li><a href="https://www.goodreads.com/series/43910-crystal-singer">Crystal Singer</a></li>
+			<li><a href="https://www.goodreads.com/series/49339-pern-chronological-order">Pern (Chronologival order)</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.goodreads.com/book/show/467457.Illusion">Illusion / Paula Volsky (nimi puudub estris)</a></li>
+	<li><a href="https://www.goodreads.com/series/162832-dreamfall">Dreamfall / Amy Plum (antut pole)</a></li>
+	<li><a href="https://www.goodreads.com/series/49377-fuzzy-sapiens">Mitmed (fuzzy sapiens)</a></li>
+	<li><a href="https://www.goodreads.com/book/show/46559.Grumbles_from_the_Grave">Grumbles from the Grave / Robert A. Heinlein (muid olemas Paepealses, ja nt. "Katze, die durch Wände geht" on võõrkeelses)</a></li>
+	<li><a href="https://www.goodreads.com/series/43762-otherland">Otherland / Tad Williams (ing. keeles on)</a></li>
+	<li><a href="https://www.goodreads.com/series/50708-santiago">Santiago / Mike Resnick</a></li>
+	<li><a href="https://www.goodreads.com/series/40506-berserker"></a>berserker / Fred Saberhagen (nime pole)</li>
+	<li><a href="https://www.goodreads.com/series/41188-uplift-storm-trilogy"></a>Uplift Strom trilogy / David Brin (osaliselt võõrkeelse kirj. osakonnas)</li>
+	<li>Mida on tlnkR-is: Ian M. Banks, Stephen Baxter.</li>
+	<li><a href="http://www.whizzpast.com/10-sci-fi-short-story-collections-will-blow-mind/">10 short story collections</a></li>
+	<li><a href="https://best-sci-fi-books.com/best-weird-science-fiction-books/">17 Best Weird Science Fiction Books - The Best Sci Fi Books</a></li>
+	<li><a href="https://www.reddit.com/r/printSF/comments/5flfb9/spiritual_sf/?st=j4vqmxca&sh=f8b55f97">Spiritual SF</a></li>
+</ul>
+</details>
+
+<details open>
+<summary>Filmid</summary>
+<ul>
+	<li>Mirrormask, 2005</li>
+	<li>The Imaginarium of Doctor Parnassus, 2009</li>
+	<li>Interstate 60, 2001</li>
+	<li>Pan’s Labyrinth, 2006</li>
+	<li><a href="https://gidonline.io/film/razinya/">Разиня - смотреть онлайн бесплатно в хорошем качестве</a></li>
+	<li><a href="http://www.dailymotion.com/playlist/x2ztsc_y2jin99_the-outer-limits-1963-season-1/1#video=x1893yj">The Outer Limits</a></li>
+	<li><a href="https://www.dailymotion.com/video/x4dpm4i_the-outer-limits-1963-65-s01e03-the-architects-of-fear_shortfilms">The Outer Limits ( 1963-65 ) S01E03 - The Architects of Fear - Dailymotion-Video</a></li>
+	<li><a href="http://the-watch-series.to/serie/Doctor_Who_(1963)/sab">Doctor Who (1963)</a></li>
+	<li><a href="http://www.watchepisodeseries.com/the-x-files">X-Files</a></li>
+	<li><a href="http://www.watchepisodeseries.com/the-expanse">The Expanse</a></li>
+	<li><a href="http://www.rollingstone.com/movies/lists/the-top-20-sci-fi-films-of-the-21st-century-20140515/gravity-2013-19691231">20 Sci-Fi Films of the 21st Century</a></li>
+</ul>
+</details>
+
+</body>
+</html>
