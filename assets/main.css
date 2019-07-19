@@ -79,3 +79,7 @@ h1{
 .btn:hover{
 	background-color: #ccc;
 }
+
+header > * > a:visited {
+	color: var(--main_elem_color);
+}

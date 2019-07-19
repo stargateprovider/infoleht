@@ -1,0 +1,20 @@
+{
+  "name": "Custom New Tab",
+  "description": "Custom new tab",
+  "version": "1.0",
+  "chrome_url_overrides": { "newtab": "index.html" },
+  "manifest_version": 2,
+  "permissions": [
+    "tabs",
+    "sessions",
+    "topSites",
+    "history",
+    "bookmarks",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["main.js"]
+  }]
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <!--meta http-equiv="Access-Control-Allow-Origin" content="*" /-->
+  <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
+  <link rel="stylesheet" type="text/css" href="main.css" />
+  <title>New tab</title>
+</head>
+<body>
+
+<!--
+To convert from bookmarks.html (using Sublime Text replace function):
+  search:   [\S\s]+?<A.+?HREF="(.+?)".+?>(.+?)</A>[\S\s]
+  replace:  <li><a href="$1">$2</a></li>\n
+-->
+
+<form id="searchForm">
+  <input type="search" name="q" autofocus="true" /><br />
+  Otsi >> <input type="image" src="https://duckduckgo.com/favicon.ico" formaction="https://duckduckgo.com/"/>
+  <input type="image" src="https://www.google.com/images/branding/product/ico/maps_32dp.ico" formaction="https://www.google.ee/maps"/>
+  <input type="image" src="https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png" formaction="https://www.youtube.com/results"/>
+  <input type="image" src="https://www.hinnavaatlus.ee/favicon.ico" value="https://www.hinnavaatlus.ee/search/?query="/>
+  <input type="image" src="http://www.ebay.co.uk/favicon.ico" value="https://www.ebay.co.uk/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw="/>
+  | <input type="image" src="http://enet.animato.ee/favicon.ico" value="http://enet.animato.ee/index.php?otsida="/>
+  <img class="favicon" src="http://www.eki.ee/favicon.ico"><input type="submit" value="IES" formaction="http://www.eki.ee/dict/ies/index.cgi"/>
+  <img class="favicon" src="http://www.eki.ee/favicon.ico"><input type="submit" value="SYS" formaction="http://www.eki.ee/dict/sys/index.cgi"/>
+  <img class="favicon" src="http://www.eki.ee/favicon.ico"><input type="submit" value="EKS" formaction="http://www.eki.ee/dict/ekss/index.cgi"/>
+  <input type="image" src="https://www.dictionary.com/hp-assets/dcom_favicon-1bff2f1b49c077ed504e55c3649f2a4b.png" value="https://www.dictionary.com/?override_query="/>
+  <input type="image" src="https://www.thesaurus.com/hp-assets/tcom_favicon-54545f5303fccb956af394ac10f1655d.png" value="https://www.thesaurus.com/?override_query="/>
+  | <input type="image" src="https://www.processlibrary.com/favicon.ico" formaction="https://www.processlibrary.com/en/search"/>
+  <input type="image" src="https://docs.python.org/favicon.ico" formaction="https://docs.python.org/3/search.html"/>
+  <input type="image" src="https://docs.djangoproject.com/favicon.ico" formaction="https://docs.djangoproject.com/en/2.2/search/"/>
+  <input type="image" src="https://en.cppreference.com/favicon.ico" value="https://en.cppreference.com/w/?search="/>
+  | <input type="image" src="http://www.goodreads.com/favicon.ico" formaction="https://www.goodreads.com/search"/>
+  <input type="image" src="https://www.ester.ee/screens/favicon.ico" value="https://www.ester.ee/search~S1*est/X?SEARCH="/>
+  <!--input type="image" src="/favicon.ico" value="/-->
+</form>
+<!--div>
+  Autor: <input id="input_author" type="text"/>
+  Pealkiri: <input id="input_name" type="text"/>
+  <input id="input_lang_eng" type="checkbox" value="eng"/>Inglise
+  <button onclick="searchESTER();">Otsi ESTER-ist</button>
+</div-->
+
+<section class="flex-container" id="quick-links"></section>
+<nav id="sidebar" class="flex-container"></nav>
+<textarea id="notepad"></textarea>
+<br /><button id="btn-save-notes">Salvesta</button>
+
+<section>
+<details>
+  <summary>Lingid</summary>
+  <div class="flex-container">
+  <ul>
+    <li><a href="https://subsetgames.com/forum/viewforum.php?f=10">FTL mods</a></li>
+    <li><a href="http://www.theyoump3.com/">TheYouMP3.com - YouTube to MP3</a></li>
+    <li><a href="http://online-audio-converter.com/">Online Audio Converter</a></li>
+    <li><a href="https://www.revealname.com/">Reverse Phone Lookup</a></li>
+    <li><a href="https://www.emailondeck.com/">EmailOnDeck</a></li>
+    <li><a href="http://fatfingers.com/">FatFingers - eBay typos</a></li>
+    <li><a href="https://www.messenger.com/login/">Messenger</a></li>
+    <li><a href="http://imgur.com/">Imgur</a></li>
+    <li><a href="https://www.mediafire.com/#myfiles">MediaFire</a></li>
+    <li><a href="https://www.sendspace.com/">Sendspace</a></li>
+  </ul>
+  <ul>
+    <li><a href="https://wiki.python.org/moin/PythonSpeed/PerformanceTips">PythonSpeed/PerformanceTips - Python Wiki</a></li>
+    <li><a href="https://www.bunsenlabs.org/index.html">BunsenLabs Linux</a></li>
+    <li><a href="http://www.astrolog.org/labyrnth/maze.htm">Think Labyrinth: Computer Mazes</a></li>
+    <li><a href="http://www.libsdl.org/">Simple DirectMedia Layer - Homepage</a></li>
+    <li><a href="https://templeos.org/">TempleOS</a></li>
+    <li><a href="https://github.com/minexew/Shrine">GitHub - minexew/Shrine: A TempleOS distro for heretics</a></li>
+    <li><a href="https://www.redbubble.com/people/finesseapparel/works/24158661-templeos?p=sticker&size=small">&quot;TempleOS&quot; Stickers | Redbubble</a></li>
+    <li><a href="https://inktoner.ee/et/hp/90-dore-ink-cartridge-hp-cb321ee-cn684ee-364xl-6950840619617.html">Dore tindikassett HP 364XL - Inktoner</a></li>
+  </ul>
+  <ul>
+    <li><a href="http://www.targotennisberg.com/eio/VP/">Võistlusprogrammeerimine</a></li>
+    <li><a href="https://practice.geeksforgeeks.org/">Practice | GeeksforGeeks | A computer science portal for geeks</a></li>
+    <li><a href="https://www.hackerrank.com/dashboard">Dashboard | HackerRank</a></li>
+    <li><a href="http://codeforces.com/group/jODaK73gf0/contests">Estonian Competitive - Codeforces</a></li>
+    <li><a href="http://codeforces.com/group/PjzGiggT71/contests?locale=en">Contests - Codeforces</a></li>
+    <li><a href="https://www.spoj.com/problems/classical/sort=6">Sphere Online Judge (SPOJ) - Problems</a></li>
+  </ul>
+
+  </div>
+</details>
+
+<details class="flex-container" id="feeds" open>
+<summary>RSS feeds<div style="color:#ccc;font-size:10px;">powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#ccc;">Surfing Waves</a></div></summary>
+<script type="text/javascript" src="feeddata_common.js"></script>
+<script type="text/javascript" src="feeddata.js"></script>
+<script type="text/javascript" src="rss-feed.js"></script>
+
+<script type="text/javascript" src="feeddata2.js"></script>
+<script type="text/javascript" src="rss-feed.js"></script>
+</details>
+
+</section>
+
+<script type="text/javascript" src="main.js"></script>
+</body></html>
