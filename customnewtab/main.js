@@ -83,7 +83,7 @@ function saveNotes() {
 	localStorage.setItem("notes", document.getElementById("notepad").value);
 }
 
-document.addEventListener('DOMContentLoaded', function(e) {
+window.onload =  function() {
 	// Load links from bookmarks and recently closed
 	appendToContainer("quick-links", quickLinksURLs, quickLinksFavicons);
 
@@ -121,10 +121,5 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		let mx = e.clientX;
 		sidebar.style.display = e.clientY>45 && (ww-mx<75 || (visible && ww-sw-mx<0)) ? "flex" : "none";
 	});
-})
-
-window.onload = function(){
-	document.getElementById("feeds").open = false;
 	document.getElementById("searchForm").children[0].focus();
 }
-
