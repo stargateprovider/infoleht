@@ -27,8 +27,22 @@ function insertFavicon(tag, url, crop=false, pos="afterbegin"){
 	tag.insertAdjacentElement(pos, icon);
 }
 
-function appendToQuickLinks(links, favicons) {
-	var quicklinks = document.getElementById('quick-links');
+function appendToContainer(parentId, links, favicons) {
+	var quicklinks = document.getElementById(parentId);
+
+	for (var i=0; i < links.length; i++) {
+		var div = quicklinks.appendChild(document.createElement('div'));
+		div.className = "bookmark"
+		var a = div.appendChild(document.createElement('a'));
+		a.href = links[i];
+
+		var icon = new Image();
+		icon.src = favicons[i];
+		a.insertAdjacentElement("afterbegin", icon);
+	}
+}
+function appendToSlowLinks(links) {
+	var quicklinks = document.getElementById("slow-links");
 
 	for (var i=0; i < links.length; i++) {
 		var div = quicklinks.appendChild(document.createElement('div'));
@@ -71,7 +85,8 @@ function saveNotes() {
 
 document.addEventListener('DOMContentLoaded', function(e) {
 	// Load links from bookmarks and recently closed
-	appendToQuickLinks(quickLinksURLs, quickLinksFavicons);
+	appendToContainer("quick-links", quickLinksURLs, quickLinksFavicons);
+
 	chrome.sessions.getRecentlyClosed(appendToSidebar);
 	chrome.topSites.get(appendToSidebar);
 	chrome.bookmarks.getTree(function(bookmarkTree){
