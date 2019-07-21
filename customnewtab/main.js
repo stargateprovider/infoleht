@@ -94,17 +94,20 @@ function saveNotes() {
 }
 
 document.addEventListener('DOMContentLoaded', function(e) {
-	// Load links from bookmarks and recently closed
-	chrome.sessions.getRecentlyClosed(appendListToSidebar);
-	chrome.topSites.get(appendListToSidebar);
-	chrome.bookmarks.getTree(function(bookmarkTree){
-		var links = bookmarkTree[0].children[1].children;
-		var musicLinks = links.find(e => e.title=="m").children;
-		appendListToSidebar(musicLinks, false);
-	});
+	// Determine if we are local
+	if (window.location.origin.startsWith("chrome-extension://")){
+		// Load links from bookmarks and recently closed
+		chrome.sessions.getRecentlyClosed(appendListToSidebar);
+		chrome.topSites.get(appendListToSidebar);
+		chrome.bookmarks.getTree(function(bookmarkTree){
+			var links = bookmarkTree[0].children[1].children;
+			var musicLinks = links.find(e => e.title=="m").children;
+			appendListToSidebar(musicLinks, false);
+		});
+	}
 
 	// Load links from file
-	readFile("links.json", "application/json", function(file){
+	readFile("https://stargateprovider.github.io/infoleht/customnewtab/links.json", "application/json", function(file){
 		var data = JSON.parse(file.responseText);
 		appendToQuickLinks(data.quickLinks, false);
 		for (let i=0; i < data.slowLinks.length; i++){
