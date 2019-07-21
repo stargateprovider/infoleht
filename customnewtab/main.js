@@ -85,8 +85,9 @@ function appendListToSidebar(links, cropLinks=true) {
 
 function searchWeb(source) {
 	let query = document.getElementById("searchForm").children[0].value;
-	window.open(source+query, name="_blank");
 	window.close();
+	window.open(source+query, name="_blank");
+	//window.close();
 }
 
 function saveNotes() {
