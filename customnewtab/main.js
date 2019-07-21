@@ -1,15 +1,15 @@
 var quickLinksURLs = [];
 
 function readFile(file, type, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType(type);
-    rawFile.open("GET", file, true);
-    rawFile.onload = function() {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile);
-        }
-    }
-    rawFile.send(null);
+	var rawFile = new XMLHttpRequest();
+	rawFile.overrideMimeType(type);
+	rawFile.open("GET", file, true);
+	rawFile.onload = function() {
+		if (rawFile.readyState === 4 && rawFile.status == "200") {
+			callback(rawFile);
+		}
+	}
+	rawFile.send(null);
 }
 
 function fetchFavicon(url, crop=false){
@@ -23,32 +23,37 @@ function appendToQuickLinks(links) {
 	var quicklinks = document.getElementById('quick-links');
 
 	for (var i=0; i < links.length; i++) {
-		var div = quicklinks.appendChild(document.createElement('div'));
+		var div = document.createElement("div");
 		div.className = "bookmark";
-		var a = div.appendChild(document.createElement('a'));
+		var a = div.appendChild(document.createElement("a"));
 		a.href = links[i].url;
 
 		var icon = new Image();
 		icon.src = links[i].favIconUrl;
 		a.insertAdjacentElement("afterbegin", icon);
+
+		quicklinks.appendChild(div);
 		quickLinksURLs.push(links[i].url);
 	}
 }
 function appendListToSidebar(links, cropLinks=true) {
+	var newElem = document.createElement.bind(document)
 	var container = document.getElementById("sidebar");
-	var ol = container.appendChild(document.createElement('ul'));
+	var ol = newElem("ul");
 
+	nQuickLinks = quickLinksURLs.length;
 	for (var i=0; i < links.length; i++) {
-		var link = links[i].hasOwnProperty('tab') ? links[i].tab : links[i];
-		if (!link.hasOwnProperty('url') || link.url.startsWith("edge://")){
+		var link = links[i].hasOwnProperty("tab") ? links[i].tab : links[i];
+		if (!link.hasOwnProperty("url") || link.url.startsWith("edge://")){
 			continue;
 		}
-		for (var j in quickLinksURLs){
-			if (link.url.includes(quickLinksURLs[j])) {continue;}
+		var linkIsIn = link.url.includes.bind(link.url);
+		for (var j=0; j<nQuickLinks; j++){
+			if (linkIsIn(quickLinksURLs[j])) {continue;}
 		}
 
-		var li = ol.appendChild(document.createElement('li'));
-		var a = li.appendChild(document.createElement('a'));
+		var li = ol.appendChild(newElem("li"));
+		var a = li.appendChild(newElem("a"));
 		a.href = link.url;
 		a.appendChild(document.createTextNode(link.title));
 
@@ -56,81 +61,85 @@ function appendListToSidebar(links, cropLinks=true) {
 		icon.src = link.favIconUrl ? link.favIconUrl : fetchFavicon(link.url, cropLinks);
 		a.insertAdjacentElement("afterbegin", icon);
 	}
-}
-
-/*function fetchWallpaper() {
-	var xhttp = new XMLHttpRequest();
-
-	xhttp.onload = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			docElement = document.getElementById("middle");
-			importElement = this.responseXML.getElementsByTagName("item")[1];
-
-			// Parse item data into a temporary 'div' tag
-			var div = document.createElement("div");
-			var desc = importElement.getElementsByTagName("description")[0];
-			var doc = new DOMParser().parseFromString(desc.innerHTML, "text/html");
-			div.innerHTML = doc.documentElement.textContent.trim();
-
-			var a = docElement.appendChild(document.createElement("a"));
-			var image = a.appendChild(new Image());
-			image.src = div.querySelector("img").src;
-			a.href = importElement.getElementsByTagName("link")[0].innerHTML;
-
-		} else {console.error("Could not load wallpaper.");}
-	}
-	xhttp.open("GET", "https://spaceshipsgalore.tumblr.com/rss", true);
-	xhttp.send();
-}*/
-
-function searchWeb(source) {
-	let query = document.getElementById("searchForm").children[0].value;
-	window.close();
-	window.open(source+query, name="_blank");
-	//window.close();
-}
-
-function saveNotes() {
-	localStorage.setItem("notes", document.getElementById("notepad").value);
+	container.appendChild(ol);
 }
 
 document.addEventListener('DOMContentLoaded', function(e) {
+	console.time("main-load");
+	var getElemById = document.getElementById.bind(document);
+
 	// Determine if we are local
+	var otherBookmarksId;
 	if (window.location.origin.startsWith("chrome-extension://")){
+		otherBookmarksId = "2";}
+	else if (window.location.origin.startsWith("moz-extension://")){
+		otherBookmarksId = "unfiled_____";}
+
+	if (typeof otherBookmarksId !== "undefined"){
 		// Load links from bookmarks and recently closed
 		chrome.sessions.getRecentlyClosed(appendListToSidebar);
 		chrome.topSites.get(appendListToSidebar);
-		chrome.bookmarks.getTree(function(bookmarkTree){
-			var links = bookmarkTree[0].children[1].children;
-			var musicLinks = links.find(e => e.title=="m").children;
+		chrome.bookmarks.getSubTree(otherBookmarksId, function(bookmarkTree){
+			var musicLinks = bookmarkTree[0].children.find(e => e.title=="m").children;
 			appendListToSidebar(musicLinks, false);
 		});
 	}
 
 	// Load links from file
-	readFile("https://stargateprovider.github.io/infoleht/customnewtab/links.json", "application/json", function(file){
-		var data = JSON.parse(file.responseText);
-		appendToQuickLinks(data.quickLinks, false);
-		for (let i=0; i < data.slowLinks.length; i++){
+	var jsonFileHander = function(responseText){
+		var data = JSON.parse(responseText);
+		appendToQuickLinks(data.quickLinks);
+		linksArrayLen = data.slowLinks.length;
+		for (let i=0; i < linksArrayLen; i++){
 			appendListToSidebar(data.slowLinks[i], false);
-		}
-	});
-
-	// Load notes if it exists in localStorage
-	document.getElementById("notepad").value=localStorage.getItem("notes");
-	document.getElementById("btn-save-notes").addEventListener("click", saveNotes);
-
-	// Add eventlisteners
-	let formInputs = document.getElementById("searchForm").children;
-	let query = formInputs[0].value;
-	for (let i=1; i < formInputs.length; i++){
-		if (formInputs[i].value){
-			formInputs[i].addEventListener("click", function(){searchWeb(formInputs[i].value)});
 		}
 	}
 
+	var staticLinks = localStorage.getItem("staticLinks");
+	if (staticLinks){
+		jsonFileHandler(staticLinks);
+	}
+	else{
+		readFile("https://stargateprovider.github.io/infoleht/customnewtab/links.json",
+			"application/json",
+			file => {
+				responseText = file.responseText;
+				sessionStorage.setItem("staticLinks", responseText);
+				jsonFileHander(responseText);
+			}
+	);}
+
+	// Load notes if it exists in localStorage
+	getElemById("notepad").value = localStorage.getItem("notes");
+	getElemById("btn-save-notes").addEventListener("click", function(){
+		localStorage.setItem("notes", getElemById("notepad").value);}
+	);
+
+	// Add eventlisteners
+	var searchForm = getElemById("searchForm");
+	var searchbar = searchForm.children[0];
+	searchForm.addEventListener("click", function(e){
+		if (e.target.name){
+			let parameters = e.target.name.split("&");
+			for (var j=0; j<parameters.length-1; j++){
+
+				let pair = parameters[j].split("=");
+				let input = document.createElement("input");
+				input.setAttribute("type", "hidden");
+				input.setAttribute("name", pair[0]);
+				input.setAttribute("value", pair[1]);
+				searchForm.appendChild(input);
+			}
+			searchbar.name = parameters[j];
+		}else{
+			console.log(e.target)
+			searchbar.name = "q";
+		}
+		searchForm.target = e.ctrlKey ? "_blank" : "_self";
+	});
+
+	var sidebar = getElemById("sidebar");
 	document.addEventListener("mousemove", (e) => {
-		let sidebar = document.getElementById("sidebar");
 		let visible = sidebar.style.display;
 		let sw = sidebar.offsetWidth;
 		let ww = window.innerWidth;
@@ -138,13 +147,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		sidebar.style.display = e.clientY>5 && (ww-mx<20 || (visible && ww-sw-mx<0)) ? "flex" : "none";
 	});
 
-	document.getElementById("feeds").ontoggle=function(){
+	var feedsToggleHandler = function(){
 		loadFeeds();
-		document.getElementById("feeds").ontoggle=function(){};
-	};
+		this.removeEventListener("toggle", feedsToggleHandler);
+	}
+	getElemById("feeds").addEventListener("toggle", feedsToggleHandler);
 
 	// Focus on searchbar
-	formInputs[0].focus();
+	searchbar.focus();
+	console.timeEnd("main-load");
 });
-
 //window.onload = function(){}
