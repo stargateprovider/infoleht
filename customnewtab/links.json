@@ -38,13 +38,12 @@
 ]],
 "feeds": {
 "Web": {
-
 	"Ebay": [
 	  [
 		"https://www.ebay.com/sch/i.html?_udhi=40.00&_geositeid=0&_sacat=139973&_nkw=%28persons+hours+doors%2C999%2Cvirtue%29+%283ds%2Cds%29+-tetsudou+-ginga+-amiibo&_dcat=139973&Region%2520Code=%2521%7CNTSC%252DU%252FC%2520%2528US%252FCanada%2529%7CPAL%7CRegion%2520Free&Game%2520Name=%2521%7C999%253A%2520Nine%2520Hours%252C%2520Nine%2520Persons%252C%2520Nine%2520Doors%7CAdventure%7CNine%2520Hours%252C%2520Nine%2520Persons%252C%2520Nine%2520Doors%7CZero%2520Escape%253A%2520Virtue%2527s%2520Last%2520Reward&_fcid=66&_sop=15&_rss=1",
 		"https://www.ebay.com/sch/i.html?LH_PrefLoc=5&_udhi=40.00&_geositeid=0&_sacat=139973&_nkw=majora+-64&_dcat=139973&Region%2520Code=%2521%7CPAL%7CRegion%2520Free&Platform=%2521%7CNintendo%25202DS%7CNintendo%25203DS%7CNintendo%2520DS&Features=%2521%7CExpansion%2520Pack%7CManual%2520Included%7CSteelBook%2520Edition%7CUltimate%2520Edition&_fcid=66&_sop=15&_blrs=recall_filtering&_rss=1",
 		"https://www.ebay.co.uk/sch/i.html?_udhi=33.00&_geositeid=3&_sacat=139973&_nkw=majora+-64+-amiibo&_dcat=139973&Region%2520Code=%2521%7CPAL&_fcid=66&_sop=15&_rss=1",
-		"https://www.ebay.co.uk/sch/Video-Games/139973/i.html?_ftrt=901&_sop=15&_dmd=1&_udhi=39&_mPrRngCbx=1&_ipg=200&_ftrv=1&_from=R40&LH_PrefLoc=2&_dcat=139973&_rss=1&_udlo&_nkw=zelda%20oracle&rt=nc&Platform=Nintendo%2520Game%2520Boy|Nintendo%2520Game%2520Boy%2520Color|!",
+		"https://www.ebay.co.uk/sch/Video-Games/139973/i.html?_ftrt=901&_sop=15&_dmd=1&_udhi=39&_mPrRngCbx=1&_ipg=100&_ftrv=1&_from=R40&LH_PrefLoc=2&_dcat=139973&_rss=1&_udlo&_nkw=zelda%20oracle&rt=nc&Platform=Nintendo%2520Game%2520Boy|Nintendo%2520Game%2520Boy%2520Color|!",
 		"https://www.ebay.co.uk/sch/Mobile-Smart-Phones/9355/i.html?_from=R40&_sop=15&_mPrRngCbx=1&_udlo=30&_udhi=300&LH_ItemCondition=1000|1500|2000|2500&Storage%2520Capacity=1%2520TB|64%2520GB|32%2520GB&_blrs=recall_filtering&_nkw=(xperia%20xz1%20compact%2C%20redmi%203s%2C%20xperia%20xa1)&LH_PrefLoc=2&_dcat=9355&rt=nc&Colour=Black|Blue|Multicoloured|White|!&_rss=1"
 	  ],
 	  "item>\\s*<title>(?:<!\\[CDATA\\[)?(?<name>.+?)(?:\\]\\]>)?</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)\\sGMT[\\s\\S]+?wPrice.+?>(?<desc>\\d+?)<",

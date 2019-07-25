@@ -14,8 +14,12 @@ function readFile(file, type, callback) {
 }
 
 function loadFeeds(name, dataArray, container, lastcheck){
-	var newElem = document.createElement.bind(document);
 	var [url, regexStr, prefix] = dataArray;
+
+	var newElem = document.createElement.bind(document);
+	var details = newElem("details");
+	var summary = details.appendChild(newElem("summary"));
+	summary.appendChild(document.createTextNode(name));
 
 	var processFeed = function(file) {
 		var fileText = file.responseText;
@@ -26,34 +30,43 @@ function loadFeeds(name, dataArray, container, lastcheck){
 		var data = fileText.matchAll(regex);
 		var ul = newElem("ul");
 
-		var match, newEntry = false;
-		while (!(match = data.next()).done) {
+		var parser = new DOMParser();
+		var match, i = 0, newEntry = false;
+		while (!(match = data.next()).done && i++ < 30) {
 			matchGroup = match.value.groups;
 
 			var li = ul.appendChild(newElem("li"));
 			var a = li.appendChild(newElem("a"));
-			a.href = prefix + matchGroup["link"];
-			a.appendChild(document.createTextNode(matchGroup["name"]));
-			if (!lastcheck || new Date(matchGroup["date"]) > lastcheck){
+			a.href = parser.parseFromString(prefix + matchGroup["link"], "text/html").documentElement.textContent;
+			a.appendChild(document.createTextNode(parser.parseFromString(matchGroup["name"], "text/html").documentElement.textContent));
+			var textarea = a.appendChild(newElem("textarea"));
+
+			textarea.appendChild(document.createTextNode(matchGroup["date"]));
+			if (matchGroup["desc"]){
+				textarea.appendChild(document.createTextNode("\n"+matchGroup["desc"]));
+			}
+			a.className = "tooltipBox";
+			textarea.className = "tooltipText";
+			textarea.setAttribute("readonly", "true");
+
+			if (!lastcheck || new Date(matchGroup["date"]) >= lastcheck){
 				a.style.color = "cyan";
 				newEntry = true;
 			}
 		}
 		if (newEntry){
-			feeds_summary = document.getElementById("feeds-summary");
-			feeds_summary.appendChild(document.createTextNode(name+", "));
-			container.appendChild(ul);
+			details.appendChild(ul);
+			container.appendChild(details);
 		}
 	}
 
-	if(Array.isArray(url)){
-		for(i=0; i<url.length; i++){
+	if (Array.isArray(url)){
+		for (i=0; i<url.length; i++){
 			readFile(url[i], "text/xml", processFeed);
 		}
 	} else {
 		readFile(url, "text/xml", processFeed);
 	}
-
 }
 
 function fetchFavicon(url, crop=false){
@@ -129,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		});
 	}
 
+	var feedsContainer = document.getElementById("feeds");
 	// Load links and feeds from file
 	var jsonFileHandler = function(responseText){
 		var data = JSON.parse(responseText);
@@ -138,25 +152,17 @@ document.addEventListener('DOMContentLoaded', function(e) {
 			appendListToSidebar(data.slowLinks[i], false);
 		}
 
-		var container = document.getElementById("feeds");
 		var feedsToggleHandler = function(){
 			this.removeEventListener("toggle", feedsToggleHandler);
 			var lastcheck = new Date(localStorage.getItem("lastcheck"));
 
 			webfeeds = data.feeds.Web;
 			for(obj in webfeeds){
-
-				var details = document.createElement("details");
-				var header = details.appendChild(document.createElement("summary"));
-				header.appendChild(document.createTextNode(obj));
-
-				url = webfeeds[obj][0];
-				loadFeeds(obj, webfeeds[obj], details, lastcheck);
-				container.appendChild(details);
+				loadFeeds(obj, webfeeds[obj], feedsContainer, lastcheck);
 			}
 			localStorage.setItem("lastcheck", new Date);
 		}
-		container.addEventListener("toggle", feedsToggleHandler);
+		feedsContainer.addEventListener("toggle", feedsToggleHandler);
 	}
 
 	var staticLinks = sessionStorage.getItem("staticLinks");
@@ -215,8 +221,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		sidebar.style.display = e.clientY>5 && (ww-mx<20 || (visible && ww-sw-mx<0)) ? "flex" : "none";
 	});
 
-	notepad.addEventListener("keypress", e => {
+	notepad.addEventListener("keydown", e => {
 		if (e.ctrlKey && e.key == "s"){
+			e.preventDefault();
 			saveNotes();
 		}
 	});
