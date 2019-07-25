@@ -146,15 +146,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 			webfeeds = data.feeds.Web;
 			for(obj in webfeeds){
 
-				var div = document.createElement("details");
-				var header = div.appendChild(document.createElement("summary"));
+				var details = document.createElement("details");
+				var header = details.appendChild(document.createElement("summary"));
 				header.appendChild(document.createTextNode(obj));
 
 				url = webfeeds[obj][0];
-				loadFeeds(obj, webfeeds[obj], div, lastcheck);
-				if (div.children[1].children){
-					container.appendChild(div);
-				}
+				loadFeeds(obj, webfeeds[obj], details, lastcheck);
+				container.appendChild(details);
 			}
 			localStorage.setItem("lastcheck", new Date);
 		}
@@ -171,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 			file => {
 				responseText = file.responseText;
 				sessionStorage.setItem("staticLinks", responseText);
-				jsonFileHander(responseText);
+				jsonFileHandler(responseText);
 			}
 	);}
 
