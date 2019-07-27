@@ -1,4 +1,4 @@
-const REGEX_DEFAULT = "item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<";
+const REGEX_DEFAULT = "item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)";
 var quickLinksURLs = [];
 
 function readFile(file, type, callback) {
@@ -15,6 +15,7 @@ function readFile(file, type, callback) {
 
 function loadFeeds(name, dataArray, container, lastcheck){
 	var [url, regexStr, prefix] = dataArray;
+	var prefix = prefix ? prefix : "";
 
 	var newElem = document.createElement.bind(document);
 	var details = newElem("details");
@@ -22,38 +23,39 @@ function loadFeeds(name, dataArray, container, lastcheck){
 	summary.appendChild(document.createTextNode(name));
 
 	var processFeed = function(file) {
-		var fileText = file.responseText;
 		if (!regexStr){
 			regexStr = REGEX_DEFAULT;
 		}
-		var regex = new RegExp(regexStr, "g");
-		var data = fileText.matchAll(regex);
-		var ul = newElem("ul");
+		var data = file.responseText.matchAll(new RegExp(regexStr, "g"));
 
 		var parser = new DOMParser();
-		var match, i = 0, newEntry = false;
+		var ul = newElem("ul");
+		var a, li, textarea, newEntry, match, matchGroup, doc, i = 0, newEntry = false;
 		while (!(match = data.next()).done && i++ < 30) {
 			matchGroup = match.value.groups;
 
-			var li = ul.appendChild(newElem("li"));
-			var a = li.appendChild(newElem("a"));
-			a.href = parser.parseFromString(prefix + matchGroup["link"], "text/html").documentElement.textContent;
-			a.appendChild(document.createTextNode(parser.parseFromString(matchGroup["name"], "text/html").documentElement.textContent));
-			var textarea = a.appendChild(newElem("textarea"));
-
-			textarea.appendChild(document.createTextNode(matchGroup["date"]));
-			if (matchGroup["desc"]){
-				textarea.appendChild(document.createTextNode("\n"+matchGroup["desc"]));
-			}
+			li = ul.appendChild(newElem("li"));
+			a = li.appendChild(newElem("a"));
 			a.className = "tooltipBox";
+			a.href = parser.parseFromString(prefix+matchGroup.link, "text/html").documentElement.textContent;
+			a.appendChild(document.createTextNode(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent));
+
+			textarea = a.appendChild(newElem("textarea"));
 			textarea.className = "tooltipText";
 			textarea.setAttribute("readonly", "true");
+			textarea.appendChild(document.createTextNode(matchGroup.date));
+			if (matchGroup["desc"]){
+				doc = parser.parseFromString(matchGroup.desc, "text/html");
+				doc = parser.parseFromString(doc.documentElement.textContent.trim(), "text/html");
+				textarea.appendChild(document.createTextNode("\n\n"+doc.documentElement.textContent));
+			}
 
-			if (!lastcheck || new Date(matchGroup["date"]) >= lastcheck){
+			if (!lastcheck || new Date(matchGroup.date) >= lastcheck){
 				a.style.color = "cyan";
 				newEntry = true;
 			}
 		}
+
 		if (newEntry){
 			details.appendChild(ul);
 			container.appendChild(details);
