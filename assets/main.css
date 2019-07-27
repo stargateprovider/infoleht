@@ -1,6 +1,6 @@
 :root {
-	--main_bg_color: #eee;
-	--main_elem_color: black;
+	--main_bg_color: #ddd;
+	--main_elem_color: #121212;
 	--main_border_color: teal;
 }
 html{
