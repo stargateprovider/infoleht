@@ -1,5 +1,5 @@
 :root {
-	--main_bg_color: white;
+	--main_bg_color: #eee;
 	--main_elem_color: black;
 	--main_border_color: teal;
 }
@@ -50,6 +50,9 @@ h1{
 	font-family: 'Arial';
 	font-size: 22px;
 	color: grey;
+}
+span{
+	color:red;
 }
 
 .img_link{
