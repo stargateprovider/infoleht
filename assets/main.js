@@ -23,7 +23,7 @@ function setCookie(cname, cvalue, exdays) {
 function changeTheme(color) {
 	let root = document.documentElement;
 	root.style.setProperty('--main_bg_color', color);
-	root.style.setProperty('--main_elem_color', color=="#ddd" ? "#121212" : "#ddd");
+	root.style.setProperty('--main_elem_color', color=="white" ? "black" : "white");
 	setCookie("bg-color", color, 365);
 }
 function includeHTML() {
