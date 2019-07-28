@@ -38,89 +38,15 @@
 ]],
 "feeds": {
 "Web": {
-	"Telegram": ["http://www.telegram.ee/feed"],
-	"BMSS": ["https://www.bodymindsoulspirit.com/feed/"],
-	"In5D": ["http://in5d.com/feed/"],
-	"Spirit Science": ["https://spiritsciencecentral.com/feed/"],
-	"SS YT": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCEcMWs6GudljuLw0-Umf97A",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"RC": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Tipharot": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCcwEgS97oUAcBR1rgKj4E0A",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"David Icke": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCAhmDfQ1LfOYECmNNWgXJ7Q",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Boris": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCS5tt2z_DFvG7-39J3aE-bQ",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Cinemassacre": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UC0M0rxSz3IF0CsSour1iWmw",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Protomario": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCENzLyqzPdI0KiOXFA4cJgA",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"G/F Theory": [
-	  [
-		"https://www.youtube.com/feeds/videos.xml?channel_id=UC3sznuotAs2ohg_U__Jzj_Q",
-		"https://www.youtube.com/feeds/videos.xml?channel_id=UCo_IB5145EVNcf8hw1Kku7w"
-	  ],
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Doctor Who": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UCcOkA2Xmk1valTOWSyKyp4g",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"WEIML": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UC6DxGtNQXPiQrNBptgCkXQQ",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Kestrel Adventures": [
-	  "https://www.youtube.com/feeds/videos.xml?channel_id=UC8d0ko6xPscthIqzKNb_Wig",
-	  "entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)[\\-+]\\d\\d:"
-	],
-	"Outside": [
-	  "https://www.reddit.com/r/outside/.rss",
-	  "<link href=\"(?<link>.+?)\" />.*?<updated>(?<date>.+?)[\\-+]\\d\\d:.+?<title>(?<name>.+?)</"
-	],
-	"New Phones": [
-	  "https://www.phonearena.com/feed/new-phones",
-	  "item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)[\\s\\S]+?pubDate>(?<date>.+?)<"
-	],
-	"SCP: SL": ["https://steamcommunity.com/games/700330/rss/"],
-	"FTL Forum": [
-	  [
-		"http://subsetgames.com/forum/search.php?keywords=*&terms=any&fid[]=10&sf=all&sr=posts&sk=t&sd=d&st=90&ch=-1&start=0&submit=Search",
-		"http://subsetgames.com/forum/search.php?keywords=*&terms=any&fid[]=10&sf=all&sr=posts&sk=t&sd=d&st=90&ch=-1&start=10&submit=Search"
-	  ],
-	  "result-date\">(?<date>.+?)</[\\s\\S]*?<h3>.*?<a href=\"\\.(?<link>.+?)\">(?<name>.+?)</[\\s\\S]+?content\">(?<desc>.+?)</div>\\s",
-	  "http://subsetgames.com/forum"
-	],
 	"Ebay": [
 	  [
 		"https://www.ebay.com/sch/i.html?_udhi=40.00&_geositeid=0&_sacat=139973&_nkw=%28persons+hours+doors%2C999%2Cvirtue%29+%283ds%2Cds%29+-tetsudou+-ginga+-amiibo&_dcat=139973&Region%2520Code=%2521%7CNTSC%252DU%252FC%2520%2528US%252FCanada%2529%7CPAL%7CRegion%2520Free&Game%2520Name=%2521%7C999%253A%2520Nine%2520Hours%252C%2520Nine%2520Persons%252C%2520Nine%2520Doors%7CAdventure%7CNine%2520Hours%252C%2520Nine%2520Persons%252C%2520Nine%2520Doors%7CZero%2520Escape%253A%2520Virtue%2527s%2520Last%2520Reward&_fcid=66&_sop=15&_rss=1",
 		"https://www.ebay.com/sch/i.html?LH_PrefLoc=5&_udhi=40.00&_geositeid=0&_sacat=139973&_nkw=majora+-64&_dcat=139973&Region%2520Code=%2521%7CPAL%7CRegion%2520Free&Platform=%2521%7CNintendo%25202DS%7CNintendo%25203DS%7CNintendo%2520DS&Features=%2521%7CExpansion%2520Pack%7CManual%2520Included%7CSteelBook%2520Edition%7CUltimate%2520Edition&_fcid=66&_sop=15&_blrs=recall_filtering&_rss=1",
 		"https://www.ebay.co.uk/sch/i.html?_udhi=33.00&_geositeid=3&_sacat=139973&_nkw=majora+-64+-amiibo&_dcat=139973&Region%2520Code=%2521%7CPAL&_fcid=66&_sop=15&_rss=1",
 		"https://www.ebay.co.uk/sch/Video-Games/139973/i.html?_ftrt=901&_sop=15&_dmd=1&_udhi=39&_mPrRngCbx=1&_ipg=100&_ftrv=1&_from=R40&LH_PrefLoc=2&_dcat=139973&_rss=1&_udlo&_nkw=zelda%20oracle&rt=nc&Platform=Nintendo%2520Game%2520Boy|Nintendo%2520Game%2520Boy%2520Color|!",
-		"https://www.ebay.co.uk/sch/Mobile-Smart-Phones/9355/i.html?_from=R40&_sop=15&_mPrRngCbx=1&_udlo=30&_udhi=300&LH_ItemCondition=1000|1500|2000|2500&Storage%2520Capacity=1%2520TB|64%2520GB|32%2520GB&_blrs=recall_filtering&_nkw=(xperia%20xz1%20compact%2C%20redmi%203s%2C%20xperia%20xa1)&LH_PrefLoc=2&_dcat=9355&rt=nc&Colour=Black|Blue|Multicoloured|White|!&_rss=1"
+		"https://www.ebay.co.uk/sch/Mobile-Smart-Phones/9355/i.html?_ftrt=901&_udlo=6&_sop=15&_dmd=1&_mPrRngCbx=1&_ipg=200&_ftrv=1&_from=R40&_nkw=%28xz1compact%2C%20zx1compact%2C%20redmi%203s%29%20-flip%20-cover&LH_PrefLoc=2&_dcat=9355&rt=nc&Colour=Black%7CBlue%7CSilver%7CWhite%7C%21&_rss=1"
 	  ],
 	  "item>\\s*<title>(?:<!\\[CDATA\\[)?(?<name>.+?)(?:\\]\\]>)?</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)[\\s\\S]+?pubDate>(?<date>.+?)\\sGMT"
-	],
-	"kino": [
-	  "https://kinoaeg.ee/movies/",
-	  "meta\\\">[\\s\\S]+?<h3>(?<name>.+?)\\s*<[\\s\\S]+?time\\\">\\s*(?<date>\\S+)\\s+[\\s\\S]+?-content\\\">\\s*(?<desc>[\\s\\S]+?)<div[\\s\\S]+?targ-href=\\\"(?<link>.+?)\\\""
 	]
-},
-"Email": {
-}}
+}
 }
