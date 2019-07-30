@@ -48,5 +48,5 @@
 	  ],
 	  "item>\\s*<title>(?:<!\\[CDATA\\[)?(?<name>.+?)(?:\\]\\]>)?</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)[\\s\\S]+?pubDate>(?<date>.+?)\\sGMT"
 	]
-}
+}}
 }

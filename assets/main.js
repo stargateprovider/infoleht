@@ -24,6 +24,7 @@ function changeTheme(color) {
 	let root = document.documentElement;
 	root.style.setProperty('--main_bg_color', color);
 	root.style.setProperty('--main_elem_color', color=="white" ? "black" : "white");
+	root.style.setProperty('--main_link_color', color=="white" ? "#0000EE" : "cyan");
 	setCookie("bg-color", color, 365);
 }
 function includeHTML() {
@@ -85,21 +86,18 @@ window.onload = function() {
 			var icon = new Image(); //document.createElement("img");
 			icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
 			icon.alt = "yt_icon";
-			icon.style = "margin-right:5px;max-width:16px;"
 			links[i].insertAdjacentElement("beforebegin", icon);
 		}
 		else if (links[i].href.indexOf("telegram") > -1) {
 			var icon = new Image();
 			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico"
 			icon.alt = "telegram_icon";
-			icon.style = "margin-right:5px;max-width:16px;"
 			links[i].insertAdjacentElement("beforebegin", icon);
 		}
 		else if (links[i].href.indexOf("in5d") > -1) {
 			var icon = new Image();
 			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
 			icon.alt = "in5d_icon";
-			icon.style = "margin-right:5px;max-width:16px;"
 			links[i].insertAdjacentElement("beforebegin", icon);
 		}
 	}

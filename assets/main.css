@@ -1,6 +1,7 @@
 :root {
 	--main_bg_color: white;
 	--main_elem_color: black;
+	--main_link_color: #0000EE;
 	--main_border_color: teal;
 }
 html{
@@ -51,6 +52,14 @@ h1{
 	font-size: 22px;
 	color: grey;
 }
+a{
+	color: var(--main_link_color);
+}
+li > img{
+	max-width:16px;
+	margin-right:5px;
+	vertical-align:text-top;
+}
 span{
 	color:red;
 }
@@ -85,4 +94,11 @@ span{
 
 header > * > a:visited {
 	color: var(--main_elem_color);
+}
+
+@media screen and (max-width:760px){
+	li {
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
 }
