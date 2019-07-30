@@ -39,7 +39,6 @@ footer{
 
 	color: grey;
 	text-align: right;
-	font-size: 1.8vh;
 }
 div, details{
 	margin-left: 5px;
@@ -98,8 +97,15 @@ header > * > a:visited {
 }
 
 @media screen and (max-width:760px){
+	ul{
+		padding-left: 25px;
+		margin-left: 0;
+	}
 	li {
 		margin-top: 4px;
 		margin-bottom: 4px;
+	}
+	footer{
+		font-size: 3.6vw;
 	}
 }
