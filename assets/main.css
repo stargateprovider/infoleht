@@ -39,8 +39,9 @@ footer{
 
 	color: grey;
 	text-align: right;
+	font-size: 2.1vh;
 }
-div{
+div, details{
 	margin-left: 5px;
 }
 img{
