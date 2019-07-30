@@ -96,7 +96,7 @@ header > * > a:visited {
 	color: var(--main_elem_color);
 }
 
-@media screen and (max-width:760px){
+@media screen and (max-width:780px){
 	ul{
 		padding-left: 28px;
 		margin-left: 0;
@@ -105,6 +105,8 @@ header > * > a:visited {
 		margin-top: 4px;
 		margin-bottom: 4px;
 	}
+}
+@media screen and (max-width:500px){
 	footer{
 		font-size: 3.2vw;
 	}
