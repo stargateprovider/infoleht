@@ -17,11 +17,12 @@
 	</ul>
 </div>
 <br /><div id="quotesDiv"></div>
+<br /><details><summary>Frank Herberti <i>Düüni</i> sarjast</summary><div id="duneQuotesDiv"></div></details>
 <!-- End page specific tags -->
 <footer></footer>
 </body>
 <script>
-	function readTextFile(file){
+	function readQuotesFile(file, containerID){
 		fetch(file)
 			.then(response => response.arrayBuffer())
 			.then((data) => {
@@ -47,12 +48,12 @@
 					}
 
 					authorDiv.style = "color:#777;font-size:11px;margin-bottom:25px;"
-					document.getElementById("quotesDiv").appendChild(txtDiv);
-					document.getElementById("quotesDiv").appendChild(authorDiv);
+					document.getElementById(containerID).appendChild(txtDiv);
+					document.getElementById(containerID).appendChild(authorDiv);
 				}
-				//console.log(array);
 			})
 	}
-	readTextFile("assets/tsitaadid.txt");
+	readQuotesFile("assets/tsitaadid.txt", "quotesDiv");
+	readQuotesFile("assets/tsitaadid_düün.txt", "duneQuotesDiv");
 </script>
 </html>
