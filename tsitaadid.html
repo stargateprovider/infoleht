@@ -54,6 +54,10 @@
 			})
 	}
 	readQuotesFile("assets/tsitaadid.txt", "quotesDiv");
-	readQuotesFile("assets/tsitaadid_düün.txt", "duneQuotesDiv");
+	var toggleHandler = function(){
+		this.removeEventListener("toggle", toggleHandler);
+		readQuotesFile("assets/tsitaadid_düün.txt", "duneQuotesDiv");
+	};
+	document.getElementsByTagName("details")[0].addEventListener("toggle", toggleHandler);
 </script>
 </html>
