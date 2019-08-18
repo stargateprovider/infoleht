@@ -32,10 +32,12 @@
 				} else {
 					text = String.fromCharCode.apply(null, new Uint8Array(data));
 				}
+				console.log("text", text);
 
 				var regexp = new RegExp('[\\"“][\\S\\s]+?[\\"”]\\s+[\\-~–―] ?.+', "gm");
 				var regexp2 = new RegExp('^([\\"“][\\S\\s]+?[\\"”])\\s+[\\-~–―] ?(.+)');
 				var array = text.match(regexp);
+				console.log("array", array);
 
 				for (var i in array){
 					array[i] = array[i].split(regexp2);
@@ -56,6 +58,7 @@
 	readQuotesFile("assets/tsitaadid.txt", "quotesDiv");
 	var toggleHandler = function(){
 		this.removeEventListener("toggle", toggleHandler);
+		console.log("start read");
 		readQuotesFile("assets/tsitaadid_düün.txt", "duneQuotesDiv");
 	};
 	document.getElementsByTagName("details")[0].addEventListener("toggle", toggleHandler);
