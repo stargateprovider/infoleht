@@ -4,10 +4,10 @@
 	<meta name="viewport" content="width=device-width" />
 	<!--meta http-equiv="Access-Control-Allow-Origin" content="*" /-->
 	<link rel="stylesheet" type="text/css" href="main.css" />
+	<!--script src="rss-feed.js" defer></script-->
 	<script src="main.js" defer></script>
 	<title>New tab</title>
-</head>
-<body>
+</head><body>
 <!--
 To convert from bookmarks.html (using Sublime Text replace function):
 	search:   [\S\s]+?<A.+?HREF="(.+?)".+?>(.+?)</A>[\S\s]
@@ -16,7 +16,7 @@ To convert from bookmarks.html (using Sublime Text replace function):
 
 <form id="searchForm" enctype="text/plain">
 	<input type="search" name="q" autofocus/><br />
-	Otsi >> <input type="image" src="https://www.google.com/favicon.ico" formaction="https://www.google.ee/search"/
+	&#x1F50D; >> <input type="image" src="https://www.google.com/favicon.ico" formaction="https://www.google.ee/search"/
 	><input type="image" src="https://duckduckgo.com/favicon.ico" formaction="https://duckduckgo.com/"/
 	><input type="image" src="https://www.google.com/images/branding/product/ico/maps_32dp.ico" formaction="https://www.google.ee/maps"/
 	><input type="image" src="https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png" formaction="https://www.youtube.com/results"/
@@ -38,9 +38,22 @@ To convert from bookmarks.html (using Sublime Text replace function):
 	<!--input type="image" src="/favicon.ico" formaction="" name=""/-->
 </form>
 
-<section class="flex-container" id="quick-links"></section>
-<nav id="sidebar" class="flex-container"></nav>
+<section class="flex-container" id="quick-links"><div class="flex-container-y" id="quick-links-edit"
+	><button id="quick-links-add">+</button
+	><button id="quick-links-move">&#x3c;</button
+	><button id="quick-links-del">–</button
+></div></section>
+<form id="form-popup">
+	<input placeholder="URL"/>
+	<input placeholder="Ikooni URL"/>
+	<input type="submit" value="Lisa"/>
+</form>
 
+<aside id="sidebar" class="flex-container"></aside>
 <textarea id="notepad"></textarea>
-<br /><button id="btn-save-notes">Salvesta</button>
+<br /><button id="btn-save-notes">&#x1F5AB;</button>
+
+<details id="feeds"><summary>RSS feeds</summary>
+<div class="flex-container"></div>
+</details>
 </body></html>

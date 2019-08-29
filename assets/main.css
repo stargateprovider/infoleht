@@ -63,6 +63,9 @@ li > img{
 span{
 	color:red;
 }
+.separator{
+	color:teal;
+}
 
 .img_link{
 	max-width: 130px;

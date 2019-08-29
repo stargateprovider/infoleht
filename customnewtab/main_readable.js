@@ -1,5 +1,6 @@
 const REGEX_DEFAULT = "item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)";
 var quickLinksURLs = [];
+var bookmarkColor = "#333"
 
 function readFile(file, type, callback) {
 	var rawFile = new XMLHttpRequest();
@@ -123,8 +124,61 @@ function appendListToSidebar(links, cropLinks=true) {
 	container.appendChild(ol);
 }
 
-document.addEventListener('DOMContentLoaded', function(e) {
-	console.time("main-load");
+function addBookmark(event){
+	event.preventDefault();
+
+	let inputs = event.target.childNodes;
+	let a1 = document.createElement("a");
+	let a2 = document.createElement("a");
+	a1.href = inputs[0].value; // Converts
+	a2.href = inputs[1].value; // Converts
+	let obj = {"url":a1.href, "favIconUrl":a2.href};
+	appendToQuickLinks([obj]);
+
+	let localQuickLinks = JSON.parse(localStorage.getItem("quick-links"));
+	localQuickLinks.push(obj);
+	localStorage.setItem("quick-links", JSON.stringify(localQuickLinks));
+}
+function moveBookmark(event){
+	event.preventDefault();
+	let container = document.getElementById("quick-links");
+	let bookmarks = container.childNodes;
+	for (var i=0; bookmarks[++i] != event.currentTarget;);
+
+	if (i>1){
+		let removed = container.removeChild(bookmarks[i]);
+		container.insertBefore(removed, bookmarks[i-1]);
+
+		let localQuickLinks = JSON.parse(localStorage.getItem("quick-links"));
+		[localQuickLinks[i-1], localQuickLinks[i-2]] = [localQuickLinks[i-2], localQuickLinks[i-1]]
+		localStorage.setItem("quick-links", JSON.stringify(localQuickLinks));
+	}
+}
+function delBookmark(event){
+	event.preventDefault();
+	let container = document.getElementById("quick-links");
+	let bookmarks = container.childNodes;
+	for (var i=0; bookmarks[++i] != event.currentTarget;);
+	container.removeChild(bookmarks[i]);
+
+	let localQuickLinks = JSON.parse(localStorage.getItem("quick-links"));
+	localQuickLinks.splice(i-1, 1);
+	localStorage.setItem("quick-links", JSON.stringify(localQuickLinks));
+}
+function setBookmarkClickEvent(bg, func=undefined){
+	let bookmarks = document.getElementsByClassName("bookmark");
+	bookmarkColor = bookmarkColor != bg ? bg : "#333";
+	for (let i=0; i<bookmarks.length; i++){
+		bookmarks[i].removeEventListener("click", delBookmark);
+		bookmarks[i].removeEventListener("click", moveBookmark);
+		bookmarks[i].style.background = bookmarkColor;
+		if (func && bookmarkColor == bg){
+			bookmarks[i].addEventListener("click", func);
+		}
+	}
+}
+
+document.addEventListener("DOMContentLoaded", function(e) {
 	var getElemById = document.getElementById.bind(document);
 
 	// Determine if we are local
@@ -148,7 +202,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
 	// Load links and feeds from file
 	var jsonFileHandler = function(responseText){
 		var data = JSON.parse(responseText);
-		appendToQuickLinks(data.quickLinks);
+		let localQuickLinks = JSON.parse(localStorage.getItem("quick-links"));
+		if (localQuickLinks){
+			appendToQuickLinks(localQuickLinks);
+		} else {
+			localStorage.setItem("quick-links", JSON.stringify(data.quickLinks));
+			appendToQuickLinks(data.quickLinks);
+		}
+
 		linksArrayLen = data.slowLinks.length;
 		for (let i=0; i < linksArrayLen; i++){
 			appendListToSidebar(data.slowLinks[i], false);
@@ -181,15 +242,36 @@ document.addEventListener('DOMContentLoaded', function(e) {
 			}
 	);}
 
+	// Bind bookmark editing buttons
+	getElemById("quick-links-add").addEventListener("click", e=>{
+		setBookmarkClickEvent("#333");
+		let form = getElemById("form-popup");
+		let top = getElemById("quick-links-add").getBoundingClientRect().top;
+		form.style.top = top.toString() + "px";
+		form.style.display = form.style.display != "block" ? "block" : "none";
+	});
+	getElemById("form-popup").addEventListener("submit", addBookmark);
+	getElemById("quick-links-move").addEventListener("click", e=>{
+		setBookmarkClickEvent("darkblue", moveBookmark)});
+	getElemById("quick-links-del").addEventListener("click", e=>{
+		setBookmarkClickEvent("darkred", delBookmark)});
+
 	// Load notes if it exists in localStorage
-	var notepad = getElemById("notepad")
+	var notepad = getElemById("notepad");
 	notepad.value = localStorage.getItem("notes");
+	// Eventlisteners for saving notes
 	var saveNotes = function(){
 		localStorage.setItem("notes", notepad.value);
 	};
 	getElemById("btn-save-notes").addEventListener("click", saveNotes);
+	notepad.addEventListener("keydown", e=>{
+		if (e.ctrlKey && e.key == "s"){
+			e.preventDefault();
+			saveNotes();
+		}
+	});
 
-	// Add eventlisteners
+	// Eventlistener for searchForm
 	var searchForm = getElemById("searchForm");
 	var searchbar = searchForm.children[0];
 	searchForm.addEventListener("click", function(e){
@@ -211,6 +293,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		searchForm.target = e.ctrlKey ? "_blank" : "_self";
 	});
 
+	// Eventlistener for sidebar
 	var sidebar = getElemById("sidebar");
 	document.addEventListener("mousemove", e => {
 		if (e.altKey){
@@ -223,15 +306,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		sidebar.style.display = e.clientY>5 && (ww-mx<20 || (visible && ww-sw-mx<0)) ? "flex" : "none";
 	});
 
-	notepad.addEventListener("keydown", e => {
-		if (e.ctrlKey && e.key == "s"){
-			e.preventDefault();
-			saveNotes();
-		}
-	});
-
 	// Focus on searchbar
 	searchbar.focus();
-	console.timeEnd("main-load");
 });
 //window.onload = function(){}

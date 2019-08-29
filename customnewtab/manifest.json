@@ -2,7 +2,7 @@
   "name": "Custom New Tab",
   "description": "Custom new tab",
   "version": "1.0",
-  "chrome_url_overrides": { "newtab": "index.html" },
+  "chrome_url_overrides": {"newtab": "index.html"},
   "manifest_version": 2,
   "permissions": [
     "tabs",
