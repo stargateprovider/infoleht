@@ -3,7 +3,7 @@
 	{"url": "https://www.youtube.com/", "favIconUrl": "https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png"},
 	{"url": "https://mail.google.com/mail/#inbox", "favIconUrl": "https://ssl.gstatic.com/ui/v1/icons/mail/images/favicon5.ico"},
 	{"url": "https://outlook.live.com/owa/", "favIconUrl": "https://outlook.live.com/favicon.ico"},
-	{"url": "https://onedrive.live.com/", "favIconUrl": "https://onedrive.live.com/favicon.ico"},
+	{"url": "https://onedrive.live.com/", "favIconUrl": "onedrive.ico"},
 	{"url": "https://www.github.com", "favIconUrl": "https://www.github.com/favicon.ico"},
 	{"url": "https://stargateprovider.github.io/infoleht", "favIconUrl": "https://stargateprovider.github.io/infoleht/images/icon32.png"},
 	{"url": "https://www.swedbank.ee/private", "favIconUrl": "https://www.swedbank.ee/favicon.ico"}
