@@ -10,6 +10,7 @@
     "topSites",
     "history",
     "bookmarks",
+    "storage",
     "http://*/*",
     "https://*/*"
   ],
