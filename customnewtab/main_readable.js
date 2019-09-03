@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 		chrome.storage.sync.get(["notes"], result=>{
 			notepad.value = result.notes;
 		});
-	}catch{}
+	}catch(e){}
 	// Eventlisteners for saving notes
 	var saveNotes = function(){
 		localStorage.setItem("notes", notepad.value);
