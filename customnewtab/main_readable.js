@@ -258,12 +258,12 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
 	// Load notes if it exists in localStorage
 	var notepad = getElemById("notepad");
-	chrome.storage.sync.get(["notes"], result=>{
-		notepad.value = result.notes;
-		if (!result.notes){
-			notepad.value = localStorage.getItem("notes");
-		}
-	});
+	notepad.value = localStorage.getItem("notes");
+	try{
+		chrome.storage.sync.get(["notes"], result=>{
+			notepad.value = result.notes;
+		});
+	}catch{}
 	// Eventlisteners for saving notes
 	var saveNotes = function(){
 		localStorage.setItem("notes", notepad.value);
