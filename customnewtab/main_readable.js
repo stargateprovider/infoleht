@@ -127,11 +127,11 @@ function appendListToSidebar(links, cropLinks=true) {
 function addBookmark(event){
 	event.preventDefault();
 
-	let inputs = event.target.childNodes;
+	let inputs = event.target;
 	let a1 = document.createElement("a");
 	let a2 = document.createElement("a");
-	a1.href = inputs[0].value; // Converts
-	a2.href = inputs[1].value; // Converts
+	a1.href = inputs.querySelector("[placeholder=\"URL\"]").value; // Converts
+	a2.href = inputs.querySelector("[placeholder=\"Ikooni URL\"]").value; // Converts
 	let obj = {"url":a1.href, "favIconUrl":a2.href};
 	appendToQuickLinks([obj]);
 
