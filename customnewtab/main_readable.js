@@ -87,10 +87,7 @@ function appendToQuickLinks(links) {
 		div.className = "bookmark";
 		var a = div.appendChild(document.createElement("a"));
 		a.href = links[i].url;
-
-		var icon = new Image();
-		icon.src = links[i].favIconUrl;
-		a.insertAdjacentElement("afterbegin", icon);
+		a.style.background = 'url(' +links[i].favIconUrl+ ') no-repeat center center'
 
 		quicklinks.appendChild(div);
 		quickLinksURLs.push(links[i].url);
@@ -127,12 +124,14 @@ function appendListToSidebar(links, cropLinks=true) {
 function addBookmark(event){
 	event.preventDefault();
 
-	let inputs = event.target.childNodes;
+	let inputs = event.target.children;
 	let a1 = document.createElement("a");
 	let a2 = document.createElement("a");
 	a1.href = inputs[0].value; // Converts
 	a2.href = inputs[1].value; // Converts
+
 	let obj = {"url":a1.href, "favIconUrl":a2.href};
+	console.log(obj)
 	appendToQuickLinks([obj]);
 
 	let localQuickLinks = JSON.parse(localStorage.getItem("quick-links"));
@@ -264,16 +263,52 @@ document.addEventListener("DOMContentLoaded", function(e) {
 			notepad.value = localStorage.getItem("notes");
 		}
 	});
-	// Eventlisteners for saving notes
+	notepad.hidden = !localStorage.getItem("showNotes");
+	getElemById("btn-toggle-notes").innerHTML = notepad.hidden?"&#x25B3;":"&#25BD";
+
+
+	// Eventlisteners for notes
 	var saveNotes = function(){
 		localStorage.setItem("notes", notepad.value);
 		chrome.storage.sync.set({"notes": notepad.value}, function(){});
 	};
+	var resizeNotes = function(){
+		if (notepad.style.width != "100%"){
+			notepad.style.width = "100%";
+			notepad.style.height = "95%";
+			notepad.scrollIntoView(true);
+		}else{
+			notepad.style.width = "57%";
+			notepad.style.height = "50%";
+		}
+	};
+	var toggleNotes = function(){
+		if (notepad.hidden){
+			notepad.hidden = false;
+			localStorage.setItem("showNotes", 1);
+			getElemById("btn-toggle-notes").innerHTML = "&#x25B3;";
+
+		}else{
+			notepad.hidden = true;
+			localStorage.setItem("showNotes", "");
+			getElemById("btn-toggle-notes").innerHTML = "&#x25BD;";
+		}
+	};
 	getElemById("btn-save-notes").addEventListener("click", saveNotes);
+	getElemById("btn-resize-notes").addEventListener("click", resizeNotes);
+	getElemById("btn-toggle-notes").addEventListener("click", toggleNotes);
 	notepad.addEventListener("keydown", e=>{
 		if (e.ctrlKey && e.key == "s"){
 			e.preventDefault();
 			saveNotes();
+		}
+		else if (e.altKey && e.key == "t"){
+			e.preventDefault();
+			resizeNotes();
+		}
+		else if (e.altKey && e.keyCode == 40){
+			e.preventDefault();
+			hideNotes();
 		}
 	});
 
