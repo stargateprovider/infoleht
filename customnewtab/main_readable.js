@@ -124,14 +124,14 @@ function appendListToSidebar(links, cropLinks=true) {
 function addBookmark(event){
 	event.preventDefault();
 
-	let inputs = event.target.children;
+	let inputs = event.target;
 	let a1 = document.createElement("a");
 	let a2 = document.createElement("a");
-	a1.href = inputs[0].value; // Converts
-	a2.href = inputs[1].value; // Converts
+	// Converts:
+	a1.href = inputs.querySelector("[placeholder=\"URL\"]").value;
+	a2.href = inputs.querySelector("[placeholder=\"Ikooni URL\"]").value;
 
 	let obj = {"url":a1.href, "favIconUrl":a2.href};
-	console.log(obj)
 	appendToQuickLinks([obj]);
 
 	let localQuickLinks = JSON.parse(localStorage.getItem("quick-links"));
@@ -257,14 +257,16 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
 	// Load notes if it exists in localStorage
 	var notepad = getElemById("notepad");
-	chrome.storage.sync.get(["notes"], result=>{
-		notepad.value = result.notes;
-		if (!result.notes){
-			notepad.value = localStorage.getItem("notes");
-		}
-	});
+	notepad.value = localStorage.getItem("notes");
+	try{
+		chrome.storage.sync.get(["notes"], result=>{
+			if (result.notes){
+				notepad.value = result.notes;
+			}
+		});
+	}catch(e){}
 	notepad.hidden = !localStorage.getItem("showNotes");
-	getElemById("btn-toggle-notes").innerHTML = notepad.hidden?"&#x25B3;":"&#25BD";
+	getElemById("btn-toggle-notes").innerHTML = notepad.hidden?"&#x25BD;":"&#x25B3";
 
 
 	// Eventlisteners for notes
