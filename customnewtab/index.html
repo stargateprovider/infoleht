@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html><html manifest="cache.manifest">
 <head>
 	<meta charset="utf-8" />
@@ -59,4 +60,67 @@ To convert from bookmarks.html (using Sublime Text replace function):
 <details id="feeds"><summary>RSS feeds</summary>
 <div class="flex-container"></div>
 </details>
+=======
+<!DOCTYPE html><html manifest="cache.manifest">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<!--meta http-equiv="Access-Control-Allow-Origin" content="*" /-->
+	<link rel="stylesheet" type="text/css" href="main.css" />
+	<!--script src="rss-feed.js" defer></script-->
+	<script src="main.js" defer></script>
+	<title>New tab</title>
+</head><body>
+<!--
+To convert from bookmarks.html (using Sublime Text replace function):
+	search:   [\S\s]+?<A.+?HREF="(.+?)".+?>(.+?)</A>[\S\s]
+	replace:  <li><a href="$1">$2</a></li>\n
+-->
+
+<form id="searchForm" enctype="text/plain">
+	<input type="search" name="q" autofocus/><br />
+	&#x1F50D; >> <input type="image" src="https://www.google.com/favicon.ico" formaction="https://www.google.ee/search"/
+	><input type="image" src="https://duckduckgo.com/favicon.ico" formaction="https://duckduckgo.com/"/
+	><input type="image" src="https://www.google.com/images/branding/product/ico/maps_32dp.ico" formaction="https://www.google.ee/maps"/
+	><input type="image" src="https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png" formaction="https://www.youtube.com/results"/
+	><input type="image" src="https://www.hinnavaatlus.ee/favicon.ico" formaction="https://www.hinnavaatlus.ee/search/" name="query"/
+	><input type="image" src="https://www.ebay.co.uk/favicon.ico" formaction="https://www.ebay.co.uk/sch/i.html" name="_sop=15&_nkw"/
+	><input type="image" src="https://www.wolframalpha.com/static/favicon.ico" formaction="https://www.wolframalpha.com/input/" name="i"/>
+	| <input type="image" src="animato.ico" formaction="http://enet.animato.ee/index.php" name="otsida"/
+	><input type="image" src="https://www.eki.ee/favicon.ico" formaction="https://www.eki.ee/dict/ies/index.cgi"/>IES
+	<input type="image" src="https://www.eki.ee/favicon.ico" formaction="https://www.eki.ee/dict/sys/index.cgi"/>SYS
+	<input type="image" src="https://www.eki.ee/favicon.ico" formaction="https://www.eki.ee/dict/ekss/index.cgi"/>EKS
+	<input type="image" src="https://www.dictionary.com/hp-assets/dcom_favicon-1bff2f1b49c077ed504e55c3649f2a4b.png" formaction="https://www.dictionary.com/" name="override_query"/
+	><input type="image" src="https://www.thesaurus.com/hp-assets/tcom_favicon-54545f5303fccb956af394ac10f1655d.png" formaction="https://www.thesaurus.com/" name="override_query"/>
+	| <input type="image" src="https://www.processlibrary.com/favicon.ico" formaction="https://www.processlibrary.com/en/search"/
+	><input type="image" src="https://docs.python.org/favicon.ico" formaction="https://docs.python.org/3/search.html"/
+	><input type="image" src="https://docs.djangoproject.com/favicon.ico" formaction="https://docs.djangoproject.com/en/2.2/search/"/
+	><input type="image" src="https://en.cppreference.com/favicon.ico" formaction="https://en.cppreference.com/w/" name="search"/>
+	| <input type="image" src="https://www.goodreads.com/favicon.ico" formaction="https://www.goodreads.com/search"/
+	><input type="image" src="https://www.ester.ee/screens/favicon.ico" formaction="https://www.ester.ee/search~S1*est/X" name="SEARCH"/
+	><input type="image" src="baas.gif" formaction="http://baas.ulme.ee/" name="checks[]=autorChk&checks[]=teosChk&otsing"/>
+	<!--input type="image" src="/favicon.ico" formaction="" name=""/-->
+</form>
+
+<section class="flex-container" id="quick-links"><div class="flex-container-y" id="quick-links-edit"
+	><button id="quick-links-add">+</button
+	><button id="quick-links-move">&#x3c;</button
+	><button id="quick-links-del">–</button
+></div></section>
+<form id="form-popup">
+	<input placeholder="URL"/>
+	<input placeholder="Ikooni URL"/>
+	<input type="submit" value="Lisa"/>
+</form>
+
+<aside id="sidebar" class="flex-container"></aside>
+<textarea id="notepad"></textarea>
+<br /><button id="btn-save-notes">&#x1F5AB;</button>
+<button id="btn-resize-notes">&#x26F6;</button>
+<button id="btn-toggle-notes">&#x25B3;</button>
+
+<details id="feeds"><summary>RSS feeds</summary>
+<div class="flex-container"></div>
+</details>
+>>>>>>> 1a1b7c313e6c40fcabb94b870885af48ef9cdd3a
 </body></html>
