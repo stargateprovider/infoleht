@@ -9,7 +9,7 @@ var oneDriveFilePickerSuccess = function(files) {
 		multiSelect: true,
 		openInNewWindow: false,
 		advanced: {
-			/*redirectUri: "https://stargateprovider.github.io/infoleht/customnewtab/odt.html",*/
+			redirectUri: "https://stargateprovider.github.io/infoleht/customnewtab/odt.html",
 			queryParameters: "select=id,name,size,file,folder,@microsoft.graph.downloadUrl",
 			filter: "folder,.json",
 			accessToken: files.accessToken
@@ -31,7 +31,7 @@ function launchOneDrivePicker(){
 		multiSelect: true,
 		openInNewWindow: false,
 		advanced: {
-			/*redirectUri: "https://stargateprovider.github.io/infoleht/customnewtab/odt.html",*/
+			redirectUri: "https://stargateprovider.github.io/infoleht/customnewtab/odt.html",
 			queryParameters: "select=id,name,size,file,folder,@microsoft.graph.downloadUrl",
 			filter: "folder,.json"
 		},
