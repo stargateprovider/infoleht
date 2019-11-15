@@ -4,8 +4,8 @@ const odOptions = {
   multiSelect: true,
   advanced: {},
   success: function(files) { console.log(files) },
-  cancel: function() { /* cancel handler */ },
-  error: function(error) { /* error handler */ }
+  cancel: function() { console.log("CANCEL") },
+  error: function(error) { console.log(error) }
 }
 function launchOneDrivePicker(){
   OneDrive.open(odOptions);
