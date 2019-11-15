@@ -36,14 +36,14 @@ function launchOneDrivePicker(){
 		advanced: {
 			redirectUri: "https://stargateprovider.github.io/infoleht/customnewtab/odt.html",
 			queryParameters: "select=id,name,size,file,folder,@microsoft.graph.downloadUrl",
-			filter: "folder,.json"
+			filter: "folder,.json",
 		    navigation: {
 		      entryLocation: {
 		        sharePoint: {
 		          itemPath: "22D9B7E9A1387531!21975"
 		        },
 		        disable: true
-		      },
+		      }
 		},
 		success: 'oneDriveFilePickerSuccess',
 		cancel: 'oneDriveFilePickerCancel',
