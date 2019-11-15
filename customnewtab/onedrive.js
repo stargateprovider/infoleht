@@ -44,6 +44,7 @@ function launchOneDrivePicker(){
 		        },
 		        disable: true
 		      }
+		    }
 		},
 		success: 'oneDriveFilePickerSuccess',
 		cancel: 'oneDriveFilePickerCancel',
