@@ -1,6 +1,9 @@
 var oneDriveFilePickerError = function() {
 	console.log('OneDrive Launch Failed!');
 }
+var oneDriveFilePickerSuccess2 = function(files) {
+	console.log(files);
+}
 var oneDriveFilePickerSuccess = function(files) {
 	console.log(files);
 	var odOptions = {
@@ -14,7 +17,7 @@ var oneDriveFilePickerSuccess = function(files) {
 			filter: "folder,.json",
 			accessToken: files.accessToken
 		},
-		success: 'oneDriveFilePickerSuccess',
+		success: 'oneDriveFilePickerSuccess2',
 		cancel: 'oneDriveFilePickerCancel',
 		error: 'oneDriveFilePickerError'
 	}
