@@ -94,8 +94,8 @@ window.onload = function() {
 		}
 		else if (links[i].href.indexOf(".bitchute.") > -1) {
 			icon = new Image();
-			icon.src = "https://www.bitchute.com/static/v112/images/favicon-32x32.png";
-			icon.alt = "bitchute_icon";
+			icon.src = "https://www.bitchute.com/static/v116/images/favicon-32x32.png";
+			icon.alt = "";
 		}
 		else if (links[i].href.indexOf("telegram") > -1) {
 			icon = new Image();
