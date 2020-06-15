@@ -60,12 +60,6 @@ li > img{
 	margin-right:5px;
 	vertical-align:text-top;
 }
-span{
-	color:red;
-}
-.separator{
-	color:teal;
-}
 
 .img_link{
 	max-width: 130px;
@@ -98,8 +92,15 @@ span{
 header > * > a:visited {
 	color: var(--main_elem_color);
 }
+header > div > span{
+	color: var(--main_border_color);
+}
 
-.separator{
+.redspan{
+	color: red;
+}
+
+.hseparator{
 	display: flex;
 	align-items: center;
 	text-align: center;
@@ -107,7 +108,7 @@ header > * > a:visited {
 	margin: 8px 0 8px 0;
 	color: var(--main_elem_color);
 }
-.separator::before, .separator::after{
+.hseparator::before, .hseparator::after{
 	content: '';
 	height: 2px;
 	flex: 1;
@@ -115,6 +116,7 @@ header > * > a:visited {
 	border-right: 0;
 	border-left: 0;
 }
+
 
 @media screen and (max-width:780px){
 	ul{
