@@ -99,6 +99,23 @@ header > * > a:visited {
 	color: var(--main_elem_color);
 }
 
+.separator{
+	display: flex;
+	align-items: center;
+	text-align: center;
+	width: 415px;
+	margin: 8px 0 8px 0;
+	color: var(--main_elem_color);
+}
+.separator::before, .separator::after{
+	content: '';
+	height: 2px;
+	flex: 1;
+	border: 1px solid var(--main_elem_color);
+	border-right: 0;
+	border-left: 0;
+}
+
 @media screen and (max-width:780px){
 	ul{
 		padding-left: 28px;

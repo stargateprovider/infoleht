@@ -27,6 +27,14 @@ function changeTheme(color) {
 	root.style.setProperty('--main_link_color', color=="white" ? "#0000EE" : "cyan");
 	setCookie("bg-color", color, 365);
 }
+function toggleTheme() {
+	let root = document.documentElement;
+	let color = root.style.getPropertyValue('--main_bg_color');
+	root.style.setProperty('--main_bg_color', color!="black" ? "black" : "white");
+	root.style.setProperty('--main_elem_color', color=="black" ? "black" : "white");
+	root.style.setProperty('--main_link_color', color=="black" ? "#0000EE" : "cyan");
+	setCookie("bg-color", color, 365);
+}
 function includeHTML() {
 	var z, i, elmnt, file, xhttp;
 	/* Loop through a collection of all HTML elements: */
