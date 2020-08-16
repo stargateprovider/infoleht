@@ -1,3 +1,8 @@
+var colors = {
+	default: {bg: "white", elem: "black", link: "#0000EE", border: "teal"},
+	alt: 	 {bg: "black", elem: "white", link: "cyan"}
+};
+
 function getCookie(cname) {
 	var name = cname + "=";
 	var decodedCookie = decodeURIComponent(document.cookie);
@@ -23,16 +28,16 @@ function setCookie(cname, cvalue, exdays) {
 function changeTheme(color) {
 	let root = document.documentElement;
 	root.style.setProperty('--main_bg_color', color);
-	root.style.setProperty('--main_elem_color', color=="white" ? "black" : "white");
-	root.style.setProperty('--main_link_color', color=="white" ? "#0000EE" : "cyan");
+	root.style.setProperty('--main_elem_color', color==colors.default.bg ? colors.default.elem : colors.alt.elem);
+	root.style.setProperty('--main_link_color', color==colors.default.bg ? colors.default.link : colors.alt.link);
 	setCookie("bg-color", color, 365);
 }
 function toggleTheme() {
 	let root = document.documentElement;
 	let color = root.style.getPropertyValue('--main_bg_color');
-	root.style.setProperty('--main_bg_color', color!="black" ? "black" : "white");
-	root.style.setProperty('--main_elem_color', color=="black" ? "black" : "white");
-	root.style.setProperty('--main_link_color', color=="black" ? "#0000EE" : "cyan");
+	root.style.setProperty('--main_bg_color', color!=colors.alt.bg ? colors.alt.bg : colors.default.bg);
+	root.style.setProperty('--main_elem_color', color==colors.alt.bg ? colors.default.elem : colors.alt.elem);
+	root.style.setProperty('--main_link_color', color==colors.alt.bg ? colors.default.link : colors.alt.link);
 	setCookie("bg-color", color, 365);
 }
 function includeHTML() {
