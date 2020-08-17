@@ -112,29 +112,28 @@ function searchHTML() {
 
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				let importBody = this.responseXML.getElementsByTagName("body")[0];
-				console.log(importBody)
+				let importElements = this.responseXML.all;
 
-				for (var i = 0; i < this.all.length; i++) {
-					let elem = this.all[i]
+				for (var i = 0; i < importElements.length; i++) {
+					let elem = importElements[i]
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 
 					if (index > -1 || inHref) {
-						resultsList.innerHTML += "<li><b><a href='" + this.filename + ".html'>"+this.title+": </a></b>";
+						resultsList.innerHTML += "<li><b><a href='" + this.responseXML.filename + ".html'>"
+						+ this.responseXML.title + ": </a></b>";
 
 						if (!inHref) {
 							let start = Math.max(0, index-35);
-							let end = Math.min(index+query.length+35, elem.textContent.length);
+							let end = Math.min(index+query.length+50, elem.textContent.length);
 							resultsList.innerHTML += "... " + elem.textContent.slice(start, end) + " ...</li>";
 						} else {
 							resultsList.innerHTML += elem.href.slice(0, Math.min(35, elem.href.length))
-								+ "(" + elem.textContent.slice(0, 25) + "...)</li>";
+								+ " (" + elem.textContent.slice(0, 35) + "...)</li>";
 						}
 					}
 				}
-
-			} else {console.error("Could not load"+this.filename+".");}
+			} else {console.error("Could not load"+this.responseXML.filename+".");}
 		}
 		xhttp.open("GET", site+".html", true);
 		xhttp.send();
