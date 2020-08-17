@@ -99,6 +99,7 @@ function searchHTML() {
 	var query = document.getElementById("searchbar").value.toLowerCase();
 	var resultsBox = document.getElementById("searchResults");
 	resultsBox.style.display = "block";
+
 	var resultsList = resultsBox.lastChild;
 	resultsList.innerHTML = "";
 	if (query.length < 3) {
@@ -106,7 +107,7 @@ function searchHTML() {
 		return;
 	}
 
-	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
+	const sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
 
 	for (i = 0; i < sites.length; i++) {
 		let xhttp = new XMLHttpRequest();
@@ -118,6 +119,7 @@ function searchHTML() {
 			if (this.readyState == 4 && this.status == 200) {
 
 				// Valib ainult kogu kuvatava teksti igalt lehelt
+				console.log(this)
 				var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
 				while(elem = walk.nextNode()) {
 
@@ -142,6 +144,8 @@ function searchHTML() {
 								+ " (" + elem.textContent.slice(0, 45) + "...)";
 						}
 						listItem.appendChild(document.createTextNode(" " + text));
+						console.log(text)
+						console.log(resultsList);
 						resultsList.appendChild(listItem);
 					}
 				}
