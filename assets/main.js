@@ -90,31 +90,31 @@ function includeTemplate() {
 }
 
 function searchHTML() {
-	query = document.getElementById("searchbar").value;
-	thisBody = document.getElementsByTagName("body")[0];
+	var query = document.getElementById("searchbar").value;
+	var thisBody = document.getElementsByTagName("body")[0];
 	if (query.length < 3) {
 		thisBody.innerHTML = "Liiga lühike.";
 		return;
 	}
 
-	sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
+	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
 
 	for (i = 0; i < sites.length; i++) {
-		file = sites[i];
+		let file = sites[i];
 
-		xhttp = new XMLHttpRequest();
+		let xhttp = new XMLHttpRequest();
 		xhttp.responseType = 'document';
 		xhttp.overrideMimeType('text/html');
 
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				importBody = this.responseXML.getElementsByTagName("body")[0];
-				importText = importBody.innerHTML;
-				index = importText.indexOf(query);
+				let importBody = this.responseXML.getElementsByTagName("body")[0];
+				let importText = importBody.innerHTML;
+				let index = importText.indexOf(query);
 
 				if (index > -1) {
 					thisBody.innerHTML += "<h4>"+file+": </h4>"
-					thisBody.innerHTML += importText.slice(index, index+query.length);
+					thisBody.innerHTML += importText.slice(index, index+query.length+15);
 					thisBody.innerHTML += "<br>"
 				}
 
