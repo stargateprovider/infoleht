@@ -88,8 +88,45 @@ function includeTemplate() {
 	xhttp.send();
 	return;
 }
+
+function searchHTML() {
+	query = document.getElementById("searchbar").value;
+	thisBody = document.getElementsByTagName("body")[0];
+	if (query.length < 3) {
+		thisBody.innerHTML = "Liiga lühike.";
+		return;
+	}
+
+	sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
+
+	for (i = 0; i < sites.length; i++) {
+		file = sites[i];
+
+		xhttp = new XMLHttpRequest();
+		xhttp.responseType = 'document';
+		xhttp.overrideMimeType('text/html');
+
+		xhttp.onload = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				importBody = this.responseXML.getElementsByTagName("body")[0];
+				importText = importBody.innerHTML;
+				index = importText.indexOf(query);
+
+				if (index > -1) {
+					thisBody.innerHTML += "<h4>"+file+": </h4>"
+					thisBody.innerHTML += importText.slice(index, index+query.length);
+					thisBody.innerHTML += "<br>"
+				}
+
+			} else {console.error("Could not load"+file+".");}
+		}
+		xhttp.open("GET", file+".html", true);
+		xhttp.send();
+	}
+}
+
 window.onload = function() {
-	// Add youtube, telegram, in5D icons next to their links
+	// Add some website icons next to their links
 	var icon, links = document.querySelectorAll("li > a");
 	for (var i=0; i<links.length; i++) {
 		if (links[i].href.match(/[/.]youtu[.b][be][e.]/)) {
@@ -99,7 +136,7 @@ window.onload = function() {
 		}
 		else if (links[i].href.indexOf(".bitchute.") > -1) {
 			icon = new Image();
-			icon.src = "https://www.bitchute.com/static/v116/images/favicon-32x32.png";
+			icon.src = "https://www.bitchute.com/static/v120/images/favicon-32x32.png";
 			icon.alt = "";
 		}
 		else if (links[i].href.indexOf("telegram") > -1) {
