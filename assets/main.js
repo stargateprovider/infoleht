@@ -116,7 +116,7 @@ function searchHTML() {
 					let elem = importElements[i];
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
-					let listItem = document.createElement("li");
+					var listItem = document.createElement("li");
 
 					if (index > -1 || inHref) {
 						let a = listItem.appendChild(document.createElement("a"));
