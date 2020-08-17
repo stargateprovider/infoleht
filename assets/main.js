@@ -96,7 +96,7 @@ function includeTemplate() {
 }
 
 function searchHTML() {
-	var query = document.getElementById("searchbar").value;
+	var query = document.getElementById("searchbar").value.toLowerCase();
 	var resultsBox = document.getElementById("searchResults");
 	resultsBox.style.display = "block";
 	var resultsList = resultsBox.lastChild;
@@ -122,11 +122,12 @@ function searchHTML() {
 					if (!["a","li","span","cite","p","div", "h1","h2","h3","h4","h5","h6"].includes(elem.localName)) {
 						continue;
 					}
-					let index = elem.textContent.indexOf(query);
+					let index = elem.textContent.toLowerCase().indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
-					console.log(elem, elem.textContent);
+
 
 					if (index > -1 || inHref) {
+						console.log(elem, elem.textContent);
 						let listItem = document.createElement("li");
 						let a = document.createElement("a");
 						a.href = this.filename;
