@@ -123,8 +123,9 @@ function searchHTML() {
 						let a = listItem.appendChild(document.createElement("a"));
 						a.href = this.filename;
 						a.style.fontWeight = "bold";
-						a.textContent = this.responseXML.title + ": ";
+						a.appendChild(document.createTextNode(this.responseXML.title + ": "));
 						console.log(listItem);
+						console.log(a);
 
 						if (!inHref) {
 							let start = Math.max(0, index-35);
