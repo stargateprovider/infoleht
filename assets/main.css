@@ -33,7 +33,7 @@ header{
 nav{
 	display: inline;
 }
-nav > * > a:visited {
+nav a:visited {
 	color: var(--main_elem_color);
 }
 nav ul{
@@ -67,6 +67,7 @@ footer{
 	color: grey;
 	text-align: right;
 }
+
 body > div, body > details{
 	margin-left: 5px;
 }
@@ -117,11 +118,10 @@ li ul{
 }
 
 .btn{
-	margin: 0;
-	padding: 0;
-	font-size: 12px;
-	border: border:1px solid black;
 	display: inline-block;
+	padding-bottom: 0;
+	padding-top: 0;
+	border: 1px solid black;
 }
 .btn:hover{
 	background-color: #ccc;

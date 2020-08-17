@@ -122,29 +122,26 @@ function searchHTML() {
 				while(elem = walk.nextNode()) {
 
 					let index = elem.textContent.toLowerCase().indexOf(query);
-					console.log(elem)
-					console.log(elem.parentNode);
 					let inHref = index == -1 && (elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1);
 
 					if (index > -1 || inHref) {
-						//console.log(elem.parent);
 						let listItem = document.createElement("li");
 						let a = document.createElement("a");
 						a.href = this.filename;
-						a.textContent = this.responseXML.title + ": ";
+						a.textContent = this.responseXML.title + ":";
 						a.style.fontWeight = "bold";
 						listItem.appendChild(a);
 
 						let text;
 						if (!inHref) {
-							let start = Math.max(0, index-75);
-							let end = Math.min(index+query.length+35, elem.textContent.length);
+							let start = Math.max(0, index-65);
+							let end = Math.min(index+query.length+45, elem.textContent.length);
 							text = "... " + elem.textContent.slice(start, end) + " ...";
 						} else {
 							text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
-								+ " (" + elem.textContent.slice(0, 35) + "...)";
+								+ " (" + elem.textContent.slice(0, 45) + "...)";
 						}
-						listItem.appendChild(document.createTextNode(text));
+						listItem.appendChild(document.createTextNode(" " + text));
 						resultsList.appendChild(listItem);
 					}
 				}
