@@ -122,10 +122,12 @@ function searchHTML() {
 				while(elem = walk.nextNode()) {
 
 					let index = elem.textContent.toLowerCase().indexOf(query);
+					console.log(elem)
+					console.log(elem.parent);
 					let inHref = index == -1 && (elem.parent.localName == "a" && elem.parent.href.indexOf(query) > -1);
 
 					if (index > -1 || inHref) {
-						console.log(elem.parent);
+						//console.log(elem.parent);
 						let listItem = document.createElement("li");
 						let a = document.createElement("a");
 						a.href = this.filename;
