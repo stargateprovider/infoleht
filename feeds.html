@@ -5,13 +5,77 @@
 	<title>RSS-vood</title>
 	<script src="assets/main.js"></script>
 	<script>includeTemplate();</script>
+	<script>
+const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g");
+
+function readFile(file, type, callback) {
+	const rawFile = new XMLHttpRequest();
+	rawFile.overrideMimeType(type);
+	rawFile.open("GET", file, true);
+	rawFile.onload = function() {
+		if (rawFile.readyState === 4 && rawFile.status == "200") {
+			callback(rawFile);
+		}
+	}
+	rawFile.send(null);
+}
+
+function loadFeeds(sources, container) {
+	const parser = new DOMParser();
+	var dataArray = [];
+	for (var i = 0; i < sources.length; i++) {
+		readFile(sources[i], "text/xml", file => dataArray.push(...Array.from(file.responseText.matchAll(REGEX))));
+	}
+	dataArray.sort((a,b) => {new Date(a.value.groups.date) > new Date(b.value.groups.date)});
+
+	var ul = document.createElement("ul");
+	var a, li, textarea, matchGroup, doc;
+
+	for (var i = 0; i < dataArray.length && i < 30; i++) {
+		matchGroup = dataArray[i].value.groups;
+
+		li = ul.appendChild(document.createElement("li"));
+		a = li.appendChild(document.createElement("a"));
+		a.className = "tooltipBox";
+		a.href = parser.parseFromString(prefix+matchGroup.link, "text/html").documentElement.textContent;
+		a.appendChild(document.createTextNode(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent));
+
+		textarea = a.appendChild(document.createElement("textarea"));
+		textarea.className = "tooltipText";
+		textarea.setAttribute("readonly", "true");
+		textarea.appendChild(document.createTextNode(matchGroup.date));
+		if (matchGroup["desc"]){
+			doc = parser.parseFromString(matchGroup.desc, "text/html");
+			doc = parser.parseFromString(doc.documentElement.textContent.trim(), "text/html");
+			textarea.appendChild(document.createTextNode("\n\n"+doc.documentElement.textContent));
+		}
+	}
+	container.appendChild(ul);
+}
+
+window.onload = function() {
+	sources = [
+	"http://www.telegram.ee/feed",
+	"http://in5d.com/feed/",
+	"https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ",
+	"https://www.youtube.com/feeds/videos.xml?channel_id=UCAhmDfQ1LfOYECmNNWgXJ7Q",
+	"https://www.youtube.com/feeds/videos.xml?channel_id=UCcYzLCs3zrQIBVHYA1sK2sw",
+	"https://www.bitchute.com/feeds/rss/channel/davidicke/"
+	];
+	let main = document.getElementsByTagName("main")[0];
+	main.textContent = "Telegram, In5D, Ryan Cropper, Sadhguru, David Icke";
+	loadFeeds(sources, main);
+
+	// Load theme based on cookies
+	if (getCookie("bg-color") != ""){
+		changeTheme(getCookie("bg-color"));
+	}
+
+	// Add last modified date to footer
+	var x = document.lastModified;
+	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
+}
+	</script>
 </head>
-
-<body>
-<header></header>
-
-
-
-<footer></footer>
-</body>
+<body><header></header><main></main><footer></footer></body>
 </html>
