@@ -25,7 +25,13 @@ function loadFeeds(sources, container) {
     },
     //redirect: 'follow', // manual, *follow, error
     //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  }).then(file => dataArray.push(...Array.from(file.text.matchAll(REGEX))));
+  }).then(file => {
+  	console.log(file)
+  	dataArray.push(...Array.from(file.text.matchAll(REGEX)));
+
+
+
+  });
 	}
 	dataArray.sort((a,b) => {new Date(a.value.groups.date) > new Date(b.value.groups.date)});
 
@@ -56,8 +62,8 @@ function loadFeeds(sources, container) {
 
 window.onload = function() {
 	sources = [
-	"http://www.telegram.ee/feed",
-	"http://in5d.com/feed/",
+	"https://www.telegram.ee/feed",
+	"https://in5d.com/feed/",
 	"https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ",
 	"https://www.youtube.com/feeds/videos.xml?channel_id=UCAhmDfQ1LfOYECmNNWgXJ7Q",
 	"https://www.youtube.com/feeds/videos.xml?channel_id=UCcYzLCs3zrQIBVHYA1sK2sw",
