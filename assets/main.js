@@ -103,34 +103,37 @@ function searchHTML() {
 	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
 
 	for (i = 0; i < sites.length; i++) {
-		let file = sites[i];
+		var site = sites[i];
 
 		let xhttp = new XMLHttpRequest();
+		xhttp.file = sites[i].valueOf();
 		xhttp.responseType = 'document';
 		xhttp.overrideMimeType('text/html');
 
 		xhttp.onload = function() {
+			var filename = site.valueOf();
 			if (this.readyState == 4 && this.status == 200) {
 				let siteTitle = this.responseXML.getElementsByTagName("title")[0].value;
 				let importBody = this.responseXML.getElementsByTagName("body")[0];
 				let importText = importBody.innerHTML;
 				let index = importText.indexOf(query);
+				console.log(this)
 
 				if (index > -1) {
-					resultsList.innerHTML += "<li><h4><a href='" + file + ".html'>"+siteTitle+": </a></h4>"
+					resultsList.innerHTML += "<li><h4><a href='" + filename + ".html'>"+siteTitle+": </a></h4>"
 						+ importText.slice(index, index+query.length+15)
 						+ " s...</li>";
 				}
 
-			} else {console.error("Could not load"+file+".");}
+			} else {console.error("Could not load"+filename+".");}
 		}
-		xhttp.open("GET", file+".html", true);
+		xhttp.open("GET", site+".html", true);
 		xhttp.send();
 	}
 }
 
 function closeSearch() {
-	document.getElementById("searchbar").style.display = "none";
+	document.getElementById("searchResults").style.display = "none";
 }
 
 window.onload = function() {
