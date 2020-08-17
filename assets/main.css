@@ -136,6 +136,9 @@ li ul{
 .redspan{
 	color: red;
 }
+.highlight{
+	background-color: gold;
+}
 
 #searchResults{
 	display: none;

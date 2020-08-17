@@ -142,7 +142,8 @@ function searchHTML() {
 							text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
 								+ " (" + elem.textContent.slice(0, 45) + "...)";
 						}
-						listItem.appendChild(document.createTextNode(" " + text));
+						text = " " + text.replace(query, "<span class='highlight'>"+query+"</span>")
+						listItem.appendChild(document.createTextNode(text));
 						resultsList.appendChild(listItem);
 					}
 				}
