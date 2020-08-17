@@ -113,9 +113,10 @@ function searchHTML() {
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				let importBody = this.responseXML.getElementsByTagName("body")[0];
+				console.log(importBody)
 
-				for (var i = 0; i < importBody.all.length; i++) {
-					let elem = importBody.all[i]
+				for (var i = 0; i < this.all.length; i++) {
+					let elem = this.all[i]
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 
