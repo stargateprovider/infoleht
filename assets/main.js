@@ -108,6 +108,7 @@ function searchHTML() {
 	}
 
 	const sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
+	var regex = new RegExp("("+query+")", "ig");
 
 	for (i = 0; i < sites.length; i++) {
 		let xhttp = new XMLHttpRequest();
@@ -142,8 +143,7 @@ function searchHTML() {
 							text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
 								+ " (" + elem.textContent.slice(0, 45) + "...)";
 						}
-						text = " " + text.replace(query, "<span class='highlight'>"+query+"</span>")
-						listItem.appendChild(document.createTextNode(text));
+						listItem.innerHTML += " " + text.replace(regex, "<span class='highlight'>$&</span>");
 						resultsList.appendChild(listItem);
 					}
 				}
