@@ -113,6 +113,9 @@ function searchHTML() {
 
 				for (var i = 0; i < this.responseXML.all.length; i++) {
 					let elem = this.responseXML.all[i];
+					if (!["a", "li", "span", "cite", "p", "div", "h1","h2","h3","h4","h5","h6"].includes(elem)) {
+						continue;
+					}
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 					console.log(elem, elem.textContent);
@@ -125,14 +128,16 @@ function searchHTML() {
 						a.style.fontWeight = "bold";
 						listItem.appendChild(a);
 
+						let text;
 						if (!inHref) {
 							let start = Math.max(0, index-75);
 							let end = Math.min(index+query.length+35, elem.textContent.length);
-							listItem.textContent += "... " + elem.textContent.slice(start, end) + " ...";
+							text = "... " + elem.textContent.slice(start, end) + " ...";
 						} else {
-							listItem.textContent += elem.href.slice(0, Math.min(35, elem.href.length))
+							text = elem.href.slice(0, Math.min(35, elem.href.length))
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
+						listItem.appendChild(document.createTextNode(text));
 						resultsList.appendChild(listItem);
 					}
 				}
@@ -179,6 +184,11 @@ window.onload = function() {
 	if (getCookie("bg-color") != ""){
 		changeTheme(getCookie("bg-color"));
 	}
+
+	// Search on Enter press
+	document.getElementById("searchbar").addEventListener("keypress", function (e) {
+		if (e.key === "Enter") searchHTML();
+	});
 
 	// Add last modified date to footer
 	var x = document.lastModified;
