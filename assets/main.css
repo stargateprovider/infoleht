@@ -29,22 +29,24 @@ header{
 	font-family: 'Arial';
 	font-size: 22px;
 }
-header > * > a:visited {
+
+nav > * > a:visited {
 	color: var(--main_elem_color);
 }
-header > div > span{
+nav > span{
 	color: var(--main_border_color);
 }
-header > div > ul{
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
+nav  ul{
+	display: inline;
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
 }
-header > div > ul > li{
+nav ul > li{
 	display: inline;
 }
-header > div > ul > li:before{
-  content: "~";
+nav ul > li:before{
+	content: "|";
 }
 
 main{
