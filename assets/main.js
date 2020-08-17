@@ -115,7 +115,7 @@ function searchHTML() {
 					let elem = this.responseXML.all[i];
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
-					console.log(index);
+					console.log(elem, elem.textContent);
 
 					if (index > -1 || inHref) {
 						let listItem = document.createElement("li");
@@ -123,16 +123,16 @@ function searchHTML() {
 						a.href = this.filename;
 						a.textContent = this.responseXML.title + ": ";
 						a.style.fontWeight = "bold";
+						listItem.appendChild(a);
 
 						if (!inHref) {
-							let start = Math.max(0, index-35);
-							let end = Math.min(index+query.length+50, elem.textContent.length);
+							let start = Math.max(0, index-75);
+							let end = Math.min(index+query.length+35, elem.textContent.length);
 							listItem.textContent += "... " + elem.textContent.slice(start, end) + " ...";
 						} else {
 							listItem.textContent += elem.href.slice(0, Math.min(35, elem.href.length))
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
-						listItem.appendChild(a);
 						resultsList.appendChild(listItem);
 					}
 				}
