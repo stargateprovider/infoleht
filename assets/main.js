@@ -117,9 +117,9 @@ function searchHTML() {
 				let index = importText.indexOf(query);
 
 				if (index > -1) {
-					resultsList.innerHTML += "<h4><a href='" + file + ".html'>"+siteTitle+": </a></h4>"
+					resultsList.innerHTML += "<li><h4><a href='" + file + ".html'>"+siteTitle+": </a></h4>"
 						+ importText.slice(index, index+query.length+15)
-						+ " s...<br>";
+						+ " s...</li>";
 				}
 
 			} else {console.error("Could not load"+file+".");}
