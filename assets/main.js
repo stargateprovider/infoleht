@@ -113,7 +113,7 @@ function searchHTML() {
 				let importElements = this.responseXML.all;
 
 				for (var i = 0; i < importElements.length; i++) {
-					let elem = importElements[i]
+					let elem = importElements[i];
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 
@@ -133,6 +133,7 @@ function searchHTML() {
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
 					}
+					resultsList.appendChild(listItem);
 				}
 			} else {console.error("Could not load"+this.filename+".");}
 		}
