@@ -82,6 +82,12 @@ function includeTemplate() {
 				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 				docElement.innerHTML += importElement.innerHTML;
 			}
+
+			// Search on Enter press
+			document.getElementById("searchbar").addEventListener("keypress", function (e) {
+				if (e.key === "Enter") searchHTML();
+			});
+
 		} else {console.error("Could not load 'template.html'.");}
 	}
 	xhttp.open("GET", "assets/template.html", true);
@@ -113,7 +119,7 @@ function searchHTML() {
 
 				for (var i = 0; i < this.responseXML.all.length; i++) {
 					let elem = this.responseXML.all[i];
-					if (!["a", "li", "span", "cite", "p", "div", "h1","h2","h3","h4","h5","h6"].includes(elem)) {
+					if (!["a","li","span","cite","p","div", "h1","h2","h3","h4","h5","h6"].includes(elem.localName)) {
 						continue;
 					}
 					let index = elem.textContent.indexOf(query);
@@ -184,11 +190,6 @@ window.onload = function() {
 	if (getCookie("bg-color") != ""){
 		changeTheme(getCookie("bg-color"));
 	}
-
-	// Search on Enter press
-	document.getElementById("searchbar").addEventListener("keypress", function (e) {
-		if (e.key === "Enter") searchHTML();
-	});
 
 	// Add last modified date to footer
 	var x = document.lastModified;
