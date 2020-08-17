@@ -100,7 +100,7 @@ function searchHTML() {
 	var resultsBox = document.getElementById("searchResults");
 	resultsBox.style.display = "block";
 
-	var resultsList = resultsBox.lastChild;
+	var resultsList = resultsBox.lastElementChild;
 	resultsList.innerHTML = "";
 	if (query.length < 3) {
 		resultsList.innerHTML += "Liiga lühike.";
@@ -111,7 +111,7 @@ function searchHTML() {
 
 	for (i = 0; i < sites.length; i++) {
 		let xhttp = new XMLHttpRequest();
-		xhttp.filename = sites[i].valueOf() + ".html";
+		xhttp.filename = sites[i] + ".html";
 		xhttp.responseType = 'document';
 		xhttp.overrideMimeType('text/html');
 
@@ -119,12 +119,11 @@ function searchHTML() {
 			if (this.readyState == 4 && this.status == 200) {
 
 				// Valib ainult kogu kuvatava teksti igalt lehelt
-				console.log(this)
 				var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
 				while(elem = walk.nextNode()) {
 
 					let index = elem.textContent.toLowerCase().indexOf(query);
-					let inHref = index == -1 && (elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1);
+					let inHref = index == -1 && elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1;
 
 					if (index > -1 || inHref) {
 						let listItem = document.createElement("li");
@@ -144,13 +143,12 @@ function searchHTML() {
 								+ " (" + elem.textContent.slice(0, 45) + "...)";
 						}
 						listItem.appendChild(document.createTextNode(" " + text));
-						console.log(text)
-						console.log(resultsList);
 						resultsList.appendChild(listItem);
 					}
 				}
 			} else {console.error("Could not load"+this.filename+".");}
 		}
+
 		xhttp.open("GET", xhttp.filename, true);
 		xhttp.send();
 	}
