@@ -10,28 +10,10 @@ const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?
 
 function loadFeeds(sources, container) {
 	const parser = new DOMParser();
+	const proxy = "https://cors-anywhere.herokuapp.com/"
 	var dataArray = [];
 	for (var i = 0; i < sources.length; i++) {
-		//fetch(sources[i]).then(file => dataArray.push(...Array.from(file.text().matchAll(REGEX))));
-
-		fetch(sources[i], {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'text/plain'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    //redirect: 'follow', // manual, *follow, error
-    //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  }).then(file => {
-  	console.log(file)
-  	dataArray.push(...Array.from(file.text().matchAll(REGEX)));
-
-
-
-  });
+		fetch(proxy + sources[i]).then(file => file.text()).then(str=>dataArray.push(...Array.from(str.matchAll(REGEX))));
 	}
 	dataArray.sort((a,b) => {new Date(a.value.groups.date) > new Date(b.value.groups.date)});
 
