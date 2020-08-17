@@ -131,6 +131,7 @@ function searchHTML() {
 								+ "(" + elem.textContent.slice(0, 25) + "...)</li>";
 						}
 					}
+				}
 
 			} else {console.error("Could not load"+this.filename+".");}
 		}
