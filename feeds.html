@@ -12,7 +12,7 @@ function loadFeeds(sources, container) {
 	const parser = new DOMParser();
 	var dataArray = [];
 	for (var i = 0; i < sources.length; i++) {
-		//fetch(sources[i]).then(file => dataArray.push(...Array.from(file.text.matchAll(REGEX))));
+		//fetch(sources[i]).then(file => dataArray.push(...Array.from(file.text().matchAll(REGEX))));
 
 		fetch(sources[i], {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -27,7 +27,7 @@ function loadFeeds(sources, container) {
     //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   }).then(file => {
   	console.log(file)
-  	dataArray.push(...Array.from(file.text.matchAll(REGEX)));
+  	dataArray.push(...Array.from(file.text().matchAll(REGEX)));
 
 
 
@@ -65,7 +65,6 @@ window.onload = function() {
 	"https://www.telegram.ee/feed",
 	"https://in5d.com/feed/",
 	"https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCAhmDfQ1LfOYECmNNWgXJ7Q",
 	"https://www.youtube.com/feeds/videos.xml?channel_id=UCcYzLCs3zrQIBVHYA1sK2sw",
 	"https://www.bitchute.com/feeds/rss/channel/davidicke/"
 	];
