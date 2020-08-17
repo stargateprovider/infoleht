@@ -13,7 +13,7 @@
 
 <body>
 <header>
-	<input type="search" name="search" id="searchbar"><button onclick="searchHTML();">&#x1F50D;</button>
+	<div style="position:absolute;right:1px;top:1px"><input type="search" name="search" id="searchbar"><button onclick="searchHTML();">&#x1F50D;</button></div>
 	<div style="text-align:center;font-size:14px;line-height:30px;">
 	Taust:
 	<!--button id="themeBtn" class="btn" type="button" onclick="toggleTheme()">Lehe taust</button-->
@@ -28,6 +28,7 @@
 	<span>|</span> <a href="lostfound.html" target="_self">Veebist kadunud</a>
 	<span>|</span> <a href="feeds.html" target="_self">RSS-vood</a>
 </div></header>
+<div style="display:none;" id="searchResults"><button style="display:absolute;right:1px;top:1px;font-size:14px;" onclick="closeSearch();">x</button></div>
 <footer></footer>
 </body>
 </html>

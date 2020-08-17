@@ -90,10 +90,12 @@ function includeTemplate() {
 }
 
 function searchHTML() {
+	document.getElementById("searchbar").style.display = "block";
 	var query = document.getElementById("searchbar").value;
-	var thisBody = document.getElementsByTagName("body")[0];
+	var resultsBox = document.getElementById("searchResults");
+	resultsBox.innerHTML = "<h3>Otsingutulemused:</h3><br>"
 	if (query.length < 3) {
-		thisBody.innerHTML = "Liiga lühike.";
+		resultsBox.innerHTML += "Liiga lühike.";
 		return;
 	}
 
@@ -108,14 +110,15 @@ function searchHTML() {
 
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
+				let siteTitle = this.responseXML.getElementsByTagName("title")[0].value;
 				let importBody = this.responseXML.getElementsByTagName("body")[0];
 				let importText = importBody.innerHTML;
 				let index = importText.indexOf(query);
 
 				if (index > -1) {
-					thisBody.innerHTML += "<h4>"+file+": </h4>"
-					thisBody.innerHTML += importText.slice(index, index+query.length+15);
-					thisBody.innerHTML += "<br>"
+					resultsBox.innerHTML += "<h4><a href='" + file + ".html'>"+siteTitle+": </a></h4>"
+						+ importText.slice(index, index+query.length+15)
+						+ " s...<br>";
 				}
 
 			} else {console.error("Could not load"+file+".");}
@@ -123,6 +126,10 @@ function searchHTML() {
 		xhttp.open("GET", file+".html", true);
 		xhttp.send();
 	}
+}
+
+function closeSearch() {
+	document.getElementById("searchbar").style.display = "none";
 }
 
 window.onload = function() {
