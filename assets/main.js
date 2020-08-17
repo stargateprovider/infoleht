@@ -117,12 +117,14 @@ function searchHTML() {
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 					var listItem = document.createElement("li");
+					console.log(index);
 
 					if (index > -1 || inHref) {
 						let a = listItem.appendChild(document.createElement("a"));
 						a.href = this.filename;
 						a.style.fontWeight = "bold";
 						a.textContent = this.responseXML.title + ": ";
+						console.log(listItem);
 
 						if (!inHref) {
 							let start = Math.max(0, index-35);
@@ -132,8 +134,8 @@ function searchHTML() {
 							listItem.textContent += elem.href.slice(0, Math.min(35, elem.href.length))
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
+						resultsList.appendChild(listItem);
 					}
-					resultsList.appendChild(listItem);
 				}
 			} else {console.error("Could not load"+this.filename+".");}
 		}
