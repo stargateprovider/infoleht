@@ -13,7 +13,7 @@ function loadFeeds(sources, container) {
 	const proxy = "https://cors-anywhere.herokuapp.com/"
 	var dataArray = [];
 	for (var i = 0; i < sources.length; i++) {
-		fetch(proxy + sources[i]).then(file => file.text()).then(str=>dataArray.push(...Array.from(str.matchAll(REGEX))));
+		fetch(proxy + sources[i]).then(file => {let a=file.text();console.log(a)}).then(str=>{dataArray.push(...Array.from(str.matchAll(REGEX)));console.log(str)});
 	}
 	dataArray.sort((a,b) => {new Date(a.value.groups.date) > new Date(b.value.groups.date)});
 
