@@ -110,6 +110,12 @@ li ul{
 .btn:hover{
 	background-color: #ccc;
 }
+.closeBtn{
+	float:right;
+	margin-right:25px;
+	font-size:16px;
+	box-shadow: 0 5px 5px 5px var(--main_border_color);
+}
 
 .redspan{
 	color: red;

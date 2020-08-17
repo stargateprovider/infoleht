@@ -90,12 +90,13 @@ function includeTemplate() {
 }
 
 function searchHTML() {
-	document.getElementById("searchbar").style.display = "block";
 	var query = document.getElementById("searchbar").value;
 	var resultsBox = document.getElementById("searchResults");
-	resultsBox.innerHTML = "<h3>Otsingutulemused:</h3><br>"
+	resultsBox.style.display = "block";
+	var resultsList = resultsBox.lastChild;
+	resultsList.innerHTML = "";
 	if (query.length < 3) {
-		resultsBox.innerHTML += "Liiga lühike.";
+		resultsList.innerHTML += "Liiga lühike.";
 		return;
 	}
 
@@ -116,7 +117,7 @@ function searchHTML() {
 				let index = importText.indexOf(query);
 
 				if (index > -1) {
-					resultsBox.innerHTML += "<h4><a href='" + file + ".html'>"+siteTitle+": </a></h4>"
+					resultsList.innerHTML += "<h4><a href='" + file + ".html'>"+siteTitle+": </a></h4>"
 						+ importText.slice(index, index+query.length+15)
 						+ " s...<br>";
 				}
