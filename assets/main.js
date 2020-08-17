@@ -109,19 +109,17 @@ function searchHTML() {
 		xhttp.overrideMimeType('text/html');
 
 		xhttp.onload = function() {
-			console.log("1");
 			if (this.readyState == 4 && this.status == 200) {
 				let importElements = this.responseXML.all;
 
 				for (var i = 0; i < importElements.length; i++) {
-					console.log("2");
 					let elem = importElements[i];
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
+					let listItem = document.createElement("li");
 
 					if (index > -1 || inHref) {
-						listItem = document.createElement("li");
-						a = listItem.appendChild(document.createElement("a"));
+						let a = listItem.appendChild(document.createElement("a"));
 						a.href = this.filename;
 						a.style.fontWeight = "bold";
 						a.textContent = this.responseXML.title + ": ";
@@ -139,7 +137,7 @@ function searchHTML() {
 				}
 			} else {console.error("Could not load"+this.filename+".");}
 		}
-		xhttp.open("GET", sites[i] + ".html", true);
+		xhttp.open("GET", xhttp.filename, true);
 		xhttp.send();
 	}
 }
