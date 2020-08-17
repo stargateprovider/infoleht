@@ -110,24 +110,19 @@ function searchHTML() {
 
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				let importElements = this.responseXML.all;
-				var listItem, a;
 
-				for (var i = 0; i < importElements.length; i++) {
-					let elem = importElements[i];
+				for (var i = 0; i < this.responseXML.all.length; i++) {
+					let elem = this.responseXML.all[i];
 					let index = elem.textContent.indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 					console.log(index);
 
 					if (index > -1 || inHref) {
-						listItem = document.createElement("li");
-						a = listItem.appendChild(document.createElement("a"));
+						let listItem = document.createElement("li");
+						let a = document.createElement("a");
 						a.href = this.filename;
-						a.title = this.responseXML.title + ": ";
+						a.textContent = this.responseXML.title + ": ";
 						a.style.fontWeight = "bold";
-						a.appendChild(document.createTextNode(this.responseXML.title + ": "));
-						console.log(a);
-						console.log(listItem);
 
 						if (!inHref) {
 							let start = Math.max(0, index-35);
@@ -137,6 +132,7 @@ function searchHTML() {
 							listItem.textContent += elem.href.slice(0, Math.min(35, elem.href.length))
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
+						listItem.appendChild(a);
 						resultsList.appendChild(listItem);
 					}
 				}
