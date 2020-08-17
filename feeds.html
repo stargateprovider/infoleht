@@ -15,7 +15,7 @@ function loadFeeds(sources, container) {
 	for (var i = 0; i < sources.length; i++) {
 		fetch(proxy + sources[i])
 		.then(file => file.text())
-		.then(str => {console.log(str);dataArray.push(...Array.from(str.matchAll(REGEX)));});
+		.then(str => dataArray.push(...Array.from(str.matchAll(REGEX))));
 	}
 	dataArray.sort((a,b) => {new Date(a.value.groups.date) > new Date(b.value.groups.date)});
 
@@ -23,15 +23,16 @@ function loadFeeds(sources, container) {
 	var a, li, textarea, matchGroup, doc;
 
 	for (var i = 0; i < dataArray.length && i < 30; i++) {
+		console.log(i)
 		matchGroup = dataArray[i].value.groups;
 
-		li = ul.appendChild(document.createElement("li"));
-		a = li.appendChild(document.createElement("a"));
+		li = document.createElement("li");
+		a = document.createElement("a");
 		a.className = "tooltipBox";
 		a.href = parser.parseFromString(prefix+matchGroup.link, "text/html").documentElement.textContent;
 		a.appendChild(document.createTextNode(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent));
 
-		textarea = a.appendChild(document.createElement("textarea"));
+		textarea = document.createElement("textarea");
 		textarea.className = "tooltipText";
 		textarea.setAttribute("readonly", "true");
 		textarea.appendChild(document.createTextNode(matchGroup.date));
@@ -40,6 +41,10 @@ function loadFeeds(sources, container) {
 			doc = parser.parseFromString(doc.documentElement.textContent.trim(), "text/html");
 			textarea.appendChild(document.createTextNode("\n\n"+doc.documentElement.textContent));
 		}
+
+		a.appendChild(textarea);
+		li.appendChild(a);
+		ul.appendChild(li);
 	}
 	container.appendChild(ul);
 }
