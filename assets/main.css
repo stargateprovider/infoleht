@@ -30,13 +30,13 @@ header{
 	font-size: 22px;
 }
 
+nav{
+	display: inline-block;
+}
 nav > * > a:visited {
 	color: var(--main_elem_color);
 }
-nav > span{
-	color: var(--main_border_color);
-}
-nav  ul{
+nav ul{
 	display: inline;
 	list-style: none;
 	margin-left: 0;
@@ -46,7 +46,9 @@ nav ul > li{
 	display: inline;
 }
 nav ul > li:before{
-	content: "|";
+	content: "| ";
+	color: var(--main_border_color);
+	font-size: 14px;
 }
 
 main{

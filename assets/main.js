@@ -117,24 +117,15 @@ function searchHTML() {
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
 
-				console.log(this)
-				let importBody = this.responseXML.getElementsByTagName("body")[0];
+				// Valib ainult kogu kuvatava teksti igalt lehelt
+				var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
+				while(elem = walk.nextNode()) {
 
-				var walk=document.createTreeWalker(importBody, NodeFilter.SHOW_TEXT, null, false);
-				while(elem=walk.nextNode()) {
-
-				//for (var i = 0; i < this.responseXML.all.length; i++) {
-					//let elem = this.responseXML.all[i];
-
-
-					/*if (!["a","li","span","cite","p","div", "h1","h2","h3","h4","h5","h6"].includes(elem.localName)) {
-						continue;
-					}*/
 					let index = elem.textContent.toLowerCase().indexOf(query);
-					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
+					let inHref = index == -1 && (elem.parent.localName == "a" && elem.parent.href.indexOf(query) > -1);
 
 					if (index > -1 || inHref) {
-						console.log(elem);
+						console.log(elem.parent);
 						let listItem = document.createElement("li");
 						let a = document.createElement("a");
 						a.href = this.filename;
@@ -148,7 +139,7 @@ function searchHTML() {
 							let end = Math.min(index+query.length+35, elem.textContent.length);
 							text = "... " + elem.textContent.slice(start, end) + " ...";
 						} else {
-							text = elem.href.slice(0, Math.min(35, elem.href.length))
+							text = elem.parent.href.slice(0, Math.min(35, elem.parent.href.length))
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
 						listItem.appendChild(document.createTextNode(text));
