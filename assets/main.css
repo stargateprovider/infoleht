@@ -118,10 +118,9 @@ li ul{
 
 .btn{
 	margin: 0;
+	padding: 0;
 	font-size: 12px;
-	padding-bottom: 0px;
-	padding-top: 0px;
-	border: border:1px solid black!important;
+	border: border:1px solid black;
 	display: inline-block;
 }
 .btn:hover{

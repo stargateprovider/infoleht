@@ -123,8 +123,8 @@ function searchHTML() {
 
 					let index = elem.textContent.toLowerCase().indexOf(query);
 					console.log(elem)
-					console.log(elem.parent);
-					let inHref = index == -1 && (elem.parent.localName == "a" && elem.parent.href.indexOf(query) > -1);
+					console.log(elem.parentNode);
+					let inHref = index == -1 && (elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1);
 
 					if (index > -1 || inHref) {
 						//console.log(elem.parent);
@@ -141,7 +141,7 @@ function searchHTML() {
 							let end = Math.min(index+query.length+35, elem.textContent.length);
 							text = "... " + elem.textContent.slice(start, end) + " ...";
 						} else {
-							text = elem.parent.href.slice(0, Math.min(35, elem.parent.href.length))
+							text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
 								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
 						listItem.appendChild(document.createTextNode(text));
