@@ -103,10 +103,8 @@ function searchHTML() {
 	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
 
 	for (i = 0; i < sites.length; i++) {
-		var site = sites[i];
-
 		let xhttp = new XMLHttpRequest();
-		xhttp.filename = sites[i].valueOf();
+		xhttp.filename = sites[i].valueOf() + ".html";
 		xhttp.responseType = 'document';
 		xhttp.overrideMimeType('text/html');
 
@@ -120,22 +118,25 @@ function searchHTML() {
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 
 					if (index > -1 || inHref) {
-						resultsList.innerHTML += "<li><b><a href='" + this.responseXML.filename + ".html'>"
-						+ this.responseXML.title + ": </a></b>";
+						listItem = document.createElement("li");
+						a = listItem.appendChild(document.createElement("a"));
+						a.href = this.filename;
+						a.style.fontWeight = "bold";
+						a.textContent = this.responseXML.title + ": ";
 
 						if (!inHref) {
 							let start = Math.max(0, index-35);
 							let end = Math.min(index+query.length+50, elem.textContent.length);
-							resultsList.innerHTML += "... " + elem.textContent.slice(start, end) + " ...</li>";
+							listItem.textContent += "... " + elem.textContent.slice(start, end) + " ...";
 						} else {
-							resultsList.innerHTML += elem.href.slice(0, Math.min(35, elem.href.length))
-								+ " (" + elem.textContent.slice(0, 35) + "...)</li>";
+							listItem.textContent += elem.href.slice(0, Math.min(35, elem.href.length))
+								+ " (" + elem.textContent.slice(0, 35) + "...)";
 						}
 					}
 				}
-			} else {console.error("Could not load"+this.responseXML.filename+".");}
+			} else {console.error("Could not load"+this.filename+".");}
 		}
-		xhttp.open("GET", site+".html", true);
+		xhttp.open("GET", xhttp.filename, true);
 		xhttp.send();
 	}
 }
