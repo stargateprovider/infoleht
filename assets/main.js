@@ -117,17 +117,24 @@ function searchHTML() {
 		xhttp.onload = function() {
 			if (this.readyState == 4 && this.status == 200) {
 
-				for (var i = 0; i < this.responseXML.all.length; i++) {
-					let elem = this.responseXML.all[i];
-					if (!["a","li","span","cite","p","div", "h1","h2","h3","h4","h5","h6"].includes(elem.localName)) {
+				console.log(this)
+				let importBody = this.responseXML.getElementsByTagName("body")[0];
+
+				var walk=document.createTreeWalker(importBody, NodeFilter.SHOW_TEXT, null, false);
+				while(elem=walk.nextNode()) {
+
+				//for (var i = 0; i < this.responseXML.all.length; i++) {
+					//let elem = this.responseXML.all[i];
+
+
+					/*if (!["a","li","span","cite","p","div", "h1","h2","h3","h4","h5","h6"].includes(elem.localName)) {
 						continue;
-					}
+					}*/
 					let index = elem.textContent.toLowerCase().indexOf(query);
 					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 
-
 					if (index > -1 || inHref) {
-						console.log(elem, elem.textContent);
+						console.log(elem);
 						let listItem = document.createElement("li");
 						let a = document.createElement("a");
 						a.href = this.filename;

@@ -35,15 +35,15 @@ header > * > a:visited {
 header > div > span{
 	color: var(--main_border_color);
 }
-header > ul{
+header > div > ul{
   list-style: none;
   margin-left: 0;
   padding-left: 0;
 }
-header > ul > li{
+header > div > ul > li{
 	display: inline;
 }
-header > ul > li:before{
+header > div > ul > li:before{
   content: "~";
 }
 
