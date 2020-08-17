@@ -106,26 +106,33 @@ function searchHTML() {
 		var site = sites[i];
 
 		let xhttp = new XMLHttpRequest();
-		xhttp.file = sites[i].valueOf();
+		xhttp.filename = sites[i].valueOf();
 		xhttp.responseType = 'document';
 		xhttp.overrideMimeType('text/html');
 
 		xhttp.onload = function() {
-			var filename = site.valueOf();
 			if (this.readyState == 4 && this.status == 200) {
-				let siteTitle = this.responseXML.getElementsByTagName("title")[0].value;
 				let importBody = this.responseXML.getElementsByTagName("body")[0];
-				let importText = importBody.innerHTML;
-				let index = importText.indexOf(query);
-				console.log(this)
 
-				if (index > -1) {
-					resultsList.innerHTML += "<li><h4><a href='" + filename + ".html'>"+siteTitle+": </a></h4>"
-						+ importText.slice(index, index+query.length+15)
-						+ " s...</li>";
-				}
+				for (var i = 0; i < importBody.all.length; i++) {
+					let elem = importBody.all[i]
+					let index = elem.textContent.indexOf(query);
+					let inHref = index == -1 && (elem.localName == "a" && elem.href.indexOf(query) > -1);
 
-			} else {console.error("Could not load"+filename+".");}
+					if (index > -1 || inHref) {
+						resultsList.innerHTML += "<li><b><a href='" + this.filename + ".html'>"+this.title+": </a></b>";
+
+						if (!inHref) {
+							let start = Math.max(0, index-35);
+							let end = Math.min(index+query.length+35, elem.textContent.length);
+							resultsList.innerHTML += "... " + elem.textContent.slice(start, end) + " ...</li>";
+						} else {
+							resultsList.innerHTML += elem.href.slice(0, Math.min(35, elem.href.length))
+								+ "(" + elem.textContent.slice(0, 25) + "...)</li>";
+						}
+					}
+
+			} else {console.error("Could not load"+this.filename+".");}
 		}
 		xhttp.open("GET", site+".html", true);
 		xhttp.send();
