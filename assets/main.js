@@ -145,22 +145,22 @@ function searchHTML() {
 				if (elem.textContent.length > 150) {
 					let start = Math.max(0, index-65);
 					let end = Math.min(index+65, elem.textContent.length);
-					elem.textContent = elem.textContent.slice(start, end);
+					elem.textContent = "..." + elem.textContent.slice(start, end) + "...";
 				}
 
 				if (index > -1) {
+					console.log(elemParent);
 					if (elemParent.localName == "a") {
 						elemParent.innerHTML = elemParent.textContent.replace(regex, replacement);
 						subListItem.appendChild(elemParent);
 					} else {
-
 						subListItem.innerHTML = elem.textContent.replace(regex, replacement);
 					}
 					subList.appendChild(subListItem);
 				}
 				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
 
-					elemParent.innerHTML = elemParent.href.replace(/^https?:\/\/w*/, "").replace(regex, replacement);
+					elemParent.innerHTML = elemParent.href.replace(/^https?:\/\/w*\.?/, "").replace(regex, replacement);
 					subListItem.appendChild(elemParent);
 					subListItem.appendChild(document.createTextNode(" (" + elem.textContent + ")"));
 					subList.appendChild(subListItem);
