@@ -139,9 +139,13 @@ function searchHTML() {
 			while(elem = walk.nextNode()) {
 
 				var subListItem = document.createElement("li");
+				query="stolen";
 				let index = elem.textContent.toLowerCase().indexOf(query);
-				let elemParent = elem.parentNode;
-				console.log(elem, index, elemParent);
+				if (index > -1 || elemParent.localName == "a" && elemParent.href.indexOf(query) > -1){
+					console.log(elem, index, elemParent);
+				}
+				/*let elemParent = elem.parentNode;
+
 
 				if (index > -1) {
 					if (elemParent.localName == "a") {
@@ -158,9 +162,9 @@ function searchHTML() {
 					elemParent.textContent += " (" + elem.textContent + ")";
 					subListItem.appendChild(elemParent);
 					subList.appendChild(subListItem);
-				}
+				}*/
 
-/*					let start = Math.max(0, index-65);
+				/*	let start = Math.max(0, index-65);
 					let end = Math.min(index+query.length+45, elem.textContent.length);
 					text = "... " + elem.textContent.slice(start, end) + " ...";
 				} else {
