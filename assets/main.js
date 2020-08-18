@@ -139,7 +139,7 @@ function searchHTML() {
 			while(elem = walk.nextNode()) {
 
 				let index = elem.textContent.toLowerCase().indexOf(query);
-				let subListItem = document.createElement("li");
+				var subListItem = document.createElement("li");
 
 				if (index > -1) {
 					if (elem.parentNode.localName == "a") {
@@ -182,7 +182,7 @@ function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
-document.addEventListener("load", function() {
+window.addEventListener("load", function() {
 	// Add some website icons next to their links
 	var icon, links = document.querySelectorAll("li > a");
 	for (var i=0; i<links.length; i++) {
