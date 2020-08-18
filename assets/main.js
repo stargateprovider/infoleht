@@ -132,7 +132,7 @@ function searchHTML() {
 			listItem.appendChild(a);
 
 			var subList = document.createElement("ul");
-			//subList.className = "simpleList"
+			subList.className = "detailsList"
 
 			// Valib ainult kogu kuvatava teksti igalt lehelt
 			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
@@ -152,6 +152,7 @@ function searchHTML() {
 					subList.appendChild(subListItem);
 				}
 				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
+					console.log(elemParent);
 					elemParent.innerHTML = elemParent.href.replace(regex, replacement)
 						+ " (" + elem.textContent + ")";
 					subListItem.appendChild(elemParent);
