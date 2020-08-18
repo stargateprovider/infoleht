@@ -142,11 +142,6 @@ function searchHTML() {
 				query="stolen";
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode.cloneNode();
-				if (index > -1 || elemParent.localName == "a" && elemParent.href.indexOf(query) > -1){
-					console.log(elem, index, elemParent);
-				}
-
-
 
 				if (index > -1) {
 					if (elemParent.localName == "a") {
@@ -158,10 +153,10 @@ function searchHTML() {
 					subList.appendChild(subListItem);
 				}
 				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
-					console.log(elemParent);
 					elemParent.innerHTML = elemParent.href.replace(regex, replacement);
-					elemParent.textContent += " (" + elem.textContent + ")";
+					console.log(elemParent.href.replace(regex, replacement));
 					subListItem.appendChild(elemParent);
+					subListItem.appendChild(document.createTextNode(" (" + elem.textContent + ")"));
 					subList.appendChild(subListItem);
 				}
 
