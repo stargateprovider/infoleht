@@ -136,11 +136,12 @@ function searchHTML() {
 
 			// Valib ainult kogu kuvatava teksti igalt lehelt
 			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
-			while(elem = walk.nextNode().cloneNode()) {
+			while(elem = walk.nextNode()) {
 
 				var subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
-				let elemParent = elem.parentNode;
+				let elemParent = elem.parentNode.cloneNode();
+				elem = elem.cloneNode();
 
 				if (elem.textContent.length > 150) {
 					let start = Math.max(0, index-65);
@@ -149,7 +150,7 @@ function searchHTML() {
 				}
 
 				if (index > -1) {
-
+					console.log(elemParent);
 					if (elemParent.localName == "a") {
 						elemParent.innerHTML = elemParent.textContent.replace(regex, replacement);
 						subListItem.appendChild(elemParent);
