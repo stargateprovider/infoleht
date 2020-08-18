@@ -141,10 +141,11 @@ function searchHTML() {
 				var subListItem = document.createElement("li");
 				query="stolen";
 				let index = elem.textContent.toLowerCase().indexOf(query);
+				let elemParent = elem.parentNode;
 				if (index > -1 || elemParent.localName == "a" && elemParent.href.indexOf(query) > -1){
 					console.log(elem, index, elemParent);
 				}
-				/*let elemParent = elem.parentNode;
+				/*
 
 
 				if (index > -1) {
