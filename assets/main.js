@@ -145,8 +145,6 @@ function searchHTML() {
 				if (index > -1) {
 					if (elemParent.localName == "a") {
 						elemParent.innerHTML = elemParent.textContent.replace(regex, replacement);
-						console.log(elemParent);
-						console.log(elem.parentNode);
 						subListItem.appendChild(elemParent);
 					} else {
 						subListItem.innerHTML = elem.textContent.replace(regex, replacement);
@@ -173,6 +171,7 @@ function searchHTML() {
 			}
 			if (subList.hasChildNodes()) {
 				listItem.appendChild(subList);
+				resultsList.appendChild(listItem);
 			}
 		}
 
