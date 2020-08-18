@@ -107,50 +107,73 @@ function searchHTML() {
 		return;
 	}
 
-	const sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "lostfound"];
-	var regex = new RegExp("("+query+")", "ig");
+	const sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
+	const regex = new RegExp("("+query+")", "ig");
+	const replacement = "<span class='highlight'>$&</span>";
 
 	for (i = 0; i < sites.length; i++) {
 		let xhttp = new XMLHttpRequest();
-		xhttp.filename = sites[i] + ".html";
 		xhttp.responseType = 'document';
 		xhttp.overrideMimeType('text/html');
 
 		xhttp.onload = function() {
-			if (this.readyState == 4 && this.status == 200) {
+			let filename = this.responseURL.slice(this.responseURL.lastIndexOf("/") + 1);
 
-				// Valib ainult kogu kuvatava teksti igalt lehelt
-				var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
-				while(elem = walk.nextNode()) {
+			if (this.readyState != 4 || this.status != 200) {
+				console.error("Could not load" + filename + ".");
+				return;
+			}
 
-					let index = elem.textContent.toLowerCase().indexOf(query);
-					let inHref = index == -1 && elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1;
+			let listItem = document.createElement("li");
+			let a = document.createElement("a");
+			a.href = filename;
+			a.textContent = this.responseXML.title + ":";
+			a.style.fontWeight = "bold";
+			listItem.appendChild(a);
 
-					if (index > -1 || inHref) {
-						let listItem = document.createElement("li");
-						let a = document.createElement("a");
-						a.href = this.filename;
-						a.textContent = this.responseXML.title + ":";
-						a.style.fontWeight = "bold";
-						listItem.appendChild(a);
+			var subList = document.createElement("ul");
+			//subList.className = "simpleList"
 
-						let text;
-						if (!inHref) {
-							let start = Math.max(0, index-65);
-							let end = Math.min(index+query.length+45, elem.textContent.length);
-							text = "... " + elem.textContent.slice(start, end) + " ...";
-						} else {
-							text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
-								+ " (" + elem.textContent.slice(0, 45) + "...)";
-						}
-						listItem.innerHTML += " " + text.replace(regex, "<span class='highlight'>$&</span>");
-						resultsList.appendChild(listItem);
+			// Valib ainult kogu kuvatava teksti igalt lehelt
+			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
+			while(elem = walk.nextNode()) {
+
+				let index = elem.textContent.toLowerCase().indexOf(query);
+				let subListItem = document.createElement("li");
+
+				if (index > -1) {
+					if (elem.parentNode.localName == "a") {
+						elem.parentNode.innerHTML = elem.parentNode.textContent.replace(regex, replacement);
+						subListItem.appendChild(elem.parentNode);
+					} else {
+						subListItem.innerHTML = elem.textContent.replace(regex, replacement);
 					}
+					subList.appendChild(subListItem);
 				}
-			} else {console.error("Could not load"+this.filename+".");}
+				else if (elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1) {
+					elem.parentNode.innerHTML = elem.parentNode.href.replace(regex, replacement)
+						+ " (" + elem.textContent + ")";
+					subListItem.appendChild(elem.parentNode);
+					subList.appendChild(subListItem);
+				}
+
+/*					let start = Math.max(0, index-65);
+					let end = Math.min(index+query.length+45, elem.textContent.length);
+					text = "... " + elem.textContent.slice(start, end) + " ...";
+				} else {
+					text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
+						+ " (" + elem.textContent.slice(0, 45) + "...)";
+				}
+				listItem.innerHTML += " " + text.replace(regex, "<span class='highlight'>$&</span>");
+				resultsList.appendChild(listItem);
+				}*/
+			}
+			if (subList.hasChildNodes()) {
+				listItem.appendChild(subList);
+			}
 		}
 
-		xhttp.open("GET", xhttp.filename, true);
+		xhttp.open("GET", sites[i] + ".html", true);
 		xhttp.send();
 	}
 }
@@ -159,7 +182,7 @@ function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("load", function() {
 	// Add some website icons next to their links
 	var icon, links = document.querySelectorAll("li > a");
 	for (var i=0; i<links.length; i++) {
