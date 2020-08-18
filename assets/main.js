@@ -144,6 +144,8 @@ function searchHTML() {
 				if (index > -1) {
 					if (elem.parentNode.localName == "a") {
 						elem.parentNode.innerHTML = elem.parentNode.textContent.replace(regex, replacement);
+						console.log(subListItem);
+						console.log(elem.parentNode);
 						subListItem.appendChild(elem.parentNode);
 					} else {
 						subListItem.innerHTML = elem.textContent.replace(regex, replacement);
