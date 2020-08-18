@@ -195,6 +195,4 @@ document.addEventListener("DOMContentLoaded", function() {
 	// Add last modified date to footer
 	var x = document.lastModified;
 	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
-
-	alert("Done")
 });
