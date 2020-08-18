@@ -141,6 +141,7 @@ function searchHTML() {
 				var subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode;
+				console.log(elem, index, elemParent);
 
 				if (index > -1) {
 					if (elemParent.localName == "a") {
@@ -153,8 +154,8 @@ function searchHTML() {
 				}
 				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
 					console.log(elemParent);
-					elemParent.innerHTML = elemParent.href.replace(regex, replacement)
-						+ " (" + elem.textContent + ")";
+					elemParent.innerHTML = elemParent.href.replace(regex, replacement);
+					elemParent.textContent += " (" + elem.textContent + ")";
 					subListItem.appendChild(elemParent);
 					subList.appendChild(subListItem);
 				}
