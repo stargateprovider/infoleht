@@ -5,77 +5,68 @@
 	<title>RSS-vood</title>
 	<script src="assets/main.js"></script>
 	<script>includeTemplate();</script>
-	<script>
-const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g");
-
-function readFile(file, type, callback) {
-	const rawFile = new XMLHttpRequest();
-	rawFile.overrideMimeType(type);
-	rawFile.open("GET", file, true);
-	rawFile.onload = function() {
-		if (rawFile.readyState === 4 && rawFile.status == "200") {
-			callback(rawFile);
-		}
-	}
-	rawFile.send(null);
-}
-
-function loadFeeds(sources, container) {
-	const parser = new DOMParser();
-	var dataArray = [];
-	for (var i = 0; i < sources.length; i++) {
-		readFile(sources[i], "text/xml", file => dataArray.push(...Array.from(file.responseText.matchAll(REGEX))));
-	}
-	dataArray.sort((a,b) => {new Date(a.value.groups.date) > new Date(b.value.groups.date)});
-
-	var ul = document.createElement("ul");
-	var a, li, textarea, matchGroup, doc;
-
-	for (var i = 0; i < dataArray.length && i < 30; i++) {
-		matchGroup = dataArray[i].value.groups;
-
-		li = ul.appendChild(document.createElement("li"));
-		a = li.appendChild(document.createElement("a"));
-		a.className = "tooltipBox";
-		a.href = parser.parseFromString(prefix+matchGroup.link, "text/html").documentElement.textContent;
-		a.appendChild(document.createTextNode(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent));
-
-		textarea = a.appendChild(document.createElement("textarea"));
-		textarea.className = "tooltipText";
-		textarea.setAttribute("readonly", "true");
-		textarea.appendChild(document.createTextNode(matchGroup.date));
-		if (matchGroup["desc"]){
-			doc = parser.parseFromString(matchGroup.desc, "text/html");
-			doc = parser.parseFromString(doc.documentElement.textContent.trim(), "text/html");
-			textarea.appendChild(document.createTextNode("\n\n"+doc.documentElement.textContent));
-		}
-	}
-	container.appendChild(ul);
-}
-
-window.onload = function() {
-	sources = [
-	"http://www.telegram.ee/feed",
-	"http://in5d.com/feed/",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCAhmDfQ1LfOYECmNNWgXJ7Q",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCcYzLCs3zrQIBVHYA1sK2sw",
-	"https://www.bitchute.com/feeds/rss/channel/davidicke/"
-	];
-	let main = document.getElementsByTagName("main")[0];
-	main.textContent = "Telegram, In5D, Ryan Cropper, Sadhguru, David Icke";
-	loadFeeds(sources, main);
-
-	// Load theme based on cookies
-	if (getCookie("bg-color") != ""){
-		changeTheme(getCookie("bg-color"));
-	}
-
-	// Add last modified date to footer
-	var x = document.lastModified;
-	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
-}
-	</script>
 </head>
-<body><header></header><main></main><footer></footer></body>
+
+<body>
+<header style="margin-bottom:0!important;"></header>
+<!-- start sw-rss-feed code -->
+<script type="text/javascript">
+<!--
+window.addEventListener('resize', function(){
+	frame = document.getElementsByTagName('iframe')[0]
+	if(screen.width<800){
+		frame.width=window.outerWidth;
+		frame.height=window.outerHeight;
+	}else{
+		frame.width=window.innerWidth;
+		frame.height=window.innerHeight;
+	}
+	var headHeight=document.getElementsByTagName('header')[0].getBoundingClientRect().height;
+	var divHeight=document.getElementsByTagName('div')[0].getBoundingClientRect().height;
+	var footHeight=document.getElementsByTagName('footer')[0].getBoundingClientRect().height;
+	frame.height-=headHeight+divHeight+footHeight+5;
+}, true);
+
+rssfeed_url = new Array();
+rssfeed_url[0]="https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ"; rssfeed_url[1]="http://www.telegram.ee/feed"; rssfeed_url[2]="http://in5d.com/feed/"; rssfeed_url[3]="https://www.bitchute.com/feeds/rss/channel/davidicke/";
+
+if(screen.width<800){
+	rssfeed_frame_width=window.outerWidth;
+	rssfeed_frame_height=window.outerHeight;
+}else{
+	rssfeed_frame_width=window.innerWidth;
+	rssfeed_frame_height=window.innerHeight;
+}
+rssfeed_frame_height-=37+61+5;
+rssfeed_scroll="off";
+rssfeed_scroll_step="6";
+rssfeed_scroll_bar="on";
+rssfeed_target="_blank";
+rssfeed_font_size="12";
+rssfeed_font_face="";
+rssfeed_border="off";
+rssfeed_css_url="";
+rssfeed_title="on";
+rssfeed_title_name="";
+rssfeed_title_bgcolor="#008080";
+rssfeed_title_color="#fff";
+rssfeed_footer="off";
+rssfeed_footer_bgcolor="#fff";
+rssfeed_footer_color="#333";
+rssfeed_item_title_length="75";
+rssfeed_item_title_color="#555";
+rssfeed_item_bgcolor="#fff";
+rssfeed_item_border_bottom="on";
+rssfeed_item_source_icon="on";
+rssfeed_item_date="off";
+rssfeed_item_description="off";
+rssfeed_cache = "2c6c9195b46d99ff04b9e3cb9d87bf0f";
+//-->
+</script>
+<script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script>
+<!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. -->
+<div style="color:#ccc;font-size:10px;text-align:right;">powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#ccc;">Surfing Waves</a></div>
+<!-- end sw-rss-feed code -->
+<footer style="margin-top:0!important;"></footer>
+</body>
 </html>
