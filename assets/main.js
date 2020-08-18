@@ -136,16 +136,17 @@ function searchHTML() {
 
 			// Valib ainult kogu kuvatava teksti igalt lehelt
 			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
-			console.log(query)
 			while(elem = walk.nextNode()) {
 
 				var subListItem = document.createElement("li");
 				query="stolen";
 				let index = elem.textContent.toLowerCase().indexOf(query);
-				let elemParent = elem.parentNode;
+				let elemParent = elem.parentNode.cloneNode();
 				if (index > -1 || elemParent.localName == "a" && elemParent.href.indexOf(query) > -1){
 					console.log(elem, index, elemParent);
 				}
+
+
 
 				if (index > -1) {
 					if (elemParent.localName == "a") {
