@@ -9,7 +9,7 @@
 const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g");
 const REGEX2 = new RegExp("entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)<", "g");
 
-async function loadFeeds(sources) {
+async function fetchFeeds(sources) {
 	const parser = new DOMParser();
 	const proxy = "https://cors-anywhere.herokuapp.com/"
 
@@ -57,7 +57,7 @@ async function loadFeeds(sources) {
 	return ul;
 }
 
-window.onload = async function() {
+async function loadFeeds() {
 	sources = [
 	"https://www.telegram.ee/feed",
 	"https://in5d.com/feed/",
@@ -66,22 +66,14 @@ window.onload = async function() {
 	"https://www.bitchute.com/feeds/rss/channel/davidicke/"
 	];
 	let main = document.getElementsByTagName("main")[0];
-	let feedsNode = await loadFeeds(sources);
-	main.innerHTML = "Värske info allikatest <b>Telegram, In5D, Ryan Cropper, David Icke</b>";
+	let feedsNode = await fetchFeeds(sources);
+	main.innerHTML = "Värske info allikatest <b>Telegram, In5D, Ryan Cropper, David Icke</b>:";
 	main.appendChild(feedsNode);
-
-	// Load theme based on cookies
-	if (getCookie("bg-color") != ""){
-		changeTheme(getCookie("bg-color"));
-	}
-
-	// Add last modified date to footer
-	var x = document.lastModified;
-	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
 }
+loadFeeds();
 	</script>
 	<style>
-	main{margin-left:0;margin-right:0;}
+	main{margin-left:0!important;margin-right:0!important;}
 	main>ul{padding:0;list-style-type:none;}
 	main>ul>li{padding:5px;border:1px solid var(--main_border_color);font:11px Verdana,Geneva,sans-serif;}
 	.tooltipBox{text-decoration:none;}
