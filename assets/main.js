@@ -159,7 +159,7 @@ function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
 	// Add some website icons next to their links
 	var icon, links = document.querySelectorAll("li > a");
 	for (var i=0; i<links.length; i++) {
@@ -195,4 +195,6 @@ window.onload = function() {
 	// Add last modified date to footer
 	var x = document.lastModified;
 	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
-}
+
+	alert("Done")
+});
