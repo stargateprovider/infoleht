@@ -138,24 +138,25 @@ function searchHTML() {
 			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
 			while(elem = walk.nextNode()) {
 
-				let index = elem.textContent.toLowerCase().indexOf(query);
 				var subListItem = document.createElement("li");
+				let index = elem.textContent.toLowerCase().indexOf(query);
+				let elemParent = elem.parentNode;
 
 				if (index > -1) {
-					if (elem.parentNode.localName == "a") {
-						elem.parentNode.innerHTML = elem.parentNode.textContent.replace(regex, replacement);
-						console.log(subListItem);
+					if (elemParent.localName == "a") {
+						elemParent.innerHTML = elemParent.textContent.replace(regex, replacement);
+						console.log(elemParent);
 						console.log(elem.parentNode);
-						subListItem.appendChild(elem.parentNode);
+						subListItem.appendChild(elemParent);
 					} else {
 						subListItem.innerHTML = elem.textContent.replace(regex, replacement);
 					}
 					subList.appendChild(subListItem);
 				}
-				else if (elem.parentNode.localName == "a" && elem.parentNode.href.indexOf(query) > -1) {
-					elem.parentNode.innerHTML = elem.parentNode.href.replace(regex, replacement)
+				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
+					elemParent.innerHTML = elemParent.href.replace(regex, replacement)
 						+ " (" + elem.textContent + ")";
-					subListItem.appendChild(elem.parentNode);
+					subListItem.appendChild(elemParent);
 					subList.appendChild(subListItem);
 				}
 
