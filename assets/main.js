@@ -49,12 +49,15 @@ function includeTemplate() {
 	xhttp.send();
 }
 
-function shortenStr(text, charlimit, middle) {
+function shortenStr(text, charlimit, middle, dot=false) {
 	if (text.length > charlimit) {
 		let allow = charlimit/2 - 10,
 			start = Math.max(0, middle-allow),
 			end = Math.min(middle+allow, text.length);
 		text = text.slice(start, end);
+		if (dot) {
+			text = "..." + text + "...";
+		}
 	}
 	return text;
 }
@@ -151,7 +154,7 @@ function searchHTML() {
 				let index = lines[i].toLowerCase().indexOf(query);
 				if (index > -1) {
 					let li = document.createElement("li");
-					li.innerHTML = shortenStr(lines[i], 330, index).replace(regex, replacement);
+					li.innerHTML = shortenStr(lines[i], 330, index, true).replace(regex, replacement);
 					subList.appendChild(li);
 					nChildren++;
 				}
