@@ -202,12 +202,13 @@ function searchHTML() {
 				return;
 			}
 
+			console.log(this);
 			let lines = this.responseText.split("\n");
 			for (var i = 0; i < lines.length; i++) {
 
 				if (lines[i].toLowerCase().includes(query)) {
 					let li = document.createElement("li");
-					li.innerHTML = line.replace(regex, replacement);
+					li.innerHTML = lines[i].replace(regex, replacement);
 					subList.appendChild(li);
 				}
 			}
