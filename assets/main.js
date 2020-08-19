@@ -150,9 +150,9 @@ function searchHTML() {
 				}
 
 				if (index > -1) {
-					console.log(elemParent.localName);
+					console.log(elemParent.localName, elemParent.textContent);
 					if (elemParent.localName == "a") {
-						elemParent.innerHTML = elemParent.textContent.replace(regex, replacement);
+						elemParent.innerHTML = elemParent.innerHTML.replace(regex, replacement);
 						subListItem.appendChild(elemParent);
 					} else {
 						subListItem.innerHTML = text.replace(regex, replacement);
