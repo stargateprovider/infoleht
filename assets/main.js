@@ -49,6 +49,15 @@ function includeTemplate() {
 	xhttp.send();
 }
 
+function shortenStr(text, charlimit, middle) {
+	if (text.length > charlimit) {
+		let allow = charlimit/2 - 10,
+			start = Math.max(0, middle-allow),
+			end = Math.min(middle+allow, text.length);
+		return text.slice(start, end);
+	}
+}
+
 function searchHTML() {
 	const query = document.getElementById("searchbar").value.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
 		  resultsBox = document.getElementById("searchResults"),
@@ -56,7 +65,7 @@ function searchHTML() {
 		  resultsList = resultsBox.lastElementChild;
 
 	resultsBox.style.display = "block";
-	resultsHeading.textContent = "Otsingutulemused:";
+	resultsHeading.textContent = "0 vastet otsingule:";
 	resultsList.innerHTML = "";
 	if (query.length < 3) {
 		resultsList.innerHTML += "Liiga lühike.";
@@ -98,14 +107,7 @@ function searchHTML() {
 				var subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode.cloneNode(); // deep=false ehk ilma sisuta
-
-				let text = elem.textContent;
-				if (text.length > 150) {
-					let start = Math.max(0, index-65),
-						end = Math.min(index+65, text.length);
-					text = text.slice(start, end);
-				}
-				text = text.replace(regex, replacement);
+				text = shortenStr(text, 150, index).replace(regex, replacement);
 
 				if (index > -1) {
 
@@ -118,7 +120,8 @@ function searchHTML() {
 				}
 				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
 
-					elemParent.innerHTML = elemParent.href.replace(/^https?:\/\/w*\.?/, "").replace(regex, replacement);
+					elemParent.innerHTML = shortenStr(elemParent.href.replace(/^https?:\/\/w*\.?/, ""))
+						.replace(regex, replacement);
 					subListItem.appendChild(elemParent);
 					subListItem.appendChild(document.createTextNode(" (" + text + ")"));
 
@@ -146,14 +149,8 @@ function searchHTML() {
 
 				let index = lines[i].toLowerCase().indexOf(query);
 				if (index > -1) {
-					let text = lines[i];
-					if (text.length > 350) {
-						let start = Math.max(0, index-165),
-							end = Math.min(index+165, text.length);
-						text = "..." + text.slice(start, end) + "...";
-					}
 					let li = document.createElement("li");
-					li.innerHTML = text.replace(regex, replacement);
+					li.innerHTML = shortenStr(lines[i], 330, index).replace(regex, replacement);
 					subList.appendChild(li);
 					nChildren++;
 				}

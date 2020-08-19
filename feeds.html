@@ -17,7 +17,7 @@ async function fetchFeeds(sources) {
 	for (var i = 0; i < sources.length; i++) {
 		var selectedRegex = sources[i].indexOf("youtube.") == -1 ? REGEX : REGEX2;
 
-		await fetch(proxy + sources[i])
+		await fetch(proxy + sources[i], {mode: 'no-cors'}) // no-cors, *cors, same-origin
 		.then(file => file.text())
 		.then(str => dataArray.push(...Array.from(str.matchAll(selectedRegex))));
 	}
