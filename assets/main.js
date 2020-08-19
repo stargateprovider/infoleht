@@ -132,7 +132,7 @@ function searchHTML() {
 			listItem.appendChild(a);
 
 			var subList = document.createElement("ul");
-			subList.className = "detailsList"
+			subList.className = "detailsList";
 
 			// Valib ainult kogu kuvatava teksti igalt lehelt
 			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
@@ -189,21 +189,12 @@ function searchHTML() {
 	listItem.appendChild(a);
 
 	var subList = document.createElement("ul");
-	subList.className = "detailsList"
+	subList.className = "detailsList";
 
 	for (i = 0; i < sites.length; i++) {
-		let xhttp = new XMLHttpRequest();
-
-		xhttp.onload = function() {
-			let filename = this.responseURL.slice(this.responseURL.lastIndexOf("/") + 1);
-
-			if (this.readyState != 4 || this.status != 200) {
-				console.error("Could not load" + filename + ".");
-				return;
-			}
-
-			console.log(this);
-			let lines = this.responseText.split("\n");
+		fetch(sites[i]).then(file => {
+			console.log(file)
+			let lines = file.responseText.split("\n\n");
 			for (var i = 0; i < lines.length; i++) {
 
 				if (lines[i].toLowerCase().includes(query)) {
@@ -217,10 +208,7 @@ function searchHTML() {
 				listItem.appendChild(subList);
 				resultsList.appendChild(listItem);
 			}
-		}
-
-		xhttp.open("GET", sites[i], true);
-		xhttp.send();
+		});
 	}
 }
 
