@@ -107,7 +107,7 @@ function searchHTML() {
 				var subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode.cloneNode(); // deep=false ehk ilma sisuta
-				text = shortenStr(text, 150, index).replace(regex, replacement);
+				var text = shortenStr(elem.textContent, 150, index).replace(regex, replacement);
 
 				if (index > -1) {
 
