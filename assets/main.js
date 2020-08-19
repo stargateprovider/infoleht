@@ -54,8 +54,9 @@ function shortenStr(text, charlimit, middle) {
 		let allow = charlimit/2 - 10,
 			start = Math.max(0, middle-allow),
 			end = Math.min(middle+allow, text.length);
-		return text.slice(start, end);
+		text = text.slice(start, end);
 	}
+	return text;
 }
 
 function searchHTML() {
