@@ -56,7 +56,7 @@ function searchHTML() {
 		  resultsList = resultsBox.lastElementChild;
 
 	resultsBox.style.display = "block";
-	resultsHeading.innerHTML = "Otsingutulemused:";
+	resultsHeading.textContent = "Otsingutulemused:";
 	resultsList.innerHTML = "";
 	if (query.length < 3) {
 		resultsList.innerHTML += "Liiga lühike.";
@@ -65,8 +65,8 @@ function searchHTML() {
 	var nChildren = 0;
 
 	function createSubList(title, url) {
-		let listItem = document.createElement("li");
-		let a = document.createElement("a");
+		let listItem = document.createElement("li"),
+			a = document.createElement("a");
 		a.href = url;
 		a.textContent = title;
 		a.style.fontWeight = "bold";
@@ -146,13 +146,13 @@ function searchHTML() {
 
 				let index = lines[i].toLowerCase().indexOf(query);
 				if (index > -1) {
-					let li = document.createElement("li");
 					let text = lines[i];
 					if (text.length > 350) {
-						let start = Math.max(0, index-165);
-						let end = Math.min(index+165, text.length);
+						let start = Math.max(0, index-165),
+							end = Math.min(index+165, text.length);
 						text = "..." + text.slice(start, end) + "...";
 					}
+					let li = document.createElement("li");
 					li.innerHTML = text.replace(regex, replacement);
 					subList.appendChild(li);
 					nChildren++;
@@ -162,10 +162,9 @@ function searchHTML() {
 				listItem.appendChild(subList);
 				resultsList.appendChild(listItem);
 			}
+			resultsHeading.textContent = nChildren + " vastet otsingule '" + query + "':";
 		});
 	}
-
-	resultsHeading.textContent = nChildren + " vastet otsingule '" + query + "':";
 }
 
 function closeSearch() {
@@ -205,6 +204,4 @@ window.addEventListener("load", function() {
 		else {continue;}
 		links[i].insertAdjacentElement("beforebegin", icon);
 	}
-
-
 });
