@@ -190,14 +190,13 @@ function searchHTML() {
 
 	var subList = document.createElement("ul");
 	subList.className = "detailsList";
-	const decoder = new TextDecoder();
+	const decoder = new TextDecoder("windows-1252");
 
 	for (i = 0; i < sites.length; i++) {
 		fetch(sites[i], {headers: {'Content-Type': 'text/plain; charset=windows-1252'}})
 		.then(file => file.text())
 		.then(text => {
-			console.log(text);
-			let lines = decoder.decode(text).split("\n\n");
+			let lines = text.split("\n\n");
 			for (var i = 0; i < lines.length; i++) {
 
 				if (lines[i].toLowerCase().includes(query)) {
@@ -217,7 +216,7 @@ function searchHTML() {
 		fetch(sites[i], {headers: {'Content-Type': 'text/plain; charset=windows-1252'}})
 		.then(file => file.arrayBuffer())
 		.then(text => {
-			console.log(text);
+			console.log(new TextDecoder("ansi").decode(text));
 			let lines = decoder.decode(text).split("\n\n");
 			for (var i = 0; i < lines.length; i++) {
 
