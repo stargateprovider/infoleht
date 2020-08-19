@@ -192,9 +192,9 @@ function searchHTML() {
 	subList.className = "detailsList";
 
 	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i]).then(file => {
-			console.log(file)
-			let lines = file.responseText.split("\n\n");
+		fetch(sites[i], {headers: {'Content-Type': 'text/plain'}}).then(file => {
+			console.log(file);
+			let lines = file.text().split("\n\n");
 			for (var i = 0; i < lines.length; i++) {
 
 				if (lines[i].toLowerCase().includes(query)) {
