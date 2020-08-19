@@ -141,21 +141,21 @@ function searchHTML() {
 				var subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode.cloneNode();
-				elem = elem.cloneNode();
+				let text = elem.textContent.valueOf();
 
-				if (elem.textContent.length > 150) {
+				if (text.length > 150) {
 					let start = Math.max(0, index-65);
-					let end = Math.min(index+65, elem.textContent.length);
-					elem.textContent = "..." + elem.textContent.slice(start, end) + "...";
+					let end = Math.min(index+65, text.length);
+					text = "..." + text.slice(start, end) + "...";
 				}
 
 				if (index > -1) {
-					console.log(elemParent);
+					console.log(elemParent.localName);
 					if (elemParent.localName == "a") {
 						elemParent.innerHTML = elemParent.textContent.replace(regex, replacement);
 						subListItem.appendChild(elemParent);
 					} else {
-						subListItem.innerHTML = elem.textContent.replace(regex, replacement);
+						subListItem.innerHTML = text.replace(regex, replacement);
 					}
 					subList.appendChild(subListItem);
 				}
@@ -163,7 +163,7 @@ function searchHTML() {
 
 					elemParent.innerHTML = elemParent.href.replace(/^https?:\/\/w*\.?/, "").replace(regex, replacement);
 					subListItem.appendChild(elemParent);
-					subListItem.appendChild(document.createTextNode(" (" + elem.textContent + ")"));
+					subListItem.appendChild(document.createTextNode(" (" + text + ")"));
 					subList.appendChild(subListItem);
 				}
 
