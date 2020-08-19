@@ -140,19 +140,20 @@ function searchHTML() {
 
 				var subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
-				let elemParent = elem.parentNode.cloneNode();
-				let text = elem.textContent.valueOf();
+				let elemParent = elem.parentNode.cloneNode(); // deep=false ehk ilma sisuta
 
+				let text = elem.textContent;
 				if (text.length > 150) {
 					let start = Math.max(0, index-65);
 					let end = Math.min(index+65, text.length);
-					text = "..." + text.slice(start, end) + "...";
+					text = text.slice(start, end);
 				}
+				text = "..." + text + "...";
 
 				if (index > -1) {
-					console.log(elemParent.localName, elemParent.textContent);
+
 					if (elemParent.localName == "a") {
-						elemParent.innerHTML = elemParent.innerHTML.replace(regex, replacement);
+						elemParent.innerHTML = text.replace(regex, replacement);
 						subListItem.appendChild(elemParent);
 					} else {
 						subListItem.innerHTML = text.replace(regex, replacement);
@@ -166,17 +167,6 @@ function searchHTML() {
 					subListItem.appendChild(document.createTextNode(" (" + text + ")"));
 					subList.appendChild(subListItem);
 				}
-
-				/*	let start = Math.max(0, index-65);
-					let end = Math.min(index+query.length+45, elem.textContent.length);
-					text = "... " + elem.textContent.slice(start, end) + " ...";
-				} else {
-					text = elem.parentNode.href.slice(0, Math.min(35, elem.parentNode.href.length))
-						+ " (" + elem.textContent.slice(0, 45) + "...)";
-				}
-				listItem.innerHTML += " " + text.replace(regex, "<span class='highlight'>$&</span>");
-				resultsList.appendChild(listItem);
-				}*/
 			}
 			if (subList.hasChildNodes()) {
 				listItem.appendChild(subList);
