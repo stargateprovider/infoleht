@@ -101,6 +101,13 @@ li ul{
 	padding: 0;
 }
 
+#searchResults > h3{
+	padding-left: 3px;
+}
+#searchResults > ul{
+	padding-left: 20px;
+}
+
 .img_link{
 	max-width: 130px;
 	margin: 2px;

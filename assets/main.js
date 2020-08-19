@@ -1,4 +1,4 @@
-var colors = {
+const colors = {
 	default: {bg: "white", elem: "black", link: "#0000EE", border: "teal"},
 	alt: 	 {bg: "black", elem: "white", link: "cyan"}
 };
@@ -11,8 +11,8 @@ function changeTheme(color) {
 	localStorage.setItem("bg-color", color);
 }
 function toggleTheme() {
-	let root = document.documentElement;
-	let color = root.style.getPropertyValue('--main_bg_color');
+	let root = document.documentElement,
+		color = root.style.getPropertyValue('--main_bg_color');
 	root.style.setProperty('--main_bg_color', color!=colors.alt.bg ? colors.alt.bg : colors.default.bg);
 	root.style.setProperty('--main_elem_color', color==colors.alt.bg ? colors.default.elem : colors.alt.elem);
 	root.style.setProperty('--main_link_color', color==colors.alt.bg ? colors.default.link : colors.alt.link);
@@ -20,8 +20,8 @@ function toggleTheme() {
 }
 
 function includeTemplate() {
-	const elements = ["head", "header", "footer"];
-	var xhttp = new XMLHttpRequest();
+	const elements = ["head", "header", "footer"],
+		  xhttp = new XMLHttpRequest();
 
 	// Force the response to be parsed as HTML
 	xhttp.responseType = 'document';
@@ -62,7 +62,7 @@ function searchHTML() {
 		resultsList.innerHTML += "Liiga lühike.";
 		return;
 	}
-	var nChildren = 0;
+	var i, nChildren = 0;
 
 	function createSubList(title, url) {
 		let listItem = document.createElement("li"),
@@ -101,8 +101,8 @@ function searchHTML() {
 
 				let text = elem.textContent;
 				if (text.length > 150) {
-					let start = Math.max(0, index-65);
-					let end = Math.min(index+65, text.length);
+					let start = Math.max(0, index-65),
+						end = Math.min(index+65, text.length);
 					text = text.slice(start, end);
 				}
 				text = text.replace(regex, replacement);
@@ -179,8 +179,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 window.addEventListener("load", function() {
 	// Add some website icons next to their links
-	var icon, links = document.querySelectorAll("li > a");
-	for (var i=0; i<links.length; i++) {
+	var i, icon, links = document.querySelectorAll("li > a");
+	for (i=0; i<links.length; i++) {
 		if (links[i].href.match(/[/.]youtu[.b][be][e.]/)) {
 			icon = new Image(); //document.createElement("img");
 			icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
