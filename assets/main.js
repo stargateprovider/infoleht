@@ -107,7 +107,7 @@ function searchHTML() {
 		return;
 	}
 
-	const sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
+	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
 	const regex = new RegExp("("+query+")", "ig");
 	const replacement = "<span class='highlight'>$&</span>";
 
@@ -148,15 +148,15 @@ function searchHTML() {
 					let end = Math.min(index+65, text.length);
 					text = text.slice(start, end);
 				}
-				text = "..." + text + "...";
+				text = "..." + text.replace(regex, replacement) + "...";
 
 				if (index > -1) {
 
 					if (elemParent.localName == "a") {
-						elemParent.innerHTML = text.replace(regex, replacement);
+						elemParent.innerHTML = text;
 						subListItem.appendChild(elemParent);
 					} else {
-						subListItem.innerHTML = text.replace(regex, replacement);
+						subListItem.innerHTML = text;
 					}
 					subList.appendChild(subListItem);
 				}
@@ -175,6 +175,50 @@ function searchHTML() {
 		}
 
 		xhttp.open("GET", sites[i] + ".html", true);
+		xhttp.send();
+	}
+
+
+	sites = ["assets/tsitaadid.txt", "assets/tsitaadid_düün.txt"];
+
+	let listItem = document.createElement("li");
+	let a = document.createElement("a");
+	a.href = "tsitaadid.html";
+	a.textContent = "Tsitaadid:";
+	a.style.fontWeight = "bold";
+	listItem.appendChild(a);
+
+	var subList = document.createElement("ul");
+	subList.className = "detailsList"
+
+	for (i = 0; i < sites.length; i++) {
+		let xhttp = new XMLHttpRequest();
+
+		xhttp.onload = function() {
+			let filename = this.responseURL.slice(this.responseURL.lastIndexOf("/") + 1);
+
+			if (this.readyState != 4 || this.status != 200) {
+				console.error("Could not load" + filename + ".");
+				return;
+			}
+
+			let lines = this.responseText.split("\n");
+			for (var i = 0; i < lines.length; i++) {
+
+				if (lines[i].toLowerCase().includes(query)) {
+					let li = document.createElement("li");
+					li.innerHTML = line.replace(regex, replacement);
+					subList.appendChild(li);
+				}
+			}
+
+			if (subList.hasChildNodes()) {
+				listItem.appendChild(subList);
+				resultsList.appendChild(listItem);
+			}
+		}
+
+		xhttp.open("GET", sites[i], true);
 		xhttp.send();
 	}
 }
