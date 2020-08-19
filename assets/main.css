@@ -72,7 +72,7 @@ body > div, body > details{
 	margin-left: 5px;
 }
 summary > h3{
-	display:inline;
+	display: inline;
 }
 img{
 	max-width: 100%;
@@ -96,9 +96,9 @@ li ul{
 	margin-top:3px;
 	margin-bottom:5px;
 }
-
 .detailsList{
-	list-style-type:none;padding:0;
+	list-style-type: none;
+	padding: 0;
 }
 
 .img_link{

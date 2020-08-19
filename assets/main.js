@@ -3,34 +3,12 @@ var colors = {
 	alt: 	 {bg: "black", elem: "white", link: "cyan"}
 };
 
-function getCookie(cname) {
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var c, ca = decodedCookie.split(';');
-	for(var i=0; i<ca.length; i++) {
-		c = ca[i];
-		while (c.charAt(0) == ' ') {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
-}
-function setCookie(cname, cvalue, exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	var expires = "expires="+d.toUTCString();
-	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
 function changeTheme(color) {
 	let root = document.documentElement;
 	root.style.setProperty('--main_bg_color', color);
 	root.style.setProperty('--main_elem_color', color==colors.default.bg ? colors.default.elem : colors.alt.elem);
 	root.style.setProperty('--main_link_color', color==colors.default.bg ? colors.default.link : colors.alt.link);
-	setCookie("bg-color", color, 365);
+	localStorage.setItem("bg-color", color);
 }
 function toggleTheme() {
 	let root = document.documentElement;
@@ -38,37 +16,11 @@ function toggleTheme() {
 	root.style.setProperty('--main_bg_color', color!=colors.alt.bg ? colors.alt.bg : colors.default.bg);
 	root.style.setProperty('--main_elem_color', color==colors.alt.bg ? colors.default.elem : colors.alt.elem);
 	root.style.setProperty('--main_link_color', color==colors.alt.bg ? colors.default.link : colors.alt.link);
-	setCookie("bg-color", color, 365);
+	localStorage.setItem("bg-color", color);
 }
-function includeHTML() {
-	var z, i, elmnt, file, xhttp;
-	/* Loop through a collection of all HTML elements: */
-	z = document.getElementsByTagName("*");
-	for (i = 0; i < z.length; i++) {
-		elmnt = z[i];
-		/*search for elements with a certain atrribute:*/
-		file = elmnt.getAttribute("w3-include-html");
-		if (file) {
-			/* Make an HTTP request using the attribute value as the file name: */
-			xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4) {
-					if (this.status == 200) {elmnt.innerHTML += this.responseText;}
-					if (this.status == 404) {elmnt.innerHTML += " imported page not found.";}
-					/* Remove the attribute, and call this function once more: */
-					elmnt.removeAttribute("w3-include-html");
-					includeHTML();
-				}
-			}
-			xhttp.open("GET", file, true);
-			xhttp.send();
-			/* Exit the function: */
-			return;
-		}
-	}
-}
+
 function includeTemplate() {
-	var elements = ["head", "header"];
+	const elements = ["head", "header", "footer"];
 	var xhttp = new XMLHttpRequest();
 
 	// Force the response to be parsed as HTML
@@ -88,24 +40,29 @@ function includeTemplate() {
 				if (e.key === "Enter") searchHTML();
 			});
 
+			// Add last modified date to footer
+			document.getElementsByTagName("footer")[0].innerHTML += document.lastModified;
+
 		} else {console.error("Could not load 'template.html'.");}
 	}
-	xhttp.open("GET", "assets/template.html", true);
+	xhttp.open("GET", "assets/template.html");
 	xhttp.send();
-	return;
 }
 
 function searchHTML() {
-	var query = document.getElementById("searchbar").value.toLowerCase();
-	var resultsBox = document.getElementById("searchResults");
-	resultsBox.style.display = "block";
+	const query = document.getElementById("searchbar").value.toLowerCase(),
+		  resultsBox = document.getElementById("searchResults"),
+		  resultsHeading = resultsBox.firstElementChild,
+		  resultsList = resultsBox.lastElementChild;
 
-	var resultsList = resultsBox.lastElementChild;
+	resultsBox.style.display = "block";
+	resultsHeading.innerHTML = "Otsingutulemused:";
 	resultsList.innerHTML = "";
 	if (query.length < 3) {
 		resultsList.innerHTML += "Liiga lühike.";
 		return;
 	}
+	var nChildren = 0;
 
 	function createSubList(title, url) {
 		let listItem = document.createElement("li");
@@ -129,6 +86,7 @@ function searchHTML() {
 	for (i = 0; i < sites.length; i++) {
 		fetch(sites[i]).then(async file => {
 
+			// await, et saada Promise asemel andmed
 			let doc = parser.parseFromString(await file.text(), "text/html");
 			let filename = file.url.slice(file.url.lastIndexOf("/") + 1);
 			var [listItem, subList] = createSubList(doc.title+":", filename);
@@ -157,15 +115,17 @@ function searchHTML() {
 					} else {
 						subListItem.innerHTML = "..." + text + "...";
 					}
-					subList.appendChild(subListItem);
 				}
 				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
 
 					elemParent.innerHTML = elemParent.href.replace(/^https?:\/\/w*\.?/, "").replace(regex, replacement);
 					subListItem.appendChild(elemParent);
 					subListItem.appendChild(document.createTextNode(" (" + text + ")"));
-					subList.appendChild(subListItem);
+
 				}
+				else {continue;}
+				subList.appendChild(subListItem);
+				nChildren++;
 			}
 			if (subList.hasChildNodes()) {
 				listItem.appendChild(subList);
@@ -188,13 +148,14 @@ function searchHTML() {
 				if (index > -1) {
 					let li = document.createElement("li");
 					let text = lines[i];
-					if (text.length > 355) {
+					if (text.length > 350) {
 						let start = Math.max(0, index-165);
 						let end = Math.min(index+165, text.length);
 						text = "..." + text.slice(start, end) + "...";
 					}
 					li.innerHTML = text.replace(regex, replacement);
 					subList.appendChild(li);
+					nChildren++;
 				}
 			}
 			if (subList.hasChildNodes()) {
@@ -203,12 +164,20 @@ function searchHTML() {
 			}
 		});
 	}
+
+	resultsHeading.textContent = nChildren + " vastet otsingule '" + query + "':";
 }
 
 function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+	// Load theme based on storage
+	if (localStorage.getItem("bg-color")){
+		changeTheme(localStorage.getItem("bg-color"));
+	}
+});
 window.addEventListener("load", function() {
 	// Add some website icons next to their links
 	var icon, links = document.querySelectorAll("li > a");
@@ -216,7 +185,7 @@ window.addEventListener("load", function() {
 		if (links[i].href.match(/[/.]youtu[.b][be][e.]/)) {
 			icon = new Image(); //document.createElement("img");
 			icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
-			icon.alt = "yt_icon";
+			icon.alt = "yt";
 		}
 		else if (links[i].href.indexOf(".bitchute.") > -1) {
 			icon = new Image();
@@ -226,23 +195,16 @@ window.addEventListener("load", function() {
 		else if (links[i].href.indexOf("telegram") > -1) {
 			icon = new Image();
 			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico"
-			icon.alt = "telegram_icon";
+			icon.alt = "telegram";
 		}
 		else if (links[i].href.indexOf("in5d") > -1) {
 			icon = new Image();
 			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
-			icon.alt = "in5d_icon";
+			icon.alt = "in5d";
 		}
 		else {continue;}
 		links[i].insertAdjacentElement("beforebegin", icon);
 	}
 
-	// Load theme based on cookies
-	if (getCookie("bg-color") != ""){
-		changeTheme(getCookie("bg-color"));
-	}
 
-	// Add last modified date to footer
-	var x = document.lastModified;
-	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
 });

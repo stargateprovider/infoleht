@@ -6,12 +6,12 @@
 	<script src="assets/main.js"></script>
 	<script>includeTemplate();</script>
 	<script>
-const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g");
-const REGEX2 = new RegExp("entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)<", "g");
+const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g"),
+	 REGEX2 = new RegExp("entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)<", "g");
 
 async function fetchFeeds(sources) {
-	const parser = new DOMParser();
-	const proxy = "https://cors-anywhere.herokuapp.com/"
+	const parser = new DOMParser(),
+		  proxy = "";
 
 	var dataArray = [];
 	for (var i = 0; i < sources.length; i++) {
