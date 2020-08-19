@@ -193,8 +193,29 @@ function searchHTML() {
 	const decoder = new TextDecoder();
 
 	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i], {headers: {'Content-Type': 'text/plain'}})
+		fetch(sites[i], {headers: {'Content-Type': 'text/plain; charset=windows-1252'}})
 		.then(file => file.text())
+		.then(text => {
+			console.log(text);
+			let lines = decoder.decode(text).split("\n\n");
+			for (var i = 0; i < lines.length; i++) {
+
+				if (lines[i].toLowerCase().includes(query)) {
+					let li = document.createElement("li");
+					li.innerHTML = lines[i].replace(regex, replacement);
+					subList.appendChild(li);
+				}
+			}
+
+			if (subList.hasChildNodes()) {
+				listItem.appendChild(subList);
+				resultsList.appendChild(listItem);
+			}
+		});
+	}
+	for (i = 0; i < sites.length; i++) {
+		fetch(sites[i], {headers: {'Content-Type': 'text/plain; charset=windows-1252'}})
+		.then(file => file.arrayBuffer())
 		.then(text => {
 			console.log(text);
 			let lines = decoder.decode(text).split("\n\n");
