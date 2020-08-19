@@ -107,29 +107,34 @@ function searchHTML() {
 		return;
 	}
 
+	function createSubList(title, url) {
+		let listItem = document.createElement("li");
+		let a = document.createElement("a");
+		a.href = url;
+		a.textContent = title;
+		a.style.fontWeight = "bold";
+		listItem.appendChild(a);
+
+		let subList = document.createElement("ul");
+		subList.className = "detailsList";
+		return [listItem, subList];
+	}
+
 	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
-	const regex = new RegExp("("+query+")", "ig");
-	const replacement = "<span class='highlight'>$&</span>";
-	const parser = new DOMParser();
+	const regex = new RegExp("("+query+")", "ig"),
+		  replacement = "<span class='highlight'>$&</span>",
+		  parser = new DOMParser(),
+		  decoder = new TextDecoder("windows-1252");
 
 	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i])
-		.then(file=>file.text())
-		.then(filetext => {
-			let doc = parser.parseFromString(filetext, "text/html");
-			console.log(doc)
-			let listItem = document.createElement("li");
-			let a = document.createElement("a");
-			a.href = filename;
-			a.textContent = doc.title + ":";
-			a.style.fontWeight = "bold";
-			listItem.appendChild(a);
+		fetch(sites[i]).then(async file => {
 
-			var subList = document.createElement("ul");
-			subList.className = "detailsList";
+			let doc = parser.parseFromString(await file.text(), "text/html");
+			let filename = file.url.slice(file.url.lastIndexOf("/") + 1);
+			var [listItem, subList] = createSubList(doc.title+":", filename);
 
 			// Valib ainult kogu kuvatava teksti igalt lehelt
-			var walk = document.createTreeWalker(this.responseXML.body, NodeFilter.SHOW_TEXT, null, false);
+			var walk = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, null, false);
 			while(elem = walk.nextNode()) {
 
 				var subListItem = document.createElement("li");
@@ -142,15 +147,15 @@ function searchHTML() {
 					let end = Math.min(index+65, text.length);
 					text = text.slice(start, end);
 				}
-				text = "..." + text.replace(regex, replacement) + "...";
+				text = text.replace(regex, replacement);
 
 				if (index > -1) {
 
 					if (elemParent.localName == "a") {
-						elemParent.innerHTML = text;
+						elemParent.innerHTML = "..." + text + "...";
 						subListItem.appendChild(elemParent);
 					} else {
-						subListItem.innerHTML = text;
+						subListItem.innerHTML = "..." + text + "...";
 					}
 					subList.appendChild(subListItem);
 				}
@@ -169,19 +174,8 @@ function searchHTML() {
 		});
 	}
 
-
 	sites = ["assets/tsitaadid.txt", "assets/tsitaadid_düün.txt"];
-
-	let listItem = document.createElement("li");
-	let a = document.createElement("a");
-	a.href = "tsitaadid.html";
-	a.textContent = "Tsitaadid:";
-	a.style.fontWeight = "bold";
-	listItem.appendChild(a);
-
-	var subList = document.createElement("ul");
-	subList.className = "detailsList";
-	const decoder = new TextDecoder("windows-1252");
+	var [listItem, subList] = createSubList("Tsitaadid:", "tsitaadid.html");
 
 	for (i = 0; i < sites.length; i++) {
 		fetch(sites[i])
@@ -190,15 +184,16 @@ function searchHTML() {
 			let lines = decoder.decode(buffer).split("\n");
 			for (var i = 0; i < lines.length; i++) {
 
-				if (lines[i].toLowerCase().includes(query)) {
+				let index = lines[i].toLowerCase().indexOf(query);
+				if (index > -1) {
 					let li = document.createElement("li");
 					let text = lines[i];
 					if (text.length > 355) {
 						let start = Math.max(0, index-165);
 						let end = Math.min(index+165, text.length);
-						text = text.slice(start, end);
+						text = "..." + text.slice(start, end) + "...";
 					}
-					li.innerHTML = "..." + text.replace(regex, replacement) + "...";
+					li.innerHTML = text.replace(regex, replacement);
 					subList.appendChild(li);
 				}
 			}
