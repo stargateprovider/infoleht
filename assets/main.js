@@ -50,9 +50,9 @@ function includeTemplate() {
 }
 
 function searchHTML() {
-	const query = document.getElementById("searchbar").value.toLowerCase(),
+	const query = document.getElementById("searchbar").value.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
 		  resultsBox = document.getElementById("searchResults"),
-		  resultsHeading = resultsBox.firstElementChild,
+		  resultsHeading = resultsBox.firstElementChild.firstChild,
 		  resultsList = resultsBox.lastElementChild;
 
 	resultsBox.style.display = "block";
