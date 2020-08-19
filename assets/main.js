@@ -110,24 +110,18 @@ function searchHTML() {
 	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
 	const regex = new RegExp("("+query+")", "ig");
 	const replacement = "<span class='highlight'>$&</span>";
+	const parser = new DOMParser();
 
 	for (i = 0; i < sites.length; i++) {
-		let xhttp = new XMLHttpRequest();
-		xhttp.responseType = 'document';
-		xhttp.overrideMimeType('text/html');
-
-		xhttp.onload = function() {
-			let filename = this.responseURL.slice(this.responseURL.lastIndexOf("/") + 1);
-
-			if (this.readyState != 4 || this.status != 200) {
-				console.error("Could not load" + filename + ".");
-				return;
-			}
-
+		fetch(sites[i])
+		.then(file=>file.text())
+		.then(filetext => {
+			let doc = parser.parseFromString(filetext, "text/html");
+			console.log(doc)
 			let listItem = document.createElement("li");
 			let a = document.createElement("a");
 			a.href = filename;
-			a.textContent = this.responseXML.title + ":";
+			a.textContent = doc.title + ":";
 			a.style.fontWeight = "bold";
 			listItem.appendChild(a);
 
@@ -172,10 +166,7 @@ function searchHTML() {
 				listItem.appendChild(subList);
 				resultsList.appendChild(listItem);
 			}
-		}
-
-		xhttp.open("GET", sites[i] + ".html", true);
-		xhttp.send();
+		});
 	}
 
 
@@ -193,40 +184,24 @@ function searchHTML() {
 	const decoder = new TextDecoder("windows-1252");
 
 	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i], {headers: {'Content-Type': 'text/plain; charset=windows-1252'}})
-		.then(file => file.text())
-		.then(text => {
-			let lines = text.split("\n\n");
-			for (var i = 0; i < lines.length; i++) {
-
-				if (lines[i].toLowerCase().includes(query)) {
-					let li = document.createElement("li");
-					li.innerHTML = lines[i].replace(regex, replacement);
-					subList.appendChild(li);
-				}
-			}
-
-			if (subList.hasChildNodes()) {
-				listItem.appendChild(subList);
-				resultsList.appendChild(listItem);
-			}
-		});
-	}
-	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i], {headers: {'Content-Type': 'text/plain; charset=windows-1252'}})
+		fetch(sites[i])
 		.then(file => file.arrayBuffer())
-		.then(text => {
-			console.log(new TextDecoder("ansi").decode(text));
-			let lines = decoder.decode(text).split("\n\n");
+		.then(buffer => {
+			let lines = decoder.decode(buffer).split("\n");
 			for (var i = 0; i < lines.length; i++) {
 
 				if (lines[i].toLowerCase().includes(query)) {
 					let li = document.createElement("li");
-					li.innerHTML = lines[i].replace(regex, replacement);
+					let text = lines[i];
+					if (text.length > 355) {
+						let start = Math.max(0, index-165);
+						let end = Math.min(index+165, text.length);
+						text = text.slice(start, end);
+					}
+					li.innerHTML = "..." + text.replace(regex, replacement) + "...";
 					subList.appendChild(li);
 				}
 			}
-
 			if (subList.hasChildNodes()) {
 				listItem.appendChild(subList);
 				resultsList.appendChild(listItem);
