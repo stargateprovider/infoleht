@@ -13,11 +13,7 @@
 
 <body>
 <header>
-<div style="font-size:14px;line-height:30px;">
-	Taust:
-	<!--button id="themeBtn" class="btn" type="button" onclick="toggleTheme()">Lehe taust</button-->
-	<button class="btn" type="button" onclick="changeTheme(colors.default.bg)">Hele</button>
-	<button class="btn" type="button" onclick="changeTheme(colors.alt.bg)">Tume</button>
+	<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
 	<nav><ul>
 		<li><input id="searchbar" type="search" name="search" placeholder="Otsi kogu arhiivist..."><button style="padding-top:0;" onclick="searchHTML();">&#x1F50D;</button></li>
 		<li><a href="index.html" target="_self">Kodu</a></li>
@@ -29,13 +25,11 @@
 		<li><a href="muu.html" target="_self">Suvaline</a></li>
 		<li><a href="feeds.html" target="_self">RSS-vood</a></li>
 	</ul></nav>
-</div>
-<div id="searchResults">
-	<h3>Otsingutulemused:<button class="closeBtn" onclick="closeSearch();">x</button></h3>
-	<ul></ul>
-</div>
+	<div id="searchResults">
+		<h3>Otsingutulemused:<button class="closeBtn" onclick="closeSearch();">x</button></h3>
+		<ul></ul>
+	</div>
 </header>
-
-<footer> | Loodud 28/06/2019 | Viimati muudetud </footer>
+<footer><button onclick="scrollUp();">Tagasi üles</button></footer>
 </body>
 </html>

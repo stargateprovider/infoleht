@@ -15,7 +15,7 @@ async function fetchFeeds(sources) {
 
 	var dataArray = [];
 	for (var i = 0; i < sources.length; i++) {
-		const selectedRegex = sources[i].indexOf("youtube.") == -1 ? REGEX : REGEX2;
+		var selectedRegex = sources[i].indexOf("youtube.") == -1 ? REGEX : REGEX2;
 
 		await fetch(proxy + sources[i])
 		.then(file => file.text())

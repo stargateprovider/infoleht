@@ -11,12 +11,8 @@ function changeTheme(color) {
 	localStorage.setItem("bg-color", color);
 }
 function toggleTheme() {
-	let root = document.documentElement,
-		color = root.style.getPropertyValue('--main_bg_color');
-	root.style.setProperty('--main_bg_color', color!=colors.alt.bg ? colors.alt.bg : colors.default.bg);
-	root.style.setProperty('--main_elem_color', color==colors.alt.bg ? colors.default.elem : colors.alt.elem);
-	root.style.setProperty('--main_link_color', color==colors.alt.bg ? colors.default.link : colors.alt.link);
-	localStorage.setItem("bg-color", color);
+	let color = document.documentElement.style.getPropertyValue('--main_bg_color');
+	changeTheme(color != colors.alt.bg ? colors.alt.bg : colors.default.bg);
 }
 
 function includeTemplate() {
@@ -39,10 +35,6 @@ function includeTemplate() {
 			document.getElementById("searchbar").addEventListener("keypress", function (e) {
 				if (e.key === "Enter") searchHTML();
 			});
-
-			// Add last modified date to footer
-			document.getElementsByTagName("footer")[0].innerHTML += document.lastModified;
-
 		} else {console.error("Could not load 'template.html'.");}
 	}
 	xhttp.open("GET", "assets/template.html");
@@ -122,9 +114,9 @@ function searchHTML() {
 						subListItem.innerHTML = "..." + text + "...";
 					}
 				}
-				else if (elemParent.localName == "a" && elemParent.href.indexOf(query) > -1) {
+				else if (elemParent.localName == "a" && (index = elemParent.href.indexOf(query)) > -1) {
 
-					elemParent.innerHTML = shortenStr(elemParent.href.replace(/^https?:\/\/w*\.?/, ""))
+					elemParent.innerHTML = shortenStr(elemParent.href.replace(/^https?:\/\/w*\.?/, ""), 100, index-5)
 						.replace(regex, replacement);
 					subListItem.appendChild(elemParent);
 					subListItem.appendChild(document.createTextNode(" (" + text + ")"));
@@ -172,13 +164,27 @@ function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
+function scrollUp() {
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 	// Load theme based on storage
-	if (localStorage.getItem("bg-color")){
-		changeTheme(localStorage.getItem("bg-color"));
+	if (localStorage.getItem("bg-color") == colors.alt.bg){
+		changeTheme(colors.alt.bg);
+		document.getElementById("switch").checked = true;
 	}
 });
 window.addEventListener("load", function() {
+	// Add last modified date
+	if (document.getElementById("siteDate")) {
+		let lastModified = new Date(document.lastModified);
+		let timeStr = lastModified.getDay() + "/" + lastModified.getMonth() + "/" lastModified.getYear()
+					+ " " + lastModified.toTimeString().slice(0,8);
+		document.getElementById("siteDate").innerHTML += timeStr;
+	}
+
 	// Add some website icons next to their links
 	var i, icon, links = document.querySelectorAll("li > a");
 	for (i=0; i<links.length; i++) {
