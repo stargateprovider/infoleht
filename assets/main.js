@@ -187,12 +187,12 @@ function loadFavicons() {
 		}
 		else if (links[i].href.indexOf("telegram") > -1) {
 			icon = new Image();
-			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico"
+			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico";
 			icon.alt = "telegram";
 		}
 		else if (links[i].href.indexOf("in5d") > -1) {
 			icon = new Image();
-			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
+			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg";
 			icon.alt = "in5d";
 		}
 		else {continue;}
