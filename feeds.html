@@ -38,16 +38,16 @@ async function fetchFeeds(sources) {
 		a = document.createElement("a");
 		a.className = "tooltipBox";
 		a.href = matchGroup.link, "text/html";
-		a.appendChild(document.createTextNode(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent));
+		a.append(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent);
 
 		textarea = document.createElement("textarea");
 		textarea.className = "tooltipText";
 		textarea.setAttribute("readonly", "true");
-		textarea.appendChild(document.createTextNode(matchGroup.date));
+		textarea.append(matchGroup.date);
 		if (matchGroup["desc"]){
 			doc = parser.parseFromString(matchGroup.desc, "text/html");
 			doc = parser.parseFromString(doc.documentElement.textContent.trim(), "text/html");
-			textarea.appendChild(document.createTextNode("\n\n"+doc.documentElement.textContent));
+			textarea.append("\n\n"+doc.documentElement.textContent);
 		}
 
 		a.appendChild(textarea);
@@ -69,7 +69,6 @@ async function loadFeeds() {
 	let feedsList = await fetchFeeds(sources);
 	feedsContainer.innerHTML = "Värske info allikatest <b>Telegram, In5D, Ryan Cropper, David Icke</b>:";
 	feedsContainer.appendChild(feedsList);
-
 	loadFavicons();
 }
 window.addEventListener("load", loadFeeds);
