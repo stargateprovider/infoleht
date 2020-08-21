@@ -186,7 +186,7 @@ window.addEventListener("load", function() {
 				year: 'numeric', month: '2-digit', day: '2-digit',
 				hour: 'numeric', minute: 'numeric', second: 'numeric'})
 				.format(lastModified);
-		document.getElementById("siteDate").innerHTML += timeStr.replace(".", "/");
+		document.getElementById("siteDate").innerHTML += timeStr.replaceAll(".", "/");
 	}
 
 	// Add some website icons next to their links
