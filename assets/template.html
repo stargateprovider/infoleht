@@ -13,7 +13,7 @@
 
 <body>
 <header>
-	<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
+	<div><span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
 	<nav><ul>
 		<li><input id="searchbar" type="search" name="search" placeholder="Otsi kogu arhiivist..."><button style="padding-top:0;" onclick="searchHTML();">&#x1F50D;</button></li>
 		<li><a href="index.html" target="_self">Kodu</a></li>
@@ -24,12 +24,12 @@
 		<li><a href="tsitaadid.html" target="_self">Tsitaadid</a></li>
 		<li><a href="muu.html" target="_self">Suvaline</a></li>
 		<li><a href="feeds.html" target="_self">RSS-vood</a></li>
-	</ul></nav>
+	</ul></nav></div>
 	<div id="searchResults">
 		<h3>Otsingutulemused:<button class="closeBtn" onclick="closeSearch();">x</button></h3>
 		<ul></ul>
 	</div>
 </header>
-<footer><button onclick="scrollUp();">Tagasi üles</button></footer>
+<footer><button class="scrollTop" onclick="scrollUp();">&#x2c4;</button></footer>
 </body>
 </html>

@@ -106,6 +106,7 @@ li ul{
 #siteDate{
 	color: grey;
 	font-size: italic;
+	margin-bottom: 16px;
 }
 
 #searchResults{
@@ -153,6 +154,12 @@ li ul{
 	margin-right: 25px;
 	font-size: 16px;
 	box-shadow: 0 0 4px 2px var(--main_border_color);
+}
+.scrollTop{
+	display: none;
+	font-weight: bold;
+	font-size: 15px;
+	width: 32px;
 }
 
 #switch{
@@ -226,5 +233,8 @@ label[for=switch]:after {
 @media screen and (max-width:500px){
 	footer{
 		font-size: 3.2vw;
+	}
+	.scrollTop{
+		display: initial;
 	}
 }

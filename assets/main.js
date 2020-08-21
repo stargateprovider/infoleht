@@ -31,6 +31,9 @@ function includeTemplate() {
 				docElement.innerHTML += importElement.innerHTML;
 			}
 
+			// Set dark theme switch state
+			document.getElementById("switch").checked = localStorage.getItem("bg-color") == colors.alt.bg;
+
 			// Search on Enter press
 			document.getElementById("searchbar").addEventListener("keypress", function (e) {
 				if (e.key === "Enter") searchHTML();
@@ -164,16 +167,10 @@ function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
-function scrollUp() {
-	document.body.scrollTop = 0; // For Safari
-	document.documentElement.scrollTop = 0;
-}
-
 document.addEventListener("DOMContentLoaded", function() {
 	// Load theme based on storage
-	if (localStorage.getItem("bg-color") == colors.alt.bg){
+	if (localStorage.getItem("bg-color") == colors.alt.bg) {
 		changeTheme(colors.alt.bg);
-		document.getElementById("switch").checked = true;
 	}
 });
 window.addEventListener("load", function() {
