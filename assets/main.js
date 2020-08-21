@@ -182,8 +182,8 @@ window.addEventListener("load", function() {
 	// Add last modified date
 	if (document.getElementById("siteDate")) {
 		let lastModified = new Date(document.lastModified);
-		let timeStr = lastModified.getDay() + "/" + lastModified.getMonth() + "/" + lastModified.getYear()
-					+ " " + lastModified.toTimeString().slice(0,8);
+		let timeStr = lastModified.getDay() + "/" + lastModified.getMonth()+1 + "/"
+					+ lastModified.getFullYear() + " " + lastModified.toTimeString().slice(0,8);
 		document.getElementById("siteDate").innerHTML += timeStr;
 	}
 
