@@ -172,24 +172,7 @@ function scrollUp() {
 	document.documentElement.scrollTop = 0;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-	// Load theme based on storage
-	if (localStorage.getItem("bg-color") == colors.alt.bg) {
-		changeTheme(colors.alt.bg);
-	}
-});
-window.addEventListener("load", function() {
-	// Add last modified date
-	if (document.getElementById("siteDate")) {
-		let lastModified = new Date(document.lastModified),
-			timeStr = new Intl.DateTimeFormat('et', {
-				year: 'numeric', month: '2-digit', day: '2-digit',
-				hour: 'numeric', minute: 'numeric', second: 'numeric'})
-				.format(lastModified);
-		document.getElementById("siteDate").innerHTML += timeStr.replaceAll(".", "/");
-	}
-
-	// Add some website icons next to their links
+function loadFavicons() {
 	var i, icon, links = document.querySelectorAll("li > a");
 	for (i=0; i<links.length; i++) {
 		if (links[i].href.match(/[/.]youtu[.b][be][e.]/)) {
@@ -215,4 +198,25 @@ window.addEventListener("load", function() {
 		else {continue;}
 		links[i].insertAdjacentElement("beforebegin", icon);
 	}
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+	// Load theme based on storage
+	if (localStorage.getItem("bg-color") == colors.alt.bg) {
+		changeTheme(colors.alt.bg);
+	}
+});
+window.addEventListener("load", function() {
+	// Add last modified date
+	if (document.getElementById("siteDate")) {
+		let lastModified = new Date(document.lastModified),
+			timeStr = new Intl.DateTimeFormat('et', {
+				year: 'numeric', month: '2-digit', day: '2-digit',
+				hour: 'numeric', minute: 'numeric', second: 'numeric'})
+				.format(lastModified);
+		document.getElementById("siteDate").innerHTML += timeStr.replaceAll(".", "/");
+	}
+
+	// Add some website icons next to their links
+	loadFavicons();
 });

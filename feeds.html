@@ -69,6 +69,8 @@ async function loadFeeds() {
 	let feedsList = await fetchFeeds(sources);
 	feedsContainer.innerHTML = "Värske info allikatest <b>Telegram, In5D, Ryan Cropper, David Icke</b>:";
 	feedsContainer.appendChild(feedsList);
+
+	loadFavicons();
 }
 window.addEventListener("load", loadFeeds);
 	</script>
