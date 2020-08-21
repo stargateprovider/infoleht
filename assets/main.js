@@ -122,7 +122,7 @@ function searchHTML() {
 					elemParent.innerHTML = shortenStr(elemParent.href.replace(/^https?:\/\/w*\.?/, ""), 100, index-5)
 						.replace(regex, replacement);
 					subListItem.appendChild(elemParent);
-					subListItem.appendChild(document.createTextNode(" (" + text + ")"));
+					subListItem.append(" (" + text + ")");
 
 				}
 				else {continue;}
@@ -196,7 +196,7 @@ function loadFavicons() {
 			icon.alt = "in5d";
 		}
 		else {continue;}
-		links[i].prepend("beforebegin", icon);
+		links[i].prepend(icon);
 	}
 }
 

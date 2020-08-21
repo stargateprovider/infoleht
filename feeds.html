@@ -35,7 +35,6 @@ async function fetchFeeds(sources) {
 		matchGroup = dataArray[i].groups;
 
 		li = document.createElement("li");
-		li.className = "flex-container";
 		a = document.createElement("a");
 		a.className = "tooltipBox";
 		a.href = matchGroup.link, "text/html";
@@ -72,7 +71,6 @@ async function loadFeeds() {
 	feedsContainer.appendChild(feedsList);
 
 	loadFavicons();
-	console.log("loaded?")
 }
 window.addEventListener("load", loadFeeds);
 	</script>
