@@ -91,7 +91,7 @@ a{
 li > img{
 	max-width:16px;
 	margin-right:5px;
-	vertical-align:text-top;
+	vertical-align:text-bottom;
 }
 
 li ul{
@@ -188,7 +188,7 @@ label[for=switch]:after {
 	transition: .15s ease-in;
 }
 #switch:checked + label[for=switch] {
-	background: teal;
+	background: var(--main_border_color);
 }
 #switch:checked + label[for=switch]:after {
 	left: calc(100% - 3px);

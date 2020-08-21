@@ -196,7 +196,7 @@ function loadFavicons() {
 			icon.alt = "in5d";
 		}
 		else {continue;}
-		links[i].insertAdjacentElement("beforebegin", icon);
+		links[i].firstChild.insertAdjacentElement("beforebegin", icon);
 	}
 }
 
