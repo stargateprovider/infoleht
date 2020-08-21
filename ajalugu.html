@@ -11,14 +11,11 @@
 		details:not([open])>summary{color:var(--main_link_color);cursor:pointer;text-decoration:underline;}
 	</style>
 	<script src="assets/main.js"></script>
-	<script>colors.default.link="#8F4401";colors.alt.link="#AB6523";</script>
 </head>
 <body>
 
 <header style="color:black;background:url('https://i.pinimg.com/originals/8b/df/5a/8bdf5aa133d11cc3a16fd92c924b38a5.jpg')">Alternatiivajaloo teooriad ja enigmad<br>
-<!--button id="themeBtn" class="btn" type="button" onclick="toggleTheme()">Lehe taust</button-->
-<button class="btn" type="button" onclick="changeTheme(colors.default.bg)">Hele</button>
-<button class="btn" type="button" onclick="changeTheme(colors.alt.bg)">Tume</button>
+<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
 </header>
 
 <main>
@@ -100,5 +97,6 @@
 	<!--li><a href="https://solutions4theinnocent.wordpress.com/library/blacks-law-9th-edition/">Black's Law Dictionary 9. versioon</a></li-->
 </ul>
 <span class="hseparator"></span>
+<script>colors.default.link="#8F4401";colors.alt.link="#AB6523";document.getElementById("switch").checked=localStorage.getItem("bg-color")==colors.alt.bg;</script>
 </body>
 </html>

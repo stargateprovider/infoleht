@@ -18,8 +18,7 @@
 <body>
 
 <header>Koroona <i>"kavala plaani"</i> lingid<br>
-<button class="btn" type="button" onclick="changeTheme(colors.default.bg)">Hele</button>
-<button class="btn" type="button" onclick="changeTheme(colors.alt.bg)">Tume</button>
+<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
 </header>
 
 <main>
@@ -309,5 +308,6 @@
 </ul></details>
 <span class="hseparator"></span>
 </main>
+<script>document.getElementById("switch").checked=localStorage.getItem("bg-color")==colors.alt.bg;</script>
 </body>
 </html>

@@ -167,6 +167,11 @@ function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
+function scrollUp() {
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 	// Load theme based on storage
 	if (localStorage.getItem("bg-color") == colors.alt.bg) {
