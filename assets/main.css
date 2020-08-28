@@ -202,6 +202,16 @@ label[for=switch]:after {
 .highlight{
 	background-color: chocolate;
 }
+.afterNote::before, .afterNote::after{
+	color: var(--main_elem_color);
+	text-decoration-line: none!important;
+}
+.afterNote::before{
+	content: '(=';
+}
+.afterNote::after{
+	content: '=)';
+}
 
 .hseparator{
 	display: flex;
