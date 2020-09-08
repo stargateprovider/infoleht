@@ -1,70 +1,23 @@
-function getCookie(cname) {
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var c, ca = decodedCookie.split(';');
-	for(var i=0; i<ca.length; i++) {
-		c = ca[i];
-		while (c.charAt(0) == ' ') {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
-}
-function setCookie(cname, cvalue, exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	var expires = "expires="+d.toUTCString();
-	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+const colors = {
+	default: {bg: "white", elem: "black", link: "#0000EE", border: "teal"},
+	alt: 	 {bg: "black", elem: "white", link: "cyan"}
+};
 
 function changeTheme(color) {
 	let root = document.documentElement;
 	root.style.setProperty('--main_bg_color', color);
-	root.style.setProperty('--main_elem_color', color=="white" ? "black" : "white");
-	root.style.setProperty('--main_link_color', color=="white" ? "#0000EE" : "cyan");
-	setCookie("bg-color", color, 365);
+	root.style.setProperty('--main_elem_color', color==colors.default.bg ? colors.default.elem : colors.alt.elem);
+	root.style.setProperty('--main_link_color', color==colors.default.bg ? colors.default.link : colors.alt.link);
+	localStorage.setItem("bg-color", color);
 }
 function toggleTheme() {
-	let root = document.documentElement;
-	let color = root.style.getPropertyValue('--main_bg_color');
-	root.style.setProperty('--main_bg_color', color!="black" ? "black" : "white");
-	root.style.setProperty('--main_elem_color', color=="black" ? "black" : "white");
-	root.style.setProperty('--main_link_color', color=="black" ? "#0000EE" : "cyan");
-	setCookie("bg-color", color, 365);
+	let color = document.documentElement.style.getPropertyValue('--main_bg_color');
+	changeTheme(color != colors.alt.bg ? colors.alt.bg : colors.default.bg);
 }
-function includeHTML() {
-	var z, i, elmnt, file, xhttp;
-	/* Loop through a collection of all HTML elements: */
-	z = document.getElementsByTagName("*");
-	for (i = 0; i < z.length; i++) {
-		elmnt = z[i];
-		/*search for elements with a certain atrribute:*/
-		file = elmnt.getAttribute("w3-include-html");
-		if (file) {
-			/* Make an HTTP request using the attribute value as the file name: */
-			xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4) {
-					if (this.status == 200) {elmnt.innerHTML += this.responseText;}
-					if (this.status == 404) {elmnt.innerHTML += " imported page not found.";}
-					/* Remove the attribute, and call this function once more: */
-					elmnt.removeAttribute("w3-include-html");
-					includeHTML();
-				}
-			}
-			xhttp.open("GET", file, true);
-			xhttp.send();
-			/* Exit the function: */
-			return;
-		}
-	}
-}
+
 function includeTemplate() {
-	var elements = ["head", "header"];
-	var xhttp = new XMLHttpRequest();
+	const elements = ["head", "header", "footer"],
+		  xhttp = new XMLHttpRequest();
 
 	// Force the response to be parsed as HTML
 	xhttp.responseType = 'document';
@@ -77,46 +30,193 @@ function includeTemplate() {
 				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 				docElement.innerHTML += importElement.innerHTML;
 			}
+
+			// Set dark theme switch state
+			document.getElementById("switch").checked = localStorage.getItem("bg-color") == colors.alt.bg;
+
+			// Search on Enter press
+			document.getElementById("searchbar").addEventListener("keypress", function (e) {
+				if (e.key === "Enter") searchHTML();
+			});
 		} else {console.error("Could not load 'template.html'.");}
 	}
-	xhttp.open("GET", "assets/template.html", true);
+	xhttp.open("GET", "assets/template.html");
 	xhttp.send();
-	return;
 }
-window.onload = function() {
-	// Add youtube, telegram, in5D icons next to their links
-	var icon, links = document.querySelectorAll("li > a");
-	for (var i=0; i<links.length; i++) {
+
+function shortenStr(text, charlimit, middle, dot=false) {
+	if (text.length > charlimit) {
+		let allow = charlimit/2 - 10,
+			start = Math.max(0, middle-allow),
+			end = Math.min(middle+allow, text.length);
+		text = text.slice(start, end);
+		if (dot) {
+			text = "..." + text + "...";
+		}
+	}
+	return text;
+}
+
+function searchHTML() {
+	const query = document.getElementById("searchbar").value.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
+		  resultsBox = document.getElementById("searchResults"),
+		  resultsHeading = resultsBox.firstElementChild.firstChild,
+		  resultsList = resultsBox.lastElementChild;
+
+	resultsBox.style.display = "block";
+	resultsHeading.textContent = "0 vastet otsingule:";
+	resultsList.innerHTML = "";
+	if (query.length < 3) {
+		resultsList.innerHTML += "Liiga lühike.";
+		return;
+	}
+	var i, nChildren = 0;
+
+	function createSubList(title, url) {
+		let listItem = document.createElement("li"),
+			a = document.createElement("a");
+		a.href = url;
+		a.textContent = title;
+		a.style.fontWeight = "bold";
+		listItem.appendChild(a);
+
+		let subList = document.createElement("ul");
+		subList.className = "detailsList";
+		return [listItem, subList];
+	}
+
+	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
+	const regex = new RegExp("("+query+")", "ig"),
+		  replacement = "<span class='highlight'>$&</span>",
+		  parser = new DOMParser(),
+		  decoder = new TextDecoder("windows-1252");
+
+	for (i = 0; i < sites.length; i++) {
+		fetch(sites[i]).then(async file => {
+
+			// await, et saada Promise asemel andmed
+			let doc = parser.parseFromString(await file.text(), "text/html");
+			let filename = file.url.slice(file.url.lastIndexOf("/") + 1);
+			var [listItem, subList] = createSubList(doc.title+":", filename);
+
+			// Valib ainult kogu kuvatava teksti igalt lehelt
+			var walk = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, null, false);
+			while(elem = walk.nextNode()) {
+
+				var subListItem = document.createElement("li");
+				let index = elem.textContent.toLowerCase().indexOf(query);
+				let elemParent = elem.parentNode.cloneNode(); // deep=false ehk ilma sisuta
+				var text = shortenStr(elem.textContent, 150, index).replace(regex, replacement);
+
+				if (index > -1) {
+
+					if (elemParent.localName == "a") {
+						elemParent.innerHTML = "..." + text + "...";
+						subListItem.appendChild(elemParent);
+					} else {
+						subListItem.innerHTML = "..." + text + "...";
+					}
+				}
+				else if (elemParent.localName == "a" && (index = elemParent.href.indexOf(query)) > -1) {
+
+					elemParent.innerHTML = shortenStr(elemParent.href.replace(/^https?:\/\/w*\.?/, ""), 100, index-5)
+						.replace(regex, replacement);
+					subListItem.appendChild(elemParent);
+					subListItem.append(" (" + text + ")");
+
+				}
+				else {continue;}
+				subList.appendChild(subListItem);
+				nChildren++;
+			}
+			if (subList.hasChildNodes()) {
+				listItem.appendChild(subList);
+				resultsList.appendChild(listItem);
+			}
+		});
+	}
+
+	sites = ["assets/tsitaadid.txt", "assets/tsitaadid_düün.txt"];
+	var [listItem, subList] = createSubList("Tsitaadid:", "tsitaadid.html");
+
+	for (i = 0; i < sites.length; i++) {
+		fetch(sites[i])
+		.then(file => file.arrayBuffer())
+		.then(buffer => {
+			let lines = decoder.decode(buffer).split("\n");
+			for (var i = 0; i < lines.length; i++) {
+
+				let index = lines[i].toLowerCase().indexOf(query);
+				if (index > -1) {
+					let li = document.createElement("li");
+					li.innerHTML = shortenStr(lines[i], 330, index, true).replace(regex, replacement);
+					subList.appendChild(li);
+					nChildren++;
+				}
+			}
+			if (subList.hasChildNodes()) {
+				listItem.appendChild(subList);
+				resultsList.appendChild(listItem);
+			}
+			resultsHeading.textContent = nChildren + " vastet otsingule '" + query + "':";
+		});
+	}
+}
+
+function closeSearch() {
+	document.getElementById("searchResults").style.display = "none";
+}
+
+function scrollUp() {
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0;
+}
+
+function loadFavicons() {
+	var i, icon, links = document.querySelectorAll("li > a");
+	for (i=0; i<links.length; i++) {
 		if (links[i].href.match(/[/.]youtu[.b][be][e.]/)) {
 			icon = new Image(); //document.createElement("img");
 			icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
-			icon.alt = "yt_icon";
+			icon.alt = "yt";
 		}
 		else if (links[i].href.indexOf(".bitchute.") > -1) {
 			icon = new Image();
-			icon.src = "https://www.bitchute.com/static/v116/images/favicon-32x32.png";
+			icon.src = "https://www.bitchute.com/static/v120/images/favicon-32x32.png";
 			icon.alt = "";
 		}
 		else if (links[i].href.indexOf("telegram") > -1) {
 			icon = new Image();
-			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico"
-			icon.alt = "telegram_icon";
+			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico";
+			icon.alt = "telegram";
 		}
 		else if (links[i].href.indexOf("in5d") > -1) {
 			icon = new Image();
-			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg"
-			icon.alt = "in5d_icon";
+			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg";
+			icon.alt = "in5d";
 		}
 		else {continue;}
-		links[i].insertAdjacentElement("beforebegin", icon);
+		links[i].prepend(icon);
 	}
-
-	// Load theme based on cookies
-	if (getCookie("bg-color") != ""){
-		changeTheme(getCookie("bg-color"));
-	}
-
-	// Add last modified date to footer
-	var x = document.lastModified;
-	document.getElementsByTagName("footer")[0].innerHTML += " | Loodud 28/06/2019 | Viimati muudetud " + x;
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+	// Load theme based on storage
+	if (localStorage.getItem("bg-color") == colors.alt.bg) {
+		changeTheme(colors.alt.bg);
+	}
+});
+window.addEventListener("load", function() {
+	// Add last modified date
+	if (document.getElementById("siteDate")) {
+		let lastModified = new Date(document.lastModified),
+			timeStr = new Intl.DateTimeFormat('et', {
+				year: 'numeric', month: '2-digit', day: '2-digit',
+				hour: 'numeric', minute: 'numeric', second: 'numeric'})
+				.format(lastModified);
+		document.getElementById("siteDate").innerHTML += timeStr.replaceAll(".", "/");
+	}
+
+	// Add some website icons next to their links
+	loadFavicons();
+});

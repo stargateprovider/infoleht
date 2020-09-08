@@ -7,25 +7,18 @@
 	<base target="_blank" />
 	<link rel="stylesheet" type="text/css" href="assets/main.css" />
 	<style>
-		div,p,h3,h4{margin:15px;}
-		button{border:1px solid black!important;}
-		.extra{margin-top:0;margin-bottom:0;}
-		details{margin-left:15px;width:fit-content;}
+		main{margin-left:15px;}
 		details:not([open])>summary{color:var(--main_link_color);cursor:pointer;text-decoration:underline;}
-		summary>h3{display:inline;margin-left:0;}
-		.detailsList{list-style-type:none;margin:0 0 15px 0;padding:0;}
+		ul{padding-left:20px;}
+		li ul{margin-top:5px;margin-bottom:10px;margin-left:20px;list-style-type:disc;}
 		.detailsList>li{margin-bottom:3px;}
-		li ul{margin-top:5px;margin-bottom:10px;list-style-type:disc;}
-		.mainLevelUl{margin-top:10px;padding-left:20px;}
 	</style>
 	<script src="assets/main.js"></script>
 </head>
 <body>
 
 <header>Koroona <i>"kavala plaani"</i> lingid<br>
-<!--button id="themeBtn" class="btn" type="button" onclick="toggleTheme()">Lehe taust</button-->
-<button class="btn" type="button" onclick="changeTheme('white')">Hele</button>
-<button class="btn" type="button" onclick="changeTheme('black')">Tume</button>
+<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
 </header>
 
 <main>
@@ -79,12 +72,13 @@
 	<li><details><summary>Andrew Kaufman</summary>
 	<ul>
 		<li><a href="https://www.dailymotion.com/embed/video/k1GlRsuIAEUc8lw0L83?queue-enable=false">London Real intervjuu</a> (29. aprill)</li>
-		<li><a href="https://youtu.be/j2Wq-alAXQY">Esitlus COVID-19 kohta</a> (30. märts)</li>
-		<li><a href="https://www.youtube.com/watch?v=fvcEIarencM">Esitlus Kochi postulaatidest</a> (20. aprill)</li>
+		<li><a href="https://www.bitchute.com/video/U2xM8ZJ0Xmdx/">Esitlus COVID-19 kohta</a> (30. märts)</li>
+		<li><a href="https://www.bitchute.com/video/9sIXMC28Yi2O/">Esitlus Kochi postulaatidest</a> (20. aprill)</li>
 		<li><a href="https://www.youtube.com/channel/UCV7v2cvSnrJ9Qyz36cW1Ftw/videos">Kaufmani Youtube kanal</a></li>
-		<li><a href="https://www.andrewkaufmanmd.com/">Kaufmani veebileht</a>, kust võib veel videoid leida</li>
+		<li><a href="https://www.andrewkaufmanmd.com/">Kaufmani veebileht</a></li>
 		<li><a href="https://www.youtube.com/watch?v=V66H3BdJMoI">Arutelud Dr. Sherri Tenpenny ja Marcy Cravat'ga</a></li>
 		<li><a href="https://www.telegram.ee/teadus-ja-tulevik/video-dr-kaufmani-london-reali-intervjuu-koroonapandeemiast-eestikeelsete-subtiitritega">Video: dr Kaufmani London Real´i intervjuu (eesti subtiitritega)</a></li>
+		<li><a href="https://www.youtube.com/watch?v=EQulB4cf1mY">Dokfilm: Hippocratic Hypocrisy</a></li>
 	</ul>
 	<p><span style="text-decoration:underline;">Täpsustuseks:</span> Kaufman mainib, et ühtegi viirust pole kunagi isoleeritud, aga selle põhjus pole võib-olla kohe ilmselge. Mulle seletati lähemalt, et asi on selles, et viiruse isoleerimisprotsess on vigane ning selle tõttu ei saa seda ka viiruse tõestamiseks kasutada.</p>
 	</details></li>
@@ -140,7 +134,7 @@
 
 		<p><i>"Here’s the thing. RNA viruses, like the one that causes COVID-19, make a lot of mistakes when replicating their genomes, and sometimes these mistakes result in viral genomes containing fatal mistakes, or mutations, that render a critical viral gene non-functional – meaning they won’t infect people who come into contact with them. (In fact, these kinds of mistakes are why plants, animals, bugs, people – basically anything more complicated than these viruses – store genetic information in DNA instead, because far fewer mistakes are made when DNA replicates.) But when you run a qRT-PCR test, those viral genes with mistakes are indistinguishable from the ones that aren’t. And either way, the cellular machinery that makes more viruses will package up both functional and non-functional RNA. The RNA inside these packages, called virions, is what the qRT-PCR test is looking for. For reasons that are not fully understood, patients that have recovered from a viral infection have cells that can continue to produce viral RNA without actually making infectious virus particles. That means it is not only possible but common to detect viral RNA without there being any infectious virus present."</i>
 		<a href="https://www.forbes.com/sites/coronavirusfrontlines/2020/04/07/a-virologist-explains-why-hyped-studies-tell-us-very-little-about-the-likelihood-of-covid-19-coronavirus-transmission/">Allikas</a></p>
-	</div></details></li>    
+	</div></details></li>
 	<li><details><summary>Teised</summary><ul>
 		<li><a href="https://social.davidicke.com/index.php?/topic/3938-docs-want-to-get-the-word-out/">Docs want to get the word out</a> - David Icke Social Forum</li>
 		<li><a href="https://youtu.be/QHBLMTrRNZE">Dr Nancy Turner Banks</a> (aprill 2018)</li>
@@ -170,7 +164,7 @@
 	<li><a href="https://www.rfglobalnet.com/doc/fixed-wireless-communications-at-60ghz-unique-0001">60GHz unikaalne hapniku imamise omadus</a> (2001)</li>
 	<!--li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0022285204003650">Vastav 60GHz uurimistöö</a> (2005)</li-->
 	<li><a href="https://www.youtube.com/watch?v=1EWQPgF6-UQ">60Ghz sageduse mõju patsientidele</a></li>
-	<li><a href="https://www.youtube.com/watch?v=gbfEDfVfx2w&feature=youtu.be">Endise Microsoft Canada juhataja hoiatus 5G suhtes</a></li>
+	<li><a href="https://www.youtube.com/watch?v=gbfEDfVfx2w">Endise Microsoft Canada juhataja hoiatus 5G suhtes</a></li>
 	<li><a href="https://www.researchgate.net/publication/298533689_International_Appeal_Scientists_call_for_protection_from_non-ionizing_electromagnetic_field_exposure">International Appeal: Scientists call for protection from non-ionizing electromagnetic field exposure</a></li>
 	<li><a href="https://theconsciousresistance.com/sorry-i-was-wrong-about-5g-and-covid19/">5G ja COVID19 | The Conscious Resistance Network</a></li>
 	<li><a href="https://www.lifewire.com/5g-availability-world-4156244">5G eri riikides</a></li>
@@ -209,6 +203,9 @@
 	<li><a href="https://www.telegram.ee/nwo/david-icke-koroonaviirusest-2-osa-5g-naljamanguuhiskond-ja-kuidas-inimkond-vabaks-saab">David Icke koroonaviirusest (2. osa)</a></li>
 	<li><a href="https://www.telegram.ee/maailm/saksa-dokfilm-who-lobistide-haardes-salajane-niiditombaja-on-bill-gates">Bill Gates ja WHO</a></li>
 	<li><a href="http://vanglaplaneet.ee/blog/2020/01/26/bill-melinda-gates-foundation-valmistus-koroonaviiruse-puhanguks-juba-kolm-kuud-tagasi-18-kuuga-65-miljonit-laipa/">Bill & Melinda Gates Foundation valmistus koroonaviiruse puhanguks juba kolm kuud tagasi – “18 kuuga 65 miljonit laipa”</a></li>
+	<li><a href="https://www.telegram.ee/teadus-ja-tulevik/torsten-engelbrecht-covid-19-pcr-testid-on-teaduslikult-mottetud">Torsten Engelbrecht: COVID-19 PCR-testid on teaduslikult mõttetud</a></li>
+	<li><a href="https://www.telegram.ee/maailm/inglismaa-tunnistab-et-kumned-tuhanded-koroonaviiruse-testid-on-topelt-arvestatud">Inglismaa tunnistab, et kümned tuhanded koroonaviiruse testid on topelt arvestatud</a></li>
+	<li><a href="https://www.telegram.ee/maailm/koroonaprotest-berliinis-politseiametnik-raagib-poliitikute-ja-massimeedia-valedest">Koroonaprotest Berliinis: politseiametniku sõnul poliitikud ja massimeedia valetasid</a></li>
 </ul></details>
 
 <h3>Bill Gates</h3>
@@ -224,7 +221,7 @@
 	<li><a href="https://www.modernghana.com/news/989161/chinas-bitter-lesson-from-pirating-patented-prope.html">China’s Bitter Lesson From Pirating Patented Properties</a></li>
 </ul>
 
-<h3>Muud allikad, mis olen leidnud:</h3>
+<h3>Muud allikad:</h3>
 <ul>
 	<!-- ALT1: https://www.youtube.com/watch?v=hp1GDqDAA4E ALT2: https://www.facebook.com/sara.98222/videos/10105710349919968/ ALT3: https://www.youtube.com/watch?v=9XJ1ojCDLYU-->
 	<li><a href="https://twitter.com/GregR19709804/status/1243886018387984385">Pereliikmed tunnistavad, et meedias viiruse ohvriks kuulutatud sugulased ei surnud viirusesse | Twitter</a></li>
@@ -249,8 +246,13 @@
 	<li><a href="https://greatgameindia.com/covid-19-deaths-certificates-scam/">COVID-19 Deaths Certificates Scam Exposed By Funeral Home Directors | GreatGameIndia</a></li>
 	<li><a href="https://www.newsbreak.com/news/0OvlLn5H/south-korean-scientists-conclude-people-cannot-be-infected-with-coronavirus-more-than-once">Lõuna-Korea teadlased ütlevad, et koroonaviirusesse saab nakatuda vaid ühe korra</a></li>
 	<li><a href="https://www.globalresearch.ca/are-ventilators-killing-more-people-than-saving/5709562">Hingamisaparaadid on ohtlikud tervisele</a></li>
+	<li><a href="https://pubmed.ncbi.nlm.nih.gov/32133832/">Märtsis tagasivõetud hiinlaste uurimistöö: Kuni 80% asümptootilistest juhtudest võivad olla valepositiivsed</a></li>
+	<li><a href="https://blog.nomorefakenews.com/2020/07/09/my-investigation-of-the-so-called-covid-deaths/">Juulis ilmunud surmajuhtumeid uuriv artikkel</a></li>
+	<li><a href="https://www.rcreader.com/commentary/masks-dont-work-covid-a-review-of-science-relevant-to-covide-19-social-policy">Miks maskidest ei ole kasu</a></li>
+	<li><a href="https://bendedreality.com/covid-19-present-in-spanish-sewage-as-early-as-march-2019-according-to-study/">COVID-19 oli Hispaanias juba 2019 kevadel</a></li>
+	<!--https://abyssum.org/2020/06/26/soylent-green-it-isnt-but-it-is-almost-as-bad-open-source-press-reports-reveal-the-excess-mortality-of-2020-is-largely-the-result-of-elderly-people-dying-prematurely-in-nursing-homes/-->
 </ul>
-</main>
+
 
 
 <span class="hseparator">&nbsp;Lisad&nbsp;</span>
@@ -307,5 +309,7 @@
 	<li><a href="https://www.mdpi.com/2072-6694/11/6/888">Exo-miRNAs as a New Tool for Liquid Biopsy in Lung Cancer</a></li>
 </ul></details>
 <span class="hseparator"></span>
+</main>
+<script>document.getElementById("switch").checked=localStorage.getItem("bg-color")==colors.alt.bg;</script>
 </body>
 </html>
