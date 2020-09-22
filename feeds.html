@@ -17,9 +17,14 @@ async function fetchFeeds(sources) {
 	for (var i = 0; i < sources.length; i++) {
 		var selectedRegex = sources[i].indexOf("youtube.") == -1 ? REGEX : REGEX2;
 
-		await fetch(proxy + sources[i])
-		.then(file => file.text())
-		.then(str => dataArray.push(...Array.from(str.matchAll(selectedRegex))));
+		try{
+			await fetch(proxy + sources[i])
+			.then(file => file.text())
+			.then(str => dataArray.push(...Array.from(str.matchAll(selectedRegex))));
+		} catch(err){
+			console.log("Failed to receive data from " + sources[i]);
+			console.error(err)
+		}
 	}
 
 	dataArray.sort((a,b) => {
@@ -69,7 +74,6 @@ async function loadFeeds() {
 	let feedsList = await fetchFeeds(sources);
 	feedsContainer.innerHTML = "Värske info allikatest <b>Telegram, In5D, Ryan Cropper, David Icke</b>:";
 	feedsContainer.appendChild(feedsList);
-	loadFavicons();
 }
 window.addEventListener("load", loadFeeds);
 	</script>
@@ -77,7 +81,6 @@ window.addEventListener("load", loadFeeds);
 	#feeds{margin-left:0;}
 	#feeds>ul{padding:0;list-style-type:none;}
 	#feeds>ul>li{border:1px solid var(--main_border_color);font:11px Verdana,Geneva,sans-serif;}
-	#feeds>ul>li>a>img{margin-bottom:0;}
 	.tooltipBox{display:block;padding:5px;text-decoration:none;}
 	.tooltipBox:link{color:var(--main_elem_color);}
 	.tooltipBox:hover{text-decoration:underline;}

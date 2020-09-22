@@ -172,34 +172,6 @@ function scrollUp() {
 	document.documentElement.scrollTop = 0;
 }
 
-function loadFavicons() {
-	var i, icon, links = document.querySelectorAll("li > a");
-	for (i=0; i<links.length; i++) {
-		if (links[i].href.match(/[/.]youtu[.b][be][e.]/)) {
-			icon = new Image(); //document.createElement("img");
-			icon.src = "https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico";
-			icon.alt = "yt";
-		}
-		else if (links[i].href.indexOf(".bitchute.") > -1) {
-			icon = new Image();
-			icon.src = "https://www.bitchute.com/static/v120/images/favicon-32x32.png";
-			icon.alt = "";
-		}
-		else if (links[i].href.indexOf("telegram") > -1) {
-			icon = new Image();
-			icon.src = "https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico";
-			icon.alt = "telegram";
-		}
-		else if (links[i].href.indexOf("in5d") > -1) {
-			icon = new Image();
-			icon.src = "https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg";
-			icon.alt = "in5d";
-		}
-		else {continue;}
-		links[i].prepend(icon);
-	}
-}
-
 document.addEventListener("DOMContentLoaded", function() {
 	// Load theme based on storage
 	if (localStorage.getItem("bg-color") == colors.alt.bg) {
@@ -216,7 +188,4 @@ window.addEventListener("load", function() {
 				.format(lastModified);
 		document.getElementById("siteDate").innerHTML += timeStr.replaceAll(".", "/");
 	}
-
-	// Add some website icons next to their links
-	loadFavicons();
 });

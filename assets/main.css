@@ -73,7 +73,7 @@ footer{
 body > div, body > details{
 	margin-left: 5px;
 }
-summary > h3{
+summary > h3, h4{
 	display: inline;
 }
 img{
@@ -88,12 +88,25 @@ h1{
 a{
 	color: var(--main_link_color);
 }
-li > a > img{
-	max-width:16px;
-	margin-right:5px;
-	margin-bottom:1px;
-	vertical-align:text-bottom;
+a[href^="https://youtu"], a[href^="https://www.youtu"], a[href*="bitchute.com"], a[href*="telegram.ee"], a[href*="in5d.com"]{
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	padding-left: 20px;
 }
+a[href^="https://youtu"], a[href^="https://www.youtu"]{
+	background-image: url("https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico");
+}
+a[href*="bitchute.com"]{
+	background-image: url("../images/icon_bitchute.png");
+}
+a[href*="telegram.ee"]{
+	background-image: url("https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico");
+}
+a[href*="in5d.com"]{
+	background-image: url("https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg");
+}
+
 
 li ul{
 	margin-top:3px;
@@ -110,6 +123,9 @@ li ul{
 	margin-bottom: 16px;
 }
 
+#searchbar + button{
+	padding-top: 0;
+}
 #searchResults{
 	display: none;
 	border: 1px solid var(--main_border_color);
@@ -211,6 +227,21 @@ label[for=switch]:after {
 }
 .afterNote::after{
 	content: '=)';
+}
+.strikethrough{
+	text-decoration: line-through;
+	opacity: 0.75;
+}
+.centered{
+	text-align: center;
+}
+.centeredWithHands{
+	justify-content:center;
+	margin-bottom:15px;
+}
+.centeredWithHands > p{
+	text-align:center;
+	max-width:75%;
 }
 
 .hseparator{
