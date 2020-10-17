@@ -14,9 +14,9 @@
 <body>
 <header>
 	<div>
-		<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
+		<span class="switchContainer"><input type="checkbox" id="switch"/><label for="switch"></label></span>
 		<nav><ul>
-			<li><input id="searchbar" type="search" name="search" placeholder="Otsi kogu arhiivist..."><button onclick="searchHTML();">&#x1F50D;</button></li>
+			<li><input id="searchbar" type="search" name="search" placeholder="Otsi kogu arhiivist..."><button>&#x1F50D;</button></li>
 			<li><a href="index.html" target="_self">Kodu</a></li>
 			<li><a href="charts.html" target="_self">Schumanni resonants</a></li>
 			<li><a href="teadvus.html" target="_self">Teadvuse muutmine</a></li>
@@ -32,6 +32,6 @@
 		<ul></ul>
 	</div>
 </header>
-<footer><button class="scrollTop" onclick="scrollUp();">&#x2c4;</button></footer>
+<footer><button id="scrollTop" onclick="scrollUp();">&#x2c4;</button></footer>
 </body>
 </html>

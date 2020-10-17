@@ -3,16 +3,13 @@
 	--main_elem_color: black;
 	--main_link_color: #0000EE;
 	--main_border_color: teal;
-}
-html{
+
 	margin: 0px;
 	background-color: var(--main_bg_color);
 	color: var(--main_elem_color);
 }
 body{
 	margin: inherit;
-	background-color: inherit;
-	color: inherit;
 }
 
 header{
@@ -172,7 +169,7 @@ li ul{
 	font-size: 16px;
 	box-shadow: 0 0 4px 2px var(--main_border_color);
 }
-.scrollTop{
+#scrollTop{
 	display: none;
 	font-weight: bold;
 	font-size: 15px;
@@ -181,6 +178,14 @@ li ul{
 
 #switch{
 	display: none;
+}
+.switchContainer{
+	font-size: 12px;
+	font-weight: bold;
+}
+.switchContainer:before{
+	content: "Tume taust: ";
+	white-space: pre;
 }
 label[for=switch] {
 	display: inline-block;
@@ -218,19 +223,20 @@ label[for=switch]:after {
 .highlight{
 	background-color: chocolate;
 }
-.afterNote::before, .afterNote::after{
+.afterNote:before, .afterNote:after{
+	display: inline-block;
 	color: var(--main_elem_color);
-	text-decoration-line: none!important;
+	text-decoration: none;
 }
-.afterNote::before{
-	content: '(=';
+.afterNote:before{
+	content: '(-';
 }
-.afterNote::after{
-	content: '=)';
+.afterNote:after{
+	content: '-)';
 }
 .strikethrough{
 	text-decoration: line-through;
-	opacity: 0.75;
+	opacity: 0.72;
 }
 .centered{
 	text-align: center;
@@ -250,7 +256,6 @@ label[for=switch]:after {
 	text-align: center;
 	width: 415px;
 	margin: 25px 0 8px 0;
-	color: var(--main_elem_color);
 }
 .hseparator::before, .hseparator::after{
 	content: '';
@@ -276,7 +281,7 @@ label[for=switch]:after {
 	footer{
 		font-size: 3.2vw;
 	}
-	.scrollTop{
+	#scrollTop{
 		display: initial;
 	}
 }

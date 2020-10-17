@@ -4,7 +4,7 @@ const colors = {
 };
 
 function changeTheme(color) {
-	let root = document.documentElement;
+	const root = document.documentElement;
 	root.style.setProperty('--main_bg_color', color);
 	root.style.setProperty('--main_elem_color', color==colors.default.bg ? colors.default.elem : colors.alt.elem);
 	root.style.setProperty('--main_link_color', color==colors.default.bg ? colors.default.link : colors.alt.link);
@@ -13,6 +13,20 @@ function changeTheme(color) {
 function toggleTheme() {
 	let color = document.documentElement.style.getPropertyValue('--main_bg_color');
 	changeTheme(color != colors.alt.bg ? colors.alt.bg : colors.default.bg);
+}
+
+function attachListeners() {
+	// Set dark theme switch state
+	const lightSwitch = document.getElementById("switch");
+	lightSwitch.checked = localStorage.getItem("bg-color") == colors.alt.bg;
+	lightSwitch.addEventListener("click", toggleTheme);
+
+	// Search on Enter press
+	const searchbar = document.getElementById("searchbar");
+	if (searchbar) {
+		searchbar.addEventListener("keypress", e=>{if (e.key === "Enter") searchHTML();});
+		searchbar.nextSibling.addEventListener("click", searchHTML);
+	}
 }
 
 function includeTemplate() {
@@ -30,14 +44,8 @@ function includeTemplate() {
 				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
 				docElement.innerHTML += importElement.innerHTML;
 			}
+			attachListeners();
 
-			// Set dark theme switch state
-			document.getElementById("switch").checked = localStorage.getItem("bg-color") == colors.alt.bg;
-
-			// Search on Enter press
-			document.getElementById("searchbar").addEventListener("keypress", function (e) {
-				if (e.key === "Enter") searchHTML();
-			});
 		} else {console.error("Could not load 'template.html'.");}
 	}
 	xhttp.open("GET", "assets/template.html");
@@ -46,9 +54,9 @@ function includeTemplate() {
 
 function shortenStr(text, charlimit, middle, dot=false) {
 	if (text.length > charlimit) {
-		let allow = charlimit/2 - 10,
-			start = Math.max(0, middle-allow),
-			end = Math.min(middle+allow, text.length);
+		const allow = charlimit/2 - 10,
+			  start = Math.max(0, middle-allow),
+			  end = Math.min(middle+allow, text.length);
 		text = text.slice(start, end);
 		if (dot) {
 			text = "..." + text + "...";
@@ -85,7 +93,7 @@ function searchHTML() {
 		return [listItem, subList];
 	}
 
-	var sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
+	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
 	const regex = new RegExp("("+query+")", "ig"),
 		  replacement = "<span class='highlight'>$&</span>",
 		  parser = new DOMParser(),
@@ -97,16 +105,16 @@ function searchHTML() {
 			// await, et saada Promise asemel andmed
 			let doc = parser.parseFromString(await file.text(), "text/html");
 			let filename = file.url.slice(file.url.lastIndexOf("/") + 1);
-			var [listItem, subList] = createSubList(doc.title+":", filename);
+			[listItem, subList] = createSubList(doc.title+":", filename);
 
 			// Valib ainult kogu kuvatava teksti igalt lehelt
-			var walk = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, null, false);
+			let walk = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, null, false);
 			while(elem = walk.nextNode()) {
 
-				var subListItem = document.createElement("li");
+				let subListItem = document.createElement("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode.cloneNode(); // deep=false ehk ilma sisuta
-				var text = shortenStr(elem.textContent, 150, index).replace(regex, replacement);
+				let text = shortenStr(elem.textContent, 150, index).replace(regex, replacement);
 
 				if (index > -1) {
 
@@ -137,7 +145,7 @@ function searchHTML() {
 	}
 
 	sites = ["assets/tsitaadid.txt", "assets/tsitaadid_düün.txt"];
-	var [listItem, subList] = createSubList("Tsitaadid:", "tsitaadid.html");
+	[listItem, subList] = createSubList("Tsitaadid:", "tsitaadid.html");
 
 	for (i = 0; i < sites.length; i++) {
 		fetch(sites[i])

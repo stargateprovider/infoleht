@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="assets/main.css" />
 	<style>
 		main{margin-left:15px;}
+		#titleHeading{text-align:center;font-weight:normal;}
 		details:not([open])>summary{color:var(--main_link_color);cursor:pointer;text-decoration:underline;}
 		ul{padding-left:20px;}
 		li ul{margin-top:5px;margin-bottom:10px;margin-left:20px;list-style-type:disc;}
@@ -18,11 +19,11 @@
 <body>
 
 <header>Koroona <i>"kavala plaani"</i> lingid<br>
-<span style="font-size:12px;font-weight:bold;">Tume taust: <input type="checkbox" id="switch" onclick="toggleTheme()"/><label for="switch"></label></span>
+<span class="switchContainer"><input type="checkbox" id="switch"/><label for="switch"></label></span>
 </header>
 
 <main>
-<h3 style="text-align:center;font-weight:normal;">Ehk <strong>kuidas 2020 kriis oli ette kavandatud</strong> ja<br><strong>covid-19 epideemiat pole olemas</strong> <i>või</i> <strong>viirus loodi laboris</strong> <i>või</i> <strong>kehaväliselt viiruseid ei tekigi</strong></h3>
+<h3 id="titleHeading">Ehk <strong>kuidas 2020 kriis oli ette kavandatud</strong> ja<br><strong>covid-19 epideemiat pole olemas</strong> <i>või</i> <strong>viirus loodi laboris</strong> <i>või</i> <strong>kehaväliselt viiruseid ei tekigi</strong></h3>
 <p>
 	<strong><span class="redspan">Lühidalt</span></strong>, teemaks on viiruse ja põhjustatud haiguse seose puudumine, testide usaldusväärsus, tühjad haiglad ja intervjuud arstidega, tegelikud surmapõhjused, Bill Gates ja tema seosed WHO-ga, eksosoomide teooria, 5G tervisemõjud, isikud, kellele kriis kasuks tuleb ning kriisi lõppeesmärk.
 </p><p>
@@ -337,6 +338,6 @@ Paljud küsivad millesse inimesed siis surevad, nt USAs, kui viirust pole olemas
 </ul></details>
 <span class="hseparator"></span>
 </main>
-<script>document.getElementById("switch").checked=localStorage.getItem("bg-color")==colors.alt.bg;</script>
+<script>attachListeners();</script>
 </body>
 </html>
