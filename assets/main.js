@@ -1,6 +1,6 @@
 const colors = {
-	default: {bg: "white", elem: "black", link: "#0000EE", border: "teal"},
-	alt: 	 {bg: "black", elem: "white", link: "cyan"}
+	default: {bg: "white", elem: "black", link: "#0000EE", border: "#A8C3BC"},
+	alt: 	 {bg: "black", elem: "white", link: "cyan", border: "teal"}
 };
 
 function changeTheme(color) {
@@ -8,6 +8,7 @@ function changeTheme(color) {
 	root.style.setProperty('--main_bg_color', color);
 	root.style.setProperty('--main_elem_color', color==colors.default.bg ? colors.default.elem : colors.alt.elem);
 	root.style.setProperty('--main_link_color', color==colors.default.bg ? colors.default.link : colors.alt.link);
+	root.style.setProperty('--main_border_color', color==colors.default.bg ? colors.default.border : colors.alt.border);
 	localStorage.setItem("bg-color", color);
 }
 function toggleTheme() {
@@ -29,6 +30,21 @@ function attachListeners() {
 	}
 }
 
+function afterCSS() {
+	// Remove bullet where there is image or details
+	const links = document.querySelectorAll("li>a:first-child,li>details:first-child");
+	for (var i = 0; i < links.length; i++) {
+		let elem = links[i];
+		if (getComputedStyle(elem).backgroundImage != "none" && elem.parentNode.firstChild === elem || elem.nodeName === "DETAILS") {
+			elem.parentNode.className = "noBullet";
+		}
+	}
+	// Create navigation sidebar
+	if (document.documentElement.scrollHeight-300 > window.outerHeight) {
+		createSidebar();
+	}
+}
+
 function includeTemplate() {
 	const elements = ["head", "header", "footer"],
 		  xhttp = new XMLHttpRequest();
@@ -45,6 +61,7 @@ function includeTemplate() {
 				docElement.innerHTML += importElement.innerHTML;
 			}
 			attachListeners();
+			document.querySelector("link[href$='main.css']").addEventListener("load", afterCSS);
 
 		} else {console.error("Could not load 'template.html'.");}
 	}
@@ -93,14 +110,14 @@ function searchHTML() {
 		return [listItem, subList];
 	}
 
-	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "tsitaadid", "muu"];
+	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "muu"];
 	const regex = new RegExp("("+query+")", "ig"),
 		  replacement = "<span class='highlight'>$&</span>",
 		  parser = new DOMParser(),
 		  decoder = new TextDecoder("windows-1252");
 
 	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i]).then(async file => {
+		fetch(sites[i]+".html").then(async file => {
 
 			// await, et saada Promise asemel andmed
 			let doc = parser.parseFromString(await file.text(), "text/html");
@@ -141,14 +158,15 @@ function searchHTML() {
 				listItem.appendChild(subList);
 				resultsList.appendChild(listItem);
 			}
+			resultsHeading.textContent = nChildren + " vastet otsingule '" + query + "':";
 		});
 	}
 
-	sites = ["assets/tsitaadid.txt", "assets/tsitaadid_düün.txt"];
-	[listItem, subList] = createSubList("Tsitaadid:", "tsitaadid.html");
+	let listItem2, subList2, sites2 = ["assets/tsitaadid.txt", "assets/tsitaadid_düün.txt"];
+	[listItem2, subList2] = createSubList("Tsitaadid:", "tsitaadid.html");
 
-	for (i = 0; i < sites.length; i++) {
-		fetch(sites[i])
+	for (i = 0; i < sites2.length; i++) {
+		fetch(sites2[i])
 		.then(file => file.arrayBuffer())
 		.then(buffer => {
 			let lines = decoder.decode(buffer).split("\n");
@@ -158,13 +176,13 @@ function searchHTML() {
 				if (index > -1) {
 					let li = document.createElement("li");
 					li.innerHTML = shortenStr(lines[i], 330, index, true).replace(regex, replacement);
-					subList.appendChild(li);
+					subList2.appendChild(li);
 					nChildren++;
 				}
 			}
-			if (subList.hasChildNodes()) {
-				listItem.appendChild(subList);
-				resultsList.appendChild(listItem);
+			if (subList2.hasChildNodes()) {
+				listItem2.appendChild(subList2);
+				resultsList.appendChild(listItem2);
 			}
 			resultsHeading.textContent = nChildren + " vastet otsingule '" + query + "':";
 		});
@@ -173,11 +191,82 @@ function searchHTML() {
 
 function closeSearch() {
 	document.getElementById("searchResults").style.display = "none";
+	window.onscroll();
 }
 
 function scrollUp() {
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0;
+}
+
+function toggleSidebar() {
+	const nav = document.getElementById("sidebar"),
+		  btn = document.getElementById("sidebarBtn");
+	btn.remove();
+	
+	if (nav.style.display != "none") {
+		nav.previousElementSibling.insertAdjacentElement("afterend", btn);
+		btn.textContent = "<<";
+		nav.style.display = "none";
+	} else {
+		nav.firstElementChild.insertAdjacentElement("beforebegin",btn);
+		btn.textContent = ">>";
+		nav.style.display = "block";
+	}
+}
+
+function createSidebar() {
+	const elements = document.querySelectorAll("*:not(nav,#searchResults,li)>ul,.detailsList,.chapter"),
+		  header = document.getElementsByTagName("header")[0],
+		  nav = document.createElement("nav"),
+		  btn = document.createElement("button"),
+		  div = document.createElement("div");
+	btn.id = "sidebarBtn";
+	btn.textContent = ">>";
+	btn.addEventListener("click", toggleSidebar);
+	nav.id = "sidebar";
+	nav.append("Sisukord");
+	nav.append(btn);
+	nav.append(div);
+
+	window.onscroll = ()=>{
+		// +3 et oleks ühel joonel esimese alapealkirjaga
+		nav.style.paddingTop = btn.style.marginTop = window.pageYOffset <= header.scrollHeight+3
+			? (header.scrollHeight - window.pageYOffset + 23).toString() + "px"
+			: "20px";
+	};
+
+	for (var i = 0; i < elements.length; i++) {
+		let heading, parent = elements[i].parentNode;
+
+		// Skip if nested list
+		while (parent.nodeName != "BODY" && parent.nodeName != "UL" && parent.className != "detailsList") {
+			if (!heading && parent.firstChild.textContent.trim()) {
+				heading = parent;
+			}
+			parent = parent.parentNode;
+		}
+
+		// Find list heading
+		if (elements[i].previousElementSibling) heading = elements[i].previousElementSibling;
+		if (parent.nodeName != "BODY" || !heading) continue;
+
+		// Create link with heading text
+		if (!heading.id) {
+			heading.id = i;
+		}
+		let a = document.createElement("a");
+		a.href = "#" + heading.id;
+		a.target = "_self";
+
+		while (heading.nodeType != 3) heading = heading.firstChild;
+		a.textContent = heading.textContent.replace(/:$/,"");
+		div.append(a);
+	}
+	if (div.childElementCount > 1) {
+		header.insertAdjacentElement("afterend", nav);
+		window.onscroll();
+	}
 }
 
 document.addEventListener("DOMContentLoaded", function() {

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajaloo RSS</title>
+	<link rel="stylesheet" type="text/css" href="assets/main.css" />
+	<link rel="stylesheet" type="text/css" href="assets/rssfeed.css" />
+	<script src="assets/main.js"></script>
+	<script src="assets/rssfeed.js"></script>
+	<script>
+window.addEventListener("load", async()=>{
+	const sources = [
+	//"https://stolenhistory.net/forums/-/index.rss",
+	"4TjXPVIYz9Z13SB3vxKuZQ",
+	"5vXBfxN7rxKeJHJxS8dNDw",
+	"IZoTgebXiFVoyqnXyS7GoA",
+	"6ubbifx2lhO4bNLYwDWbjA",
+	"Ssz5hijS79cioRCJcZpW2A",
+	"EfFohhBoKFgVy8UCUbRMmA",
+	"e3OmUXohXrXnNZSRl5Z9kA",
+	"Zyc0QITNeI6xOcs0OGzsxQ",
+	"nK3gIeVugsW_MzkG82pcUQ",
+	"GiFJNwxpxTR5enwfKxNh0w",
+	"ucqZKVEvZ9v32-BbHa-ttg",
+	];
+	for (var i = 0; i < sources.length; i++) sources[i] = "https://www.youtube.com/feeds/videos.xml?channel_id=UC" + sources[i];
+	loadFeeds(sources, 180, "Uued videod kanalitest <b>Mind Unveiled, Jon Levi, Philipp Druzhinin, Conspiracy-R-Us, AutoDidactic, Kurimeo Ahau, PraveenMohan, Exploring Tartaria, Flat Earth British, UAP, Tartarian Zephyr</b>:");
+});
+	</script>
+	<style>
+		:root{--main_link_color:#8F4401;--main_border_color:#8F4401;}
+		header{color:black;background:url('https://i.pinimg.com/originals/8b/df/5a/8bdf5aa133d11cc3a16fd92c924b38a5.jpg')}
+	</style>
+</head>
+<body>
+<header>Uued alternatiivajaloo videod<br>
+<span class="switchContainer"><input type="checkbox" id="switch"/><label for="switch"></label></span>
+</header>
+<div id="feeds"></div>
+<footer></footer>
+<script>colors.default.link="#8F4401";colors.alt.link="#BF7937";colors.default.border="#8F4401";colors.alt.border="#8F4401";attachListeners();</script>
+</body>
+</html>
