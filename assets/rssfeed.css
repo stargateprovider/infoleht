@@ -4,7 +4,7 @@
 .tooltipBox{display:block;padding:5px;text-decoration:none;}
 .tooltipBox:link{color:var(--main_elem_color);}
 .tooltipBox:hover{text-decoration:underline;}
-.tooltipBox>.tooltipText{visibility:hidden;position:fixed;width:35%;max-width:400px;padding:3px;padding-top:50px;top:0;bottom:0;right:0;background-color:#555;color:#fff;border-left:1px solid var(--main_border_color);box-shadow:inset 8px 0 10px -6px var(--main_border_color);opacity:0;transition:opacity .3s;text-align:center;line-height:16px;word-wrap:break-word;overflow-x:hidden}
+.tooltipBox>.tooltipText{visibility:hidden;position:fixed;width:35%;max-width:400px;padding:3px;padding-top:15px;top:0;bottom:0;right:0;background-color:#555;color:#fff;border-left:1px solid var(--main_border_color);box-shadow:inset 8px 0 10px -6px var(--main_border_color);opacity:0;transition:opacity .3s;text-align:center;line-height:16px;word-wrap:break-word;overflow-x:hidden;z-index:1}
 .tooltipBox:hover>.tooltipText{visibility:visible;opacity:1}
 .tooltipText>img{width:100%;}
 

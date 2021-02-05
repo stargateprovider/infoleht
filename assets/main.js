@@ -238,6 +238,7 @@ function createSidebar() {
 
 	for (var i = 0; i < elements.length; i++) {
 		let heading, parent = elements[i].parentNode;
+		console.log(heading, parent.nodeName, parent.className, elements[i])
 
 		// Skip if nested list
 		while (parent.nodeName != "BODY" && parent.nodeName != "UL" && parent.className != "detailsList") {

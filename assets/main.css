@@ -117,7 +117,7 @@ nav ul > li{
 main{
 	margin-left: 5px;
 	margin-right: 2%;
-	max-width: 90%;
+	max-width: 89%;
 }
 footer{
 	margin: 25px 0px 0px 0px;
@@ -301,8 +301,11 @@ li > ul{
 .backBtn:before{
 	display: inline-block;
 	text-decoration: none;
-	content: "⏎";
+	content: "<";
 	margin-right: 3px;
+}
+.backBtn:hover {
+	background-color: rgba(150,150,150,.4);
 }
 #scrollTop{
 	display: none;
