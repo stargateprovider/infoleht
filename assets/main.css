@@ -112,6 +112,7 @@ nav ul > li{
 	color: var(--main_link_color);
 	height: 20px;
 	margin-top: 80px;
+	z-index: 1;
 }
 
 main{
@@ -417,6 +418,7 @@ label[for=switch]:after {
 	align-items: center;
 	text-align: center;
 	width: 415px;
+	max-width: 100%;
 	margin: 25px 0 8px 0;
 }
 .hseparator::before, .hseparator::after{

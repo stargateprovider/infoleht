@@ -202,14 +202,11 @@ function scrollUp() {
 function toggleSidebar() {
 	const nav = document.getElementById("sidebar"),
 		  btn = document.getElementById("sidebarBtn");
-	btn.remove();
 	
 	if (nav.style.display != "none") {
-		nav.previousElementSibling.insertAdjacentElement("afterend", btn);
 		btn.textContent = "<<";
 		nav.style.display = "none";
 	} else {
-		nav.firstElementChild.insertAdjacentElement("beforebegin",btn);
 		btn.textContent = ">>";
 		nav.style.display = "block";
 	}
@@ -226,7 +223,6 @@ function createSidebar() {
 	btn.addEventListener("click", toggleSidebar);
 	nav.id = "sidebar";
 	nav.append("Sisukord");
-	nav.append(btn);
 	nav.append(div);
 
 	window.onscroll = ()=>{
@@ -238,7 +234,6 @@ function createSidebar() {
 
 	for (var i = 0; i < elements.length; i++) {
 		let heading, parent = elements[i].parentNode;
-		console.log(heading, parent.nodeName, parent.className, elements[i])
 
 		// Skip if nested list
 		while (parent.nodeName != "BODY" && parent.nodeName != "UL" && parent.className != "detailsList") {
@@ -266,6 +261,7 @@ function createSidebar() {
 	}
 	if (div.childElementCount > 1) {
 		header.insertAdjacentElement("afterend", nav);
+		header.insertAdjacentElement("afterend", btn);
 		window.onscroll();
 	}
 }
