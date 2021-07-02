@@ -164,6 +164,7 @@ a{
 a[href^="https://youtu"], a[href^="https://www.youtu"],
 a[href*="bitchute.com"],
 a[href*="telegram.ee"],
+a[href*="fonte.news"],
 a[href*="in5d.com"]:not([href$=".jpg"]),
 a[href*="stolenhistory."]:not([class="afterNote"]),
 a[href^="ajalugu"]{
@@ -180,6 +181,9 @@ a[href*="bitchute.com"]{
 }
 a[href*="telegram.ee"]{
 	background-image: url("https://www.telegram.ee/wp-content/themes/telegram/favicon/favicon.ico");
+}
+a[href*="fonte.news"]{
+	background-image: url("https://fonte.news/wp-content/uploads/2021/05/cropped-favicon-32x32.png");
 }
 a[href*="in5d.com"]:not([href$=".jpg"]){
 	background-image: url("https://in5d.com/wp-content/uploads/2019/03/cropped-favicon5-32x32.jpg");
