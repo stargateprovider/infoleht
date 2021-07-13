@@ -22,6 +22,10 @@ function attachListeners() {
 	lightSwitch.checked = localStorage.getItem("bg-color") == colors.alt.bg;
 	lightSwitch.addEventListener("click", toggleTheme);
 
+	// Highlight current location
+	const currentPageElement = document.querySelector("[href='"+location.pathname.slice(location.pathname.lastIndexOf("/") + 1)+"']");
+	if (currentPageElement) currentPageElement.className = "current";
+
 	// Search on Enter press
 	const searchbar = document.getElementById("searchbar");
 	if (searchbar) {
@@ -45,7 +49,7 @@ function afterCSS() {
 	}
 }
 
-function includeTemplate() {
+function includeTemplate(alternative) {
 	const elements = ["head", "header", "footer"],
 		  xhttp = new XMLHttpRequest();
 
@@ -57,15 +61,17 @@ function includeTemplate() {
 		if (this.readyState == 4 && this.status == 200) {
 			for(var i in elements){
 				docElement = document.getElementsByTagName(elements[i])[0];
-				importElement = this.responseXML.getElementsByTagName(elements[i])[0];
-				docElement.innerHTML += importElement.innerHTML;
+				if (docElement) {
+					importElement = this.responseXML.getElementsByTagName(elements[i])[0];
+					docElement.innerHTML += importElement.innerHTML;
+				}
 			}
 			attachListeners();
 			document.querySelector("link[href$='main.css']").addEventListener("load", afterCSS);
 
-		} else {console.error("Could not load 'template.html'.");}
+		} else {console.error("Could not load template page");}
 	}
-	xhttp.open("GET", "assets/template.html");
+	xhttp.open("GET", "assets/template" + (alternative?"2":"") + ".html");
 	xhttp.send();
 }
 
@@ -110,7 +116,7 @@ function searchHTML() {
 		return [listItem, subList];
 	}
 
-	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "praktiline", "muu"];
+	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "filo", "vandenou_sissejuhatus", "europa_allikad", "praktiline", "muu"];
 	const regex = new RegExp("("+query+")", "ig"),
 		  replacement = "<span class='highlight'>$&</span>",
 		  parser = new DOMParser(),
@@ -268,9 +274,7 @@ function createSidebar() {
 
 document.addEventListener("DOMContentLoaded", function() {
 	// Load theme based on storage
-	if (localStorage.getItem("bg-color") == colors.alt.bg) {
-		changeTheme(colors.alt.bg);
-	}
+	changeTheme(localStorage.getItem("bg-color") == colors.alt.bg ? colors.alt.bg : colors.default.bg);
 });
 window.addEventListener("load", function() {
 	// Add last modified date

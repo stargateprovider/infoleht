@@ -27,7 +27,7 @@ header{
 	font-family: 'Arial';
 	font-size: 22px;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 }
 header nav{
 	display: inline;
@@ -40,9 +40,16 @@ header nav a {
 	padding-left: 4px;
 	padding-right: 4px;
 }
-nav a:hover {
-	background-color: rgba(150,150,150,.3);
+header nav a:hover:not(.current) {
+	box-shadow: inset 0px -35px 8px -8px rgba(150,150,150,.37);
 }
+header nav a.current {
+	box-shadow: inset 0px -35px 8px -8px var(--main_border_color);
+	text-decoration: none;
+	pointer-events: none;
+	cursor: default;
+}
+
 header nav ul > li{
 	font-size: 14px;
 }
@@ -102,6 +109,9 @@ nav ul > li{
 	list-style-type: decimal;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
+}
+#sidebar a:hover {
+	background-color: rgba(150,150,150,.3);
 }
 #sidebarBtn{
 	border: 1px solid grey;
@@ -167,7 +177,8 @@ a[href*="telegram.ee"],
 a[href*="fonte.news"],
 a[href*="in5d.com"]:not([href$=".jpg"]),
 a[href*="stolenhistory."]:not([class="afterNote"]),
-a[href^="ajalugu"]{
+a[href^="ajalugu"],
+a[href^="filo.html"]{
 	background-position: left center;
 	background-repeat: no-repeat;
 	background-size: 16px 16px;
@@ -193,6 +204,9 @@ a[href*="stolenhistory."]:not([class="afterNote"]){
 }
 a[href^="ajalugu"]{
 	background-image: url("../images/iconc16.png");
+}
+a[href^="filo.html"]{
+	background-image: url("../images/icona16.png");
 }
 
 

@@ -3,11 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Ajaloo RSS</title>
-	<link rel="stylesheet" type="text/css" href="assets/main.css" />
+	<link rel="icon" type="image/png" href="images/iconc32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="images/iconc16.png" sizes="16x16" />
+	<link rel="shortcut icon" type="image/png" href="images/iconc16.png" sizes="16x16" />
 	<link rel="stylesheet" type="text/css" href="assets/rssfeed.css" />
 	<script src="assets/main.js"></script>
 	<script src="assets/rssfeed.js"></script>
 	<script>
+includeTemplate(true);colors.default.link="#8F4401";colors.alt.link="#BF7937";colors.default.border="#8F4401";colors.alt.border="#8F4401";
 window.addEventListener("load", async()=>{
 	const sources = [
 	//"https://stolenhistory.net/forums/-/index.rss",
@@ -23,22 +26,21 @@ window.addEventListener("load", async()=>{
 	"nK3gIeVugsW_MzkG82pcUQ",
 	"GiFJNwxpxTR5enwfKxNh0w",
 	"ucqZKVEvZ9v32-BbHa-ttg",
+	"C9JHVPm-4P5QDp9vk8EH-A",
+	"Op-_-lVkj9MO1VPLAyHvYQ",
 	];
 	for (var i = 0; i < sources.length; i++) sources[i] = "https://www.youtube.com/feeds/videos.xml?channel_id=UC" + sources[i];
-	loadFeeds(sources, 180, "Uued videod kanalitest <b>Mind Unveiled, Jon Levi, Philipp Druzhinin, Conspiracy-R-Us, AutoDidactic, Kurimeo Ahau, PraveenMohan, Exploring Tartaria, Flat Earth British, Flat Earth Nation, UAP, Tartarian Zephyr</b>:");
+	loadFeeds(sources, 180, "Uued videod kanalitest <b>Mind Unveiled, Jon Levi, Philipp Druzhinin, Conspiracy-R-Us, AutoDidactic, Kurimeo Ahau, PraveenMohan, Exploring Tartaria, Flat Earth British, Flat Earth Nation, UAP, Tartarian Zephyr, Mystery History</b>:");
 });
 	</script>
 	<style>
-		:root{--main_link_color:#8F4401;--main_border_color:#8F4401;}
-		header{color:black;background:url('https://i.pinimg.com/originals/8b/df/5a/8bdf5aa133d11cc3a16fd92c924b38a5.jpg')}
+		header,header *{color:black!important;}
+		header{background:url('https://i.pinimg.com/originals/8b/df/5a/8bdf5aa133d11cc3a16fd92c924b38a5.jpg')}
 	</style>
 </head>
 <body>
-<header>Uued alternatiivajaloo videod<br>
-<span class="switchContainer"><input type="checkbox" id="switch"/><label for="switch"></label></span>
-</header>
+<header>Uued alternatiivajaloo videod</header>
 <div id="feeds"></div>
 <footer></footer>
-<script>colors.default.link="#8F4401";colors.alt.link="#BF7937";colors.default.border="#8F4401";colors.alt.border="#8F4401";attachListeners();</script>
 </body>
 </html>
