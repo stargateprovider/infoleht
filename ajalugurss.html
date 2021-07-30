@@ -3,15 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Ajaloo RSS</title>
-	<link rel="icon" type="image/png" href="images/iconc32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="images/iconc16.png" sizes="16x16" />
-	<link rel="shortcut icon" type="image/png" href="images/iconc16.png" sizes="16x16" />
-	<link rel="stylesheet" type="text/css" href="assets/rssfeed.css" />
+	<link rel="preconnect" href="https://api.allorigins.win" />
+	<link rel="preconnect" href="https://s.ytimg.com" />
 	<script src="assets/main.js"></script>
 	<script src="assets/rssfeed.js"></script>
+	<link rel="icon" type="image/png" href="images/iconc32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="images/iconc16.png" sizes="16x16" />
 	<script>
-includeTemplate(true);colors.default.link="#8F4401";colors.alt.link="#BF7937";colors.default.border="#8F4401";colors.alt.border="#8F4401";
-window.addEventListener("load", async()=>{
+colors.alt.link="#BF7937";colors.default.link=colors.default.border=colors.alt.border="#8F4401";loadTemplate(2);
+window.addEventListener("load", ()=>{
 	const sources = [
 	//"https://stolenhistory.net/forums/-/index.rss",
 	"4TjXPVIYz9Z13SB3vxKuZQ",
@@ -22,25 +22,21 @@ window.addEventListener("load", async()=>{
 	"EfFohhBoKFgVy8UCUbRMmA",
 	"e3OmUXohXrXnNZSRl5Z9kA",
 	"Zyc0QITNeI6xOcs0OGzsxQ",
-	"lZhAJlC-oUFtsI6X1nUOiA",
+	"lZhAJlC-oUFtsI6X1nUOiA", 
 	"nK3gIeVugsW_MzkG82pcUQ",
-	"GiFJNwxpxTR5enwfKxNh0w",
+	//"GiFJNwxpxTR5enwfKxNh0w", Flat Earth Nation
 	"ucqZKVEvZ9v32-BbHa-ttg",
 	"C9JHVPm-4P5QDp9vk8EH-A",
 	"Op-_-lVkj9MO1VPLAyHvYQ",
 	];
 	for (var i = 0; i < sources.length; i++) sources[i] = "https://www.youtube.com/feeds/videos.xml?channel_id=UC" + sources[i];
-	loadFeeds(sources, 180, "Uued videod kanalitest <b>Mind Unveiled, Jon Levi, Philipp Druzhinin, Conspiracy-R-Us, AutoDidactic, Kurimeo Ahau, PraveenMohan, Exploring Tartaria, Flat Earth British, Flat Earth Nation, UAP, Tartarian Zephyr, Mystery History</b>:");
+	loadFeeds(sources, 180, "Uued videod kanalitest <b>Mind Unveiled, Jon Levi, Philipp Druzhinin, Conspiracy-R-Us, AutoDidactic, Kurimeo Ahau, PraveenMohan, Exploring Tartaria, Flat Earth British, UAP, Tartarian Zephyr, Mystery History</b>:");
 });
 	</script>
 	<style>
 		header,header *{color:black!important;}
-		header{background:url('https://i.pinimg.com/originals/8b/df/5a/8bdf5aa133d11cc3a16fd92c924b38a5.jpg')}
+		header{background-color:var(--main_link_color);background-image:url('https://i.pinimg.com/originals/8b/df/5a/8bdf5aa133d11cc3a16fd92c924b38a5.jpg')}
 	</style>
 </head>
-<body>
-<header>Uued alternatiivajaloo videod</header>
-<div id="feeds"></div>
-<footer></footer>
-</body>
+<body><header>Uued alternatiivajaloo videod</header><div id="feeds"></div><footer></footer></body>
 </html>

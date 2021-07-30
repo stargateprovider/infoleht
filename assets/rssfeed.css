@@ -1,6 +1,6 @@
 #feeds{margin-left:0;}
 #feeds>ul{padding:0;list-style-type:none;}
-#feeds>ul>li{border:1px solid var(--main_border_color);font:11px Verdana,Geneva,sans-serif;}
+#feeds>ul>li{border:1px solid var(--main_border_color);font:11px Verdana,Geneva,sans-serif;padding-left:3px;}
 .tooltipBox{display:block;padding:5px;text-decoration:none;}
 .tooltipBox:link{color:var(--main_elem_color);}
 .tooltipBox:hover{text-decoration:underline;}

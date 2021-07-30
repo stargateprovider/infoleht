@@ -2,23 +2,24 @@ const colors = {
 	default: {bg: "white", elem: "black", link: "#0000EE", border: "#A8C3BC"},
 	alt: 	 {bg: "black", elem: "white", link: "cyan", border: "teal"}
 };
+const $=e=>document.getElementById(e), _=e=>document.createElement(e), root = document.documentElement;
 
-function changeTheme(color) {
-	const root = document.documentElement;
-	root.style.setProperty('--main_bg_color', color);
-	root.style.setProperty('--main_elem_color', color==colors.default.bg ? colors.default.elem : colors.alt.elem);
-	root.style.setProperty('--main_link_color', color==colors.default.bg ? colors.default.link : colors.alt.link);
-	root.style.setProperty('--main_border_color', color==colors.default.bg ? colors.default.border : colors.alt.border);
-	localStorage.setItem("bg-color", color);
+function setTheme(theme) {
+	for(let type of ["bg","elem","link","border"]) root.style.setProperty("--main_"+type+"_color", theme[type]);
 }
 function toggleTheme() {
-	let color = document.documentElement.style.getPropertyValue('--main_bg_color');
-	changeTheme(color != colors.alt.bg ? colors.alt.bg : colors.default.bg);
+	const theme = root.style.getPropertyValue('--main_bg_color') != colors.alt.bg ? colors.alt : colors.default;
+	setTheme(theme);
+	localStorage.setItem("bg-color", theme.bg);
+}
+
+function displayBody() {
+	document.body.style.display = "";
 }
 
 function attachListeners() {
 	// Set dark theme switch state
-	const lightSwitch = document.getElementById("switch");
+	const lightSwitch = $("switch");
 	lightSwitch.checked = localStorage.getItem("bg-color") == colors.alt.bg;
 	lightSwitch.addEventListener("click", toggleTheme);
 
@@ -27,14 +28,16 @@ function attachListeners() {
 	if (currentPageElement) currentPageElement.className = "current";
 
 	// Search on Enter press
-	const searchbar = document.getElementById("searchbar");
+	const searchbar = $("searchbar");
 	if (searchbar) {
-		searchbar.addEventListener("keypress", e=>{if (e.key === "Enter") searchHTML();});
+		searchbar.addEventListener("keypress", e => (e.key === "Enter")&&searchHTML());
 		searchbar.nextSibling.addEventListener("click", searchHTML);
 	}
 }
 
 function afterCSS() {
+	displayBody();
+
 	// Remove bullet where there is image or details
 	const links = document.querySelectorAll("li>a:first-child,li>details:first-child");
 	for (var i = 0; i < links.length; i++) {
@@ -43,13 +46,40 @@ function afterCSS() {
 			elem.parentNode.className = "noBullet";
 		}
 	}
+
 	// Create navigation sidebar
-	if (document.documentElement.scrollHeight-300 > window.outerHeight) {
+	if (root.scrollHeight-300 > window.outerHeight) {
 		createSidebar();
+	}
+	$(location.hash.slice(1)) && $(location.hash.slice(1)).scrollIntoView();
+
+	// Add last modified date
+	if ($("siteDate")) {
+		let lastModified = new Date(document.lastModified),
+			timeStr = new Intl.DateTimeFormat('et', {
+				year: 'numeric', month: '2-digit', day: '2-digit',
+				hour: 'numeric', minute: 'numeric', second: 'numeric'})
+				.format(lastModified);
+		$("siteDate").innerHTML += timeStr.replaceAll(".", "/");
 	}
 }
 
-function includeTemplate(alternative) {
+function loadTemplate(template) {
+	// Load theme based on storage
+	root.style.backgroundColor = "var(--main_bg_color)";
+	const theme = localStorage.getItem("bg-color") == colors.alt.bg ? colors.alt : colors.default;
+	setTheme(theme);
+
+	// Add early instructions to head
+	const cssLink = _("link"),
+		  faviconLink = _("link");
+	cssLink.rel = "stylesheet";
+	cssLink.href = "assets/main.css";
+	cssLink.type = "text/css";
+	faviconLink.rel = "icon";
+	faviconLink.href = "data:;";
+	document.head.append(cssLink, faviconLink);
+
 	const elements = ["head", "header", "footer"],
 		  xhttp = new XMLHttpRequest();
 
@@ -59,19 +89,18 @@ function includeTemplate(alternative) {
 
 	xhttp.onload = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			for(var i in elements){
-				docElement = document.getElementsByTagName(elements[i])[0];
+			for(let elem of elements){
+				let docElement = document.getElementsByTagName(elem)[0];
 				if (docElement) {
-					importElement = this.responseXML.getElementsByTagName(elements[i])[0];
+					let importElement = this.responseXML.getElementsByTagName(elem)[0];
 					docElement.innerHTML += importElement.innerHTML;
 				}
 			}
 			attachListeners();
 			document.querySelector("link[href$='main.css']").addEventListener("load", afterCSS);
-
-		} else {console.error("Could not load template page");}
+		} else console.error("Could not load template page");
 	}
-	xhttp.open("GET", "assets/template" + (alternative?"2":"") + ".html");
+	xhttp.open("GET", "assets/template" + (template||"") + ".html");
 	xhttp.send();
 }
 
@@ -89,8 +118,8 @@ function shortenStr(text, charlimit, middle, dot=false) {
 }
 
 function searchHTML() {
-	const query = document.getElementById("searchbar").value.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
-		  resultsBox = document.getElementById("searchResults"),
+	const query = $("searchbar").value.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
+		  resultsBox = $("searchResults"),
 		  resultsHeading = resultsBox.firstElementChild.firstChild,
 		  resultsList = resultsBox.lastElementChild;
 
@@ -104,14 +133,14 @@ function searchHTML() {
 	var i, nChildren = 0;
 
 	function createSubList(title, url) {
-		let listItem = document.createElement("li"),
-			a = document.createElement("a");
+		let listItem = _("li"),
+			a = _("a");
 		a.href = url;
 		a.textContent = title;
 		a.style.fontWeight = "bold";
 		listItem.appendChild(a);
 
-		let subList = document.createElement("ul");
+		let subList = _("ul");
 		subList.className = "detailsList";
 		return [listItem, subList];
 	}
@@ -134,7 +163,7 @@ function searchHTML() {
 			let walk = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, null, false);
 			while(elem = walk.nextNode()) {
 
-				let subListItem = document.createElement("li");
+				let subListItem = _("li");
 				let index = elem.textContent.toLowerCase().indexOf(query);
 				let elemParent = elem.parentNode.cloneNode(); // deep=false ehk ilma sisuta
 				let text = shortenStr(elem.textContent, 150, index).replace(regex, replacement);
@@ -180,7 +209,7 @@ function searchHTML() {
 
 				let index = lines[i].toLowerCase().indexOf(query);
 				if (index > -1) {
-					let li = document.createElement("li");
+					let li = _("li");
 					li.innerHTML = shortenStr(lines[i], 330, index, true).replace(regex, replacement);
 					subList2.appendChild(li);
 					nChildren++;
@@ -196,94 +225,114 @@ function searchHTML() {
 }
 
 function closeSearch() {
-	document.getElementById("searchResults").style.display = "none";
+	$("searchResults").style.display = "none";
 	window.onscroll();
 }
 
 function scrollUp() {
 	document.body.scrollTop = 0; // For Safari
-	document.documentElement.scrollTop = 0;
+	root.scrollTop = 0;
 }
 
 function toggleSidebar() {
-	const nav = document.getElementById("sidebar"),
-		  btn = document.getElementById("sidebarBtn");
-	
-	if (nav.style.display != "none") {
-		btn.textContent = "<<";
-		nav.style.display = "none";
-	} else {
-		btn.textContent = ">>";
-		nav.style.display = "block";
+	root.style.setProperty('--sidebar_width', $("sidebarBtn").checked ? "0px" : "175px");
+}
+
+function findListHeading(list, allowNested=true) {
+	let heading, text, depth = 0, node = list.previousSibling;
+	while (node.nodeName != "MAIN") {
+
+		const parent = node.parentNode;
+		if (parent.nodeName == "UL" || parent.className == "detailsList") {
+			if (!allowNested) return {};
+			depth++;
+		}
+
+		if (!heading) {
+			while (node.previousSibling && node.nodeType != Node.ELEMENT_NODE && !node.textContent.trim()) {
+				node = node.previousSibling;
+			}
+
+			let content = node.textContent.trim();
+			while (node.nodeType == Node.ELEMENT_NODE) {
+				// Join direct children into heading text
+				content = Array.from(node.childNodes, ({nodeValue}) => nodeValue).join("").trim();
+				node = node.firstChild;
+			}
+			if (content) {
+				if (content.length > 120) return {};
+				heading = node.parentNode;
+				text = content;
+			}
+		}
+		node = parent;
 	}
+
+	return {heading, text, depth};
 }
 
 function createSidebar() {
-	const elements = document.querySelectorAll("*:not(nav,#searchResults,li)>ul,.detailsList,.chapter"),
+	const elements = document.querySelectorAll("main ul,.detailsList,h3>a"),
 		  header = document.getElementsByTagName("header")[0],
-		  nav = document.createElement("nav"),
-		  btn = document.createElement("button"),
-		  div = document.createElement("div");
+		  btn = _("input"),
+		  nav = _("nav"),
+		  heading = _("span"),
+		  div = _("div"),
+		  sitemap = _("a");
+
 	btn.id = "sidebarBtn";
-	btn.textContent = ">>";
+	btn.type = "checkbox";
+	btn.title = btn.id;
 	btn.addEventListener("click", toggleSidebar);
+
+	sitemap.href = "sitemap.html";
+	sitemap.target = "_self";
+	sitemap.textContent = "Sisukaart";
+	div.append(sitemap);
+
+	heading.textContent = "Sisukord";
 	nav.id = "sidebar";
-	nav.append("Sisukord");
-	nav.append(div);
+	nav.append(heading, div);
 
 	window.onscroll = ()=>{
 		// +3 et oleks ühel joonel esimese alapealkirjaga
-		nav.style.paddingTop = btn.style.marginTop = window.pageYOffset <= header.scrollHeight+3
-			? (header.scrollHeight - window.pageYOffset + 23).toString() + "px"
+		nav.style.paddingTop = window.pageYOffset <= header.scrollHeight+3
+			? (header.scrollHeight - window.pageYOffset + 23) + "px"
 			: "20px";
+		btn.style.marginTop = (parseInt(nav.style.paddingTop) - 3) + "px";
+	};
+	window.onresize = ()=>{
+		if (!root.style.getPropertyValue('--sidebar_width')) btn.checked = window.innerWidth < 780 ? true : false;
+		window.onscroll();
 	};
 
 	for (var i = 0; i < elements.length; i++) {
-		let heading, parent = elements[i].parentNode;
 
-		// Skip if nested list
-		while (parent.nodeName != "BODY" && parent.nodeName != "UL" && parent.className != "detailsList") {
-			if (!heading && parent.firstChild.textContent.trim()) {
-				heading = parent;
-			}
-			parent = parent.parentNode;
-		}
-
-		// Find list heading
-		if (elements[i].previousElementSibling) heading = elements[i].previousElementSibling;
-		if (parent.nodeName != "BODY" || !heading) continue;
+		const {heading, text, depth} = elements[i].nodeName == "A"
+			? {heading: elements[i], text: elements[i].textContent}
+			: findListHeading(elements[i], false);
+		if (!text) continue;
 
 		// Create link with heading text
 		if (!heading.id) {
 			heading.id = i;
 		}
-		let a = document.createElement("a");
+		const a = _("a");
 		a.href = "#" + heading.id;
 		a.target = "_self";
-
-		while (heading.nodeType != 3) heading = heading.firstChild;
-		a.textContent = heading.textContent.replace(/:$/,"");
+		a.textContent = text.replace(/:$/,"");
 		div.append(a);
 	}
-	if (div.childElementCount > 1) {
+	if (div.childElementCount > 2) {
 		header.insertAdjacentElement("afterend", nav);
 		header.insertAdjacentElement("afterend", btn);
-		window.onscroll();
+		window.onresize();
 	}
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-	// Load theme based on storage
-	changeTheme(localStorage.getItem("bg-color") == colors.alt.bg ? colors.alt.bg : colors.default.bg);
+	// Hide until CSS loaded or timeout
+	setTimeout(displayBody, 10000);
+	document.body.style.display = "none";
 });
-window.addEventListener("load", function() {
-	// Add last modified date
-	if (document.getElementById("siteDate")) {
-		let lastModified = new Date(document.lastModified),
-			timeStr = new Intl.DateTimeFormat('et', {
-				year: 'numeric', month: '2-digit', day: '2-digit',
-				hour: 'numeric', minute: 'numeric', second: 'numeric'})
-				.format(lastModified);
-		document.getElementById("siteDate").innerHTML += timeStr.replaceAll(".", "/");
-	}
-});
+//window.addEventListener("load", );

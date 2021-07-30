@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="UTF-8">
+	<title>Sisukaart</title>
+	<script src="assets/main.js"></script>
+	<script>loadTemplate();</script>
+	<style>
+		#sitemap {
+			align-content: space-evenly;
+			display: flex;
+			flex-flow: column wrap;
+			margin: initial;
+			max-width: 100%;
+		}
+		#sitemap > div {
+			border: solid 1px var(--main_border_color);
+			margin: 3px 0 3px 0;
+			padding: 5px;
+		}
+		@media screen and (max-width: 990px) {
+			#sitemap {
+				align-content: stretch;
+				max-height: max-content!important;
+			}
+		}
+	</style>
+</head>
+<body>
+<header>Sisukaart</header><main id="sitemap"></main><footer></footer>
+<script>
+const sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "filo", "vandenou_sissejuhatus", "europa_allikad", "praktiline", "tsitaadid", "muu", "feeds", "ajalugurss"];
+const parser = new DOMParser();
+const container = $("sitemap");
+const divs = [];
+
+// When sitemap filled, set max-height to fit half of elements
+new MutationObserver(()=>{
+	container.style.maxHeight = Math.floor(parseInt(getComputedStyle(container).height) / 1.77) + "px";
+}).observe(container, {childList:true});
+
+for (let i = 0; i < sites.length; i++) {
+	fetch(sites[i]+".html").then(async file => {
+
+		const doc = parser.parseFromString(await file.text(), "text/html"),
+			  div = _("div"),
+			  a = _("a");
+		a.href = file.url.slice(file.url.lastIndexOf("/") + 1);
+		a.target = "_self";
+		a.textContent = doc.title;
+		div.append(a)
+
+		const heading = doc.getElementsByTagName("header")[0].textContent;
+		if (heading !== doc.title) {
+			div.append(_("br"), heading);
+		}
+
+		const ul = _("ul");
+		const elements = doc.querySelectorAll("main ul,.detailsList");
+		for (let i = 0; i < elements.length; i++) {
+
+			const {text, depth} = findListHeading(elements[i]);
+			if (!text) continue;
+
+			const li = _("li");
+			if (depth) {
+				li.style.listStyleType = "circle";
+				li.style.marginLeft = (2 * depth).toString() + "ch";
+			}
+			li.append(text.replace(/:$/,""));
+			ul.append(li);
+		}
+		
+		if (ul.childElementCount) div.append(ul);
+		divs.push(div);
+
+		if (divs.length == sites.length) {
+			divs.sort((a, b) => (a.firstChild.textContent > b.firstChild.textContent) ? 1 : -1);
+			container.append(...divs);
+		}
+	});
+}
+</script>
+
+<noscript>
+Luba Javascript või kasuta uuemat veebilehitsejat, et näha täpsemat loetelu...
+<ul>
+<li><a href="index.html">Kodu</a></li>
+<li><a href="kuiv.html">Teoreetiline</a></li>
+<li><a href="praktiline.html">Praktiline</a></li>
+<li><a href="teadvus.html">Teadvuse muutmine jm maagia</a></li>
+<li><a href="charts.html">Schumanni resonantsi graafikud</a></li>
+<li><a href="muu.html">Varia</a></li>
+</ul>
+</noscript>
+</body>
+</html>

@@ -1,3 +1,11 @@
+{ //Load CSS
+const cssLink = document.createElement("link");
+cssLink.rel = "stylesheet";
+cssLink.href = "assets/rssfeed.css";
+cssLink.type = "text/css";
+document.head.appendChild(cssLink);
+}
+
 const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g"),
 	 REGEX2 = new RegExp("entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)<[\\s\\S]+?thumbnail url=\"(?<desc>.+?)\"", "g");
 
@@ -12,7 +20,7 @@ async function fetchFeeds(sources, n) {
 		let selectedRegex = sources[i].indexOf("youtube.") == -1 ? REGEX : REGEX2;
 
 		promises.push(
-			fetch(proxy + sources[i])
+			fetch(proxy + sources[i], {cache: "no-cache"}) // no-cache kontrollib kas serveris on uuem versioon
 			.then(file => file.text())
 			.then(str => dataArray.push(...Array.from(str.matchAll(selectedRegex))))
 			.catch(err => console.error(err + " " + sources[i]))
@@ -26,8 +34,8 @@ async function fetchFeeds(sources, n) {
 		return (db > da) - (db < da);
 	});
 
-	var ul = document.createElement("ul");
-	var a, li, tooltip, matchGroup, doc, img;
+	const ul = document.createElement("ul");
+	let a, li, tooltip, matchGroup, doc, img;
 
 	for (var i = 0; i < dataArray.length && i < n; i++) {
 		matchGroup = dataArray[i].groups;
@@ -66,7 +74,7 @@ async function loadFeeds(sources, n, heading) {
 	spinner.className = "spinner";
 	for (var i = 1; i <= 5; i++) {
 		spinner.appendChild(document.createElement("div")).className = "rect" + i;
-		spinner.appendChild(document.createTextNode(" "));
+		spinner.append(" ");
 	}
 	feedsContainer.appendChild(spinner);
 

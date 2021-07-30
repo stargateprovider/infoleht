@@ -3,6 +3,7 @@
 	--main_elem_color: black;
 	--main_link_color: #0000EE;
 	--main_border_color: #A8C3BC;
+	--sidebar_width: 175px;
 
 	margin: 0;
 	background-color: var(--main_bg_color);
@@ -13,6 +14,7 @@ body{
 }
 
 header{
+	contain: content; /*Uuri seda kui midagi elem sees katki tundub*/
 	margin: 0px 0px 20px 0px;
 	padding-top: 10px;
 
@@ -69,68 +71,119 @@ nav ul > li{
 	display: inherit;
 }
 
-#sidebar, #sidebarBtn{
-	background-color: var(--main_bg_color);
+#sidebar, #sidebarBtn, #sidebarBtn:before{
 	position: fixed;
 	top: 0;
 	right: 0;
+	transition: width .3s ease-in-out;
 }
 #sidebar{
+	contain: strict;
 	box-sizing: border-box;
-	width: 175px;
+	width: var(--sidebar_width);
 	height: 100vh;
 	padding-top: 80px;
 	padding-bottom: 35px;
 
 	border-left: 3px solid var(--main_border_color);
 	box-shadow: inset 10px 0px 15px -7px var(--main_border_color);
-	text-align: center;
 	overflow: hidden;
+}
+#sidebar > span {
+	border-bottom: solid thin grey;
+	display: block;
+	font-size: 20px;
+	margin-left: 26px;
 }
 #sidebar > div{
 	box-sizing: inherit;
 	height: 100%;
-	padding-left: 8px;
+	padding-left: 26px;
 	overflow-y: auto;
-	scrollbar-width: 0;
+	scrollbar-width: none;
 }
 #sidebar > div::-webkit-scrollbar {
 	display: none;
 }
+
 #sidebar a {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	margin: 7px 3px 7px 18px;
+	font-size: 11px;
+	margin: 7px 3px 7px 0;
 	padding-top: 4px;
-	padding-bottom: 4px;
-	text-align: initial;
+	padding-bottom: 3px;
 	text-decoration: none;
 	display: list-item;
 	list-style-type: decimal;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 }
-#sidebar a:hover {
+#sidebar a:first-of-type {
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+}
+#sidebar a:first-of-type:before {
+	content: "\2605";
+	/*content: "\279F";*/
+	display: inline-block;
+	margin-left: -2ch;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#sidebar a:not(:first-of-type):hover {
 	background-color: rgba(150,150,150,.3);
 }
-#sidebarBtn{
-	border: 1px solid grey;
-	border-right: none;
+#sidebar a:first-of-type:hover {
+	text-decoration: underline;
+}
 
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	color: var(--main_link_color);
-	height: 20px;
-	margin-top: 80px;
+#sidebarBtn{
+	-moz-appearance: initial;
+	-webkit-appearance: initial;
+	height: 0;
 	z-index: 1;
+}
+#sidebarBtn:before{
+	border: 1px solid grey;
+	border-radius: 3px;
+	border-right: none;
+	color: var(--main_elem_color);
+	content: "\2630";
+	font-weight: bold;
+	
+	margin-top: inherit;
+	padding: 2px 3px 4px 5px;
+	transition-property: border-color;
+	width: 15px;
+}
+/*#sidebarBtn:checked:before{
+	content: "\25C0";
+	content: "\1438";
+}*/
+#sidebarBtn:not(:checked):before{
+	border-color: rgba(0,0,0,0);
+	/*content: "\25B6";
+	content: "\2716";
+	content: "\1433";
+	content: "\2630";*/
+}
+#sidebarBtn:hover:before{
+	cursor: pointer;
+	text-shadow: 
+		0 0 7px var(--main_elem_color),
+		0 0 10px var(--main_border_color),
+		0 0 11px var(--main_border_color),
+		0 0 13px var(--main_border_color),
+		0 0 15px var(--main_border_color);
 }
 
 main{
 	margin-left: 5px;
-	margin-right: 2%;
-	max-width: 89%;
+	margin-right: calc(var(--sidebar_width) + 5px);
 }
 footer{
+	contain: content;
 	margin: 25px 0px 0px 0px;
 	padding: 10px 10px 5px 10px;
 
@@ -145,9 +198,6 @@ footer{
 	position: relative;
 }
 
-body > div, body > details{
-	margin-left: 5px;
-}
 summary{
 	width:fit-content;
 }
@@ -171,20 +221,20 @@ h1{
 a{
 	color: var(--main_link_color);
 }
-a[href^="https://youtu"], a[href^="https://www.youtu"],
+a[href*="//youtu"], a[href*="//www.youtu"],
 a[href*="bitchute.com"],
 a[href*="telegram.ee"],
 a[href*="fonte.news"],
 a[href*="in5d.com"]:not([href$=".jpg"]),
 a[href*="stolenhistory."]:not([class="afterNote"]),
 a[href^="ajalugu"],
-a[href^="filo.html"]{
+a[href^="filo.htm"]{
 	background-position: left center;
 	background-repeat: no-repeat;
 	background-size: 16px 16px;
 	padding-left: 20px;
 }
-a[href^="https://youtu"], a[href^="https://www.youtu"]{
+a[href*="//youtu"], a[href*="//www.youtu"]{
 	background-image: url("https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico");
 }
 a[href*="bitchute.com"]{
@@ -205,11 +255,14 @@ a[href*="stolenhistory."]:not([class="afterNote"]){
 a[href^="ajalugu"]{
 	background-image: url("../images/iconc16.png");
 }
-a[href^="filo.html"]{
+a[href^="filo.htm"]{
 	background-image: url("../images/icona16.png");
 }
 
 
+li{
+	min-height: 20px;
+}
 li > details{
 	margin-bottom: 5px;
 }
@@ -223,7 +276,7 @@ li.noBullet{
 li.noBullet > details{
 	text-indent: 3px;
 }
-li > ul{
+li > ul, li > ol{
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding-left: 30px;
@@ -276,15 +329,9 @@ li > ul{
 	padding-left: initial;
 }
 
-.img_link{
-	max-width: 130px;
-	margin: 2px;
-}
-
 .flex-container{
 	display: flex;
 	flex-wrap: wrap;
-	flex-direction: row;
 	align-content: flex-start;
 	margin-left: 0;
 }
@@ -296,21 +343,19 @@ li > ul{
 }
 
 .btn{
-	display: inline-block;
-	padding: 0 3px 0 3px;
-	border: 1px solid black;
-	font-size: 12px;
+	background-color: var(--main_bg_color);
+	border: 1px solid rgba(130, 130, 130, 0.7);
+	box-shadow: 0 0 4px 2px var( --main_border_color);
+	color: var(--main_elem_color);
+	contain: content;
+	float: right;
+	font-size: 16px;
+	font-weight: bold;
+	margin-right: 25px;
+	padding: 0 5px 0 5px;
 }
 .btn:hover{
-	background-color: #ccc;
-}
-.closeBtn{
-	float: right;
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-right: 25px;
-	font-size: 16px;
-	box-shadow: 0 0 4px 2px var(--main_border_color);
+	filter: contrast(.65);
 }
 .backBtn{
 	color: var(--main_bg_color);
@@ -328,9 +373,8 @@ li > ul{
 }
 #scrollTop{
 	display: none;
-	font-weight: bold;
-	font-size: 15px;
-	width: 32px;
+	margin: 0;
+	width: 25px;
 }
 
 #switch{
@@ -391,6 +435,9 @@ label[for=switch]:after {
 .afterNote:after{
 	content: '-)';
 }
+.hidden {
+	display: none;
+}
 .strikethrough{
 	text-decoration: line-through;
 	opacity: 0.72;
@@ -398,11 +445,23 @@ label[for=switch]:after {
 .centered{
 	text-align: center;
 }
-.centeredImg{
-	display: block;
+main.centered{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	max-width: 50%;
+}
+main.centered > :first-child {
+	margin-top: 3vh;
+	margin-bottom: 10vh;
+}
+main.centered > h4 {
 	margin-left: auto;
 	margin-right: auto;
-	max-width: 50%;
+	max-width: 85%;
+}
+main.centered ul {
+	text-align: left;
 }
 
 .heldByEris{
@@ -418,9 +477,7 @@ label[for=switch]:after {
 }
 .heldByEris:before, .heldByEris:after{
 	content: "";
-	background-image: url("../images/handoferis.png");
-	background-position: center;
-	background-repeat: no-repeat;
+	background: url("../images/handoferis.png") center no-repeat;
 	min-width: 32px;
 	min-height: 32px;
 }
@@ -450,12 +507,15 @@ label[for=switch]:after {
 
 
 @media screen and (max-width:900px){
-	.centeredImg{
+	main.centered{
 		max-width: 90%;
 	}
 }
 @media screen and (max-width:780px){
-	ul{
+	main.centered{
+		max-width: 95%;
+	}
+	ul, ol{
 		padding-left: 28px;
 		margin-left: 0;
 	}
@@ -463,15 +523,15 @@ label[for=switch]:after {
 		margin-top: 4px;
 		margin-bottom: 4px;
 	}
-	#sidebar{
-		display: none;
+	:root{
+		--sidebar_width: 0px;
+	}
+	#scrollTop{
+		display: initial;
 	}
 }
 @media screen and (max-width:500px){
 	footer{
 		font-size: 3.2vw;
-	}
-	#scrollTop{
-		display: initial;
 	}
 }

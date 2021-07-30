@@ -3,9 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>RSS-vood</title>
-	<link rel="stylesheet" type="text/css" href="assets/rssfeed.css" />
+	<link rel="preconnect" href="https://api.allorigins.win" />
+	<link rel="preconnect" href="https://s.ytimg.com" />
 	<script src="assets/main.js"></script>
-	<script>includeTemplate();</script>
+	<script>loadTemplate();</script>
 	<script src="assets/rssfeed.js"></script>
 	<script>
 window.addEventListener("load", async()=>{
@@ -25,7 +26,5 @@ window.addEventListener("load", async()=>{
 });
 	</script>
 </head>
-<body><header></header>
-<div id="feeds"></div>
-<footer></footer></body>
+<body><header></header><div id="feeds"></div><footer></footer></body>
 </html>

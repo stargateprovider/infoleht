@@ -1,27 +1,15 @@
 <!DOCTYPE html>
-<html lang="et">
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="msapplication-TileColor" content="#999999" />
-	<meta name="msapplication-TileImage" content="images/mstile-144x144.png" />
-	<base target="_blank" />
-	<link rel="icon" type="image/png" href="images/icon32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="images/icon16.png" sizes="16x16" />
-	<link rel="shortcut icon" type="image/png" href="images/icon16.png" sizes="16x16" />
-	<link rel="stylesheet" type="text/css" href="assets/main.css" />
-</head>
-
-<body>
-<header>
-	<div>
-		<span class="switchContainer"><input type="checkbox" id="switch"/><label for="switch"></label></span>
-		<nav><ul><li><input id="searchbar" type="search" name="search" placeholder="Otsi kogu arhiivist..."><button>&#x1F50D;</button></li><li><a href="index.html" target="_self">Kodu</a></li><li><a href="charts.html" target="_self">Schumanni resonants</a></li><li><a href="teadvus.html" target="_self">Teadvuse muutmine</a></li><li><a href="kuiv.html" target="_self">Teooriad</a></li><li><a href="praktiline.html" target="_self">Praktiline</a></li><li><a href="tsitaadid.html" target="_self">Tsitaadid</a></li><li><a href="muu.html" target="_self">Varia</a></li><li><a href="feeds.html" target="_self">RSS-vood</a></li></ul></nav>
-	</div>
-	<div id="searchResults">
-		<h3>Otsingutulemused:<button class="closeBtn" onclick="closeSearch();">x</button></h3>
-		<ul></ul>
-	</div>
-</header>
-<footer><button id="scrollTop" onclick="scrollUp();">&#x2c4;</button></footer>
-</body>
-</html>
+<html lang="et"><head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<base target="_blank" />
+<link rel="icon" type="image/png" href="images/icon32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="images/icon16.png" sizes="16x16" />
+</head><body>
+<header><div>
+	<span class="switchContainer"><input type="checkbox" id="switch"/><label for="switch"></label></span>
+	<nav><ul><li><input id="searchbar" type="search" name="search" placeholder="Otsi kogu arhiivist..."><button>&#x1F50D;</button></li><li><a href="index.html" target="_self">Kodu</a></li><li><a href="charts.html" target="_self">Schumanni resonants</a></li><li><a href="teadvus.html" target="_self">Teadvuse muutmine</a></li><li><a href="kuiv.html" target="_self">Teooriad</a></li><li><a href="praktiline.html" target="_self">Praktiline</a></li><li><a href="tsitaadid.html" target="_self">Tsitaadid</a></li><li><a href="muu.html" target="_self">Varia</a></li><li><a href="feeds.html" target="_self">RSS-vood</a></li></ul></nav>
+</div><div id="searchResults">
+	<h3>Otsingutulemused:<button class="btn" onclick="closeSearch();">&#x2715;</button></h3><ul></ul>
+</div></header>
+<footer><button class="btn" id="scrollTop" onclick="scrollUp();">&#x2c4;</button></footer>
+</body></html>
