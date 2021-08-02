@@ -2,10 +2,10 @@ const colors = {
 	default: {bg: "white", elem: "black", link: "#0000EE", border: "#A8C3BC"},
 	alt: 	 {bg: "black", elem: "white", link: "cyan", border: "teal"}
 };
-const $=e=>document.getElementById(e), _=e=>document.createElement(e), root = document.documentElement;
+const $=e=>document.getElementById(e), _=e=>document.createElement(e), root=document.documentElement;
 
 function setTheme(theme) {
-	for(let type of ["bg","elem","link","border"]) root.style.setProperty("--main_"+type+"_color", theme[type]);
+	for(let type of Object.keys(theme)) root.style.setProperty("--main_"+type+"_color", theme[type]);
 }
 function toggleTheme() {
 	const theme = root.style.getPropertyValue('--main_bg_color') != colors.alt.bg ? colors.alt : colors.default;
@@ -48,7 +48,7 @@ function afterCSS() {
 	}
 
 	// Create navigation sidebar
-	if (root.scrollHeight-300 > window.outerHeight) {
+	if (root.scrollHeight-300 > window.outerHeight && !$("sitemap")) {
 		createSidebar();
 	}
 	$(location.hash.slice(1)) && $(location.hash.slice(1)).scrollIntoView();
@@ -260,7 +260,7 @@ function findListHeading(list, allowNested=true) {
 				node = node.firstChild;
 			}
 			if (content) {
-				if (content.length > 120) return {};
+				if (content.length > 110) return {};
 				heading = node.parentNode;
 				text = content;
 			}
@@ -332,7 +332,7 @@ function createSidebar() {
 
 document.addEventListener("DOMContentLoaded", function() {
 	// Hide until CSS loaded or timeout
-	setTimeout(displayBody, 10000);
+	setTimeout(displayBody, 8000);
 	document.body.style.display = "none";
 });
 //window.addEventListener("load", );

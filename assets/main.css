@@ -445,48 +445,6 @@ label[for=switch]:after {
 .centered{
 	text-align: center;
 }
-main.centered{
-	display: flex;
-	flex-direction: column;
-	margin: auto;
-	max-width: 50%;
-}
-main.centered > :first-child {
-	margin-top: 3vh;
-	margin-bottom: 10vh;
-}
-main.centered > h4 {
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 85%;
-}
-main.centered ul {
-	text-align: left;
-}
-
-.heldByEris{
-	display:flex;
-	flex-wrap:nowrap;
-	justify-content:center;
-	line-height:32px;
-	text-align:center;
-}
-.heldByEris p{
-	line-height:initial;
-	text-align:inherit;
-}
-.heldByEris:before, .heldByEris:after{
-	content: "";
-	background: url("../images/handoferis.png") center no-repeat;
-	min-width: 32px;
-	min-height: 32px;
-}
-.heldByEris:before{
-	padding-right: 15px;
-}
-.heldByEris:after{
-	padding-left: 15px;
-}
 
 .hseparator{
 	display: flex;
@@ -506,15 +464,7 @@ main.centered ul {
 }
 
 
-@media screen and (max-width:900px){
-	main.centered{
-		max-width: 90%;
-	}
-}
 @media screen and (max-width:780px){
-	main.centered{
-		max-width: 95%;
-	}
 	ul, ol{
 		padding-left: 28px;
 		margin-left: 0;

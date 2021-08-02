@@ -5,21 +5,90 @@
 	<title>Infoleht</title>
 	<script src="assets/main.js"></script>
 	<script>loadTemplate();</script>
+	<style>
+.heldByEris{
+	display:flex;
+	flex-wrap:nowrap;
+	justify-content:center;
+	line-height:32px;
+	text-align:center;
+}
+.heldByEris p{
+	line-height:initial;
+	text-align:inherit;
+}
+.heldByEris:before, .heldByEris:after{
+	content: "";
+	background: url("../images/handoferis.png") center no-repeat;
+	min-width: 32px;
+	min-height: 32px;
+}
+.heldByEris:before{
+	padding-right: 15px;
+}
+.heldByEris:after{
+	padding-left: 15px;
+}
+main{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	max-width: 50%;
+	text-align: center;
+}
+main > :first-child {
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+}
+h4 {
+	white-space: nowrap;
+}
+main ul {
+	text-align: left;
+}
+@media screen and (max-width:900px){
+	main{
+		max-width: 90%;
+	}
+	ul{
+		padding-left: 20px;
+	}
+}
+@media screen and (max-width:780px){
+	main{
+		max-width: 95%;
+	}
+}
+@media screen and (min-width:500px) and (min-height:600px) and (max-height:790px){
+	main > :first-child {
+		margin-top: 3vh;
+		height: 80vh;
+	}
+	h4 {
+		position: sticky;
+		bottom: 15px;
+	}
+	h4:before, h4:after {
+		content: "\2B9F";
+	}
+}
+	</style>
 </head>
 <body>
 <header>Infoleht</header>
 
-<main class="centered">
+<main>
 <div>
 	<h2 class="heldByEris">Tervist ja olgu tervitatud Discordia!</h2>
-	<img src="https://i.redd.it/w4o6t6pbwxhz.jpg" alt="tervituskaart" width="265px" border="1px">
-	<div class="heldByEris"><p>Kogun siia saidile huvitavaid infokilde ja allikaid teatud teemadel, muuhulgas selliseid, mida võib-olla ise ei oskaks uuesti leida või otsida. Niisiis on siin võimalus tutvuda nende teemade ja ideedega, alusta nt. <strong><a href="sitemap.html" target="_self">sisukaardilt</a></strong>. Täiendan lehte ebaregulaarselt. Kui soovid anda tagasisidet või soovitusi lehe kujunduse, sisu või millegi muu osas, võid seda teha <a href="https://form.jotformeu.com/92081751957364"><b>siin</b></a>.</p></div>
+	<img src="images/pope.gif" alt="tervituskaart" border="1px" width="269px">
+	<div class="heldByEris"><p>Kogun siia saidile huvitavaid infokilde ja allikaid teatud teemadel, muuhulgas selliseid, mida võib-olla ise ei oskaks uuesti leida või otsida. Niisiis on siin võimalus tutvuda nende teemade ja ideedega, alusta nt. <strong><a href="sitemap.html" target="_self">sisukaardilt</a></strong>. Täiendan lehte ebaregulaarselt. Tagasisidet või soovitusi lehe kujunduse, sisu või millegi muu osas saab anda <a href="https://form.jotformeu.com/92081751957364"><b>siin</b></a>.</p></div>
 	<div id="siteDate">Leht loodud 28/06/2019 | Viimati muudetud </div>
 </div>
 
-<h4>Allpool on mõned allikad, kust saab põhjalikumalt uurida-otsida enamikke teemasid, kui muudest linkidest väheseks jääb.</h4>
+<h4> Mõned üldallikad ja sarnased veebilehed </h4>
 <div>
-	<span class="hidden">Suuremad üldallikad</span>
+	<span>...aitab ehk põhjalikumalt uurida-otsida enamikke teemasid, kui muudest linkidest väheseks jääb.</span>
+	<h4 class="hidden">Mõned üldallikad ja sarnased veebilehed</h4>
 	<ul>
 		<li><a href="https://www.sacred-texts.com/eso/">Sacred-texts</a> - Müstika, okultismi, filosoofia, paranormaalsete tekstide arhiiv</li>
 		<li><a href="http://metaphysicspirit.com/">Metaphysicspririt</a> - Suur raamatute arhiiv kõikidel alternatiivteemadel</li>
@@ -37,7 +106,6 @@
 		<li><a href="http://www.fractalu.com/">Halvasti vormindatud suvaliste infokildude kogumik</a></li>
 		<li><a href="https://in5d.com/todays-live-schumann-resonance-charts-and-resources/">In5D</a> - vahel on kasulikku nt Schumanni resonantsi kohta.</li>
 		<li><a href="https://londonreal.tv/">LondonReal.tv</a> | Brian Rose</li>
-		<li><a href="https://www.bitchute.com/">Bitchute.com</a> - Youtubest eemaldatud ja mitte-peavoolu videod</li>
 		<li><a href="https://www.sites.google.com/site/alternatiivuudised/">Erinevad Eesti alternatiivmeedialehed, -uudised, lingid</a></li>
 		<li><a href="http://www.para-web.org/">Para web foorum</a></li>
 		<li><a href="https://www.youtube.com/c/MAATRlKStv/videoss">Maatriks</a> - kunagine Tallinna TV saade</li>
