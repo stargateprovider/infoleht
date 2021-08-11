@@ -1,84 +1,223 @@
+!_ && (_=e=>document.createElement(e));
+//Proxyd: https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
+const proxy = "https://api.allorigins.win/raw?url=";
+const initSources = [];
+const sources = [];
+let n = 65;
+
 { //Load CSS
-const cssLink = document.createElement("link");
+const cssLink = _("link");
 cssLink.rel = "stylesheet";
 cssLink.href = "assets/rssfeed.css";
 cssLink.type = "text/css";
 document.head.appendChild(cssLink);
 }
 
-const REGEX = new RegExp("item>\\s*<title>(?<name>.+?)</title>[\\s\\S]*?<link>(?:<!\\[CDATA\\[)?(?<link>.+?)(?:\\]\\]>)?<[\\s\\S]+?pubDate>(?<date>.+?)<[\\s\\S]+?(?<desc><description>[\\s\\S]+?</description>)", "g"),
-	 REGEX2 = new RegExp("entry>[\\s\\S]+?<title>(?<name>.+?)<[\\s\\S]+?href=\"(?<link>.+?)\"[\\s\\S]+?published>(?<date>.+?)<[\\s\\S]+?thumbnail url=\"(?<desc>.+?)\"", "g");
+function getTitle(el) {
+	let name = el.getElementsByTagName("title")[0].textContent;
+	return name;
+}
 
-async function fetchFeeds(sources, n) {
-	//Proxyd: https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
-	const parser = new DOMParser(),
-		  proxy = "https://api.allorigins.win/raw?url=",
+async function fetchFeeds() {
+	const findDate = el => el.querySelector("pubDate,published").innerHTML,
+		  parser = new DOMParser(),
 		  promises = [],
-		  dataArray = [];
+		  dataArray = [],
+		  srcNames = new Array(sources.length);
 
-	for (var i = 0; i < sources.length; i++) {
-		let selectedRegex = sources[i].indexOf("youtube.") == -1 ? REGEX : REGEX2;
-
+	for (let i = 0; i < sources.length; i++) {
 		promises.push(
-			fetch(proxy + sources[i], {cache: "no-cache"}) // no-cache kontrollib kas serveris on uuem versioon
+			fetch(proxy + sources[i].url, {cache: "no-cache"}) // no-cache kontrollib kas serveris on uuem versioon
 			.then(file => file.text())
-			.then(str => dataArray.push(...Array.from(str.matchAll(selectedRegex))))
-			.catch(err => console.error(err + " " + sources[i]))
+			.then(str => {
+				const doc = parser.parseFromString(str, "text/xml");
+				srcNames[i] = getTitle(doc);
+				dataArray.push(...Array.from(doc.querySelectorAll("item,entry"), item=>({item, i})));
+			})
+			.catch(err => console.error(err + " " + sources[i].url))
 		);
 	}
 	await Promise.allSettled(promises);
 
 	dataArray.sort((a,b) => {
-		let da = new Date(a.groups.date),
-			db = new Date(b.groups.date);
+		let da = new Date(findDate(a.item)),
+			db = new Date(findDate(b.item));
 		return (db > da) - (db < da);
 	});
 
-	const ul = document.createElement("ul");
-	let a, li, tooltip, matchGroup, doc, img;
+	const ul = _("ul"), len = dataArray.length;
+	let item, link, a, li, tooltip, desc, media, img;
 
-	for (var i = 0; i < dataArray.length && i < n; i++) {
-		matchGroup = dataArray[i].groups;
+	for (var i = 0; i < len && i < n; i++) {
+		item = dataArray[i].item;
+		li = _("li");
+		li.setAttribute("data-class", srcNames[dataArray[i].i]);
+		sources[dataArray[i].i].hidden && li.classList.add("hidden");
 
-		li = document.createElement("li");
-		a = document.createElement("a");
+		link = item.getElementsByTagName("link")[0];
+		a = _("a");
 		a.className = "tooltipBox";
-		a.href = matchGroup.link, "text/html";
-		a.append(parser.parseFromString(matchGroup.name, "text/html").documentElement.textContent);
+		a.href = link.innerHTML || link.getAttribute("href");
+		a.append(item.getElementsByTagName("title")[0].textContent);
 
-		tooltip = document.createElement("div");
+		tooltip = _("div");
 		tooltip.className = "tooltipText";
-		tooltip.append(matchGroup.date);
-		if (matchGroup["desc"]) {
-			if (matchGroup.desc.endsWith(".jpg")) {
-				img = new Image();
-				img.src = matchGroup.desc;
-				tooltip.append(img);
-			} else {
-				doc = parser.parseFromString(matchGroup.desc, "text/html");
-				doc = parser.parseFromString(doc.documentElement.textContent.trim(), "text/html");
-				tooltip.append(doc.body);
-			}
+		tooltip.append(findDate(item));
+
+		if (media = item.querySelector("thumbnail,enclosure")) {
+			img = new Image();
+			img.src = media.getAttribute("url");
+			tooltip.append(img);
+		}
+		if (desc = item.querySelector("description")) {
+			desc = desc.firstChild || desc.textContent;
+			tooltip.append(desc.nodeType == Node.TEXT_NODE ? desc : parser.parseFromString(desc.data, "text/html").body);
 		}
 
 		a.appendChild(tooltip);
 		li.appendChild(a);
 		ul.appendChild(li);
 	}
-	return ul;
+	return {ul, srcNames};
 }
 
-async function loadFeeds(sources, n, heading) {
+function updateLocalStorage() {
+	localStorage.setItem(window.location.pathname.match(".*/(.+?)\\.")[1], JSON.stringify(sources));
+}
+
+function createSourceListItem(name, source, custom=false) {
+	const li = _("li"),
+		  label = _("label"),
+		  input = _("input"),
+		  checkbox = _("input"),
+		  srcIndex = sources.findIndex(s=>s.url===source);
+
+	label.innerHTML = name + ": ";
+	input.type = "text";
+	input.title = name;
+	input.setAttribute("value", source);
+	input.disabled = true;
+	checkbox.type = "checkbox";
+	checkbox.title = name;
+	checkbox.checked = !sources[srcIndex].hidden;
+	checkbox.addEventListener("click", ()=>{
+		sources[srcIndex].hidden = !sources[srcIndex].hidden;
+		document.getElementById("feeds")
+		.querySelectorAll("[data-class='"+name+"']")
+		.forEach(el=>el.classList.toggle("hidden"));
+		updateLocalStorage();
+	});
+
+	li.append(label, input, checkbox);
+
+	if (custom) {
+		deleteBtn = _("button");
+		deleteBtn.innerHTML = "&#x2715;";
+		deleteBtn.className = "deleteBtn";
+		deleteBtn.addEventListener("click", ()=>{
+			sources.splice(srcIndex, 1);
+			li.remove();
+			updateLocalStorage();
+			document.getElementById("feeds")
+				.querySelectorAll("[data-class='"+name+"']")
+				.forEach(e=>e.remove());
+		});
+		li.appendChild(deleteBtn);
+	}
+
+	return li;
+}
+
+async function loadFeeds() {
 	const feedsContainer = document.getElementById("feeds"),
-		  spinner = document.createElement("div");
+		  spinner = _("div");
+	// Laadimisvaade
 	spinner.className = "spinner";
 	for (var i = 1; i <= 5; i++) {
-		spinner.appendChild(document.createElement("div")).className = "rect" + i;
+		spinner.appendChild(_("div")).className = "rect" + i;
 		spinner.append(" ");
 	}
 	feedsContainer.appendChild(spinner);
 
-	const feedsList = await fetchFeeds(sources, n);
-	feedsContainer.innerHTML = feedsList.hasChildNodes() ? heading : "Tekkis viga. Proovi hiljem uuesti.";
-	feedsContainer.appendChild(feedsList);
+	// Too sisu
+	const {ul, srcNames} = await fetchFeeds();
+
+	// Allikate vaade
+	feedsContainer.innerHTML = "<details class=\"feedSources\"><summary class=\"link\">Vali allikad</summary></details>";
+	const sourcesUl = _("ul"),
+		  li = _("li"),
+		  label = _("label"),
+		  input = _("input"),
+		  addBtn = _("button"),
+		  status = _("span");
+	label.innerHTML = "Lisa muu allikas:"
+	input.type = "text";
+	input.title = "newSource";
+	addBtn.innerHTML = "Lisa";
+	li.append(label, input, addBtn, status);
+
+	// onAdd
+	addBtn.addEventListener("click", ()=>{
+		let url = input.value.trim();
+		if (!url) return;
+		if (sources.findIndex(s=>s.url===url) >= 0) {
+			status.innerHTML = "Allikas juba olemas.";
+			return;
+		}
+
+		try {
+			!url.startsWith("http") && (url = "http://" + url);
+			url = "" + new URL(url);
+		} catch (TypeError) {
+			status.innerHTML = "Vigane link.";
+			return;
+		}
+
+		status.innerHTML = "Kontrollin...";
+		fetch(proxy + url)
+			.then(file => file.text())
+			.then(str => new DOMParser().parseFromString(str, "text/xml"))
+			.catch(err => {
+				console.error(err);
+				status.innerHTML = "Viga: Ei saanud kätte sisu.";
+			})
+			.then(doc => {
+				if (doc.getElementsByTagName("parsererror").length) {
+					throw "parsererror from: " + url;
+				}
+				const name = getTitle(doc);
+				sources.push({url, hidden: false});
+				li.insertAdjacentElement("beforebegin", createSourceListItem(name, url, true));
+				updateLocalStorage();
+				status.innerHTML = "";
+				input.value = "";
+			})
+			.catch(err => {
+				console.error(err);
+				status.innerHTML = "Viga: Ei suutnud lingilt lugeda RSS sisu.";
+			});
+	});
+
+	// Allikate loend
+	for (var i = 0; i < srcNames.length; i++) {
+		sourcesUl.appendChild(createSourceListItem(srcNames[i], sources[i].url, !initSources.includes(sources[i].url)));
+	}
+	sourcesUl.appendChild(li);
+
+	feedsContainer.firstChild.appendChild(sourcesUl);
+	feedsContainer.append(ul.hasChildNodes() ? "" : "Viga sisu toomisel. Proovi hiljem uuesti.");
+	feedsContainer.appendChild(ul);
 }
+
+window.addEventListener("load", ()=>{
+	for (var i = 0; i < initSources.length; i++) {
+		initSources[i].startsWith("http") || (initSources[i] = "https://www.youtube.com/feeds/videos.xml?channel_id=UC" + initSources[i]);
+		sources.push({url: initSources[i], hidden: false});
+	}
+	const localSources = localStorage.getItem(window.location.pathname.match(".*/(.+?)\\.")[1]);
+	if (localSources) {
+		sources.length = 0;
+		sources.push(...JSON.parse(localSources));
+	}
+	loadFeeds();
+});

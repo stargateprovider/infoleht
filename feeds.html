@@ -9,21 +9,18 @@
 	<script>loadTemplate();</script>
 	<script src="assets/rssfeed.js"></script>
 	<script>
-window.addEventListener("load", async()=>{
-	const sources = [
-	"https://www.telegram.ee/feed",
-	"https://vanglaplaneet.ee/feed/",
-	"https://fonte.news/feed/",
-	"https://in5d.com/feed/",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCAsBuR5iq0d9ioZ1tUJUwyQ",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCaC3wrQpIfsn4G8stxQEbDQ",
-	//"https://www.youtube.com/feeds/videos.xml?channel_id=UCcYzLCs3zrQIBVHYA1sK2sw",
-	"https://www.bitchute.com/feeds/rss/channel/davidicke/",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCR5c_uKtoeia44F372UWJ0A",
-	"https://www.youtube.com/feeds/videos.xml?channel_id=UCtVzqLs8gPbwhFATIk4dyDA"
-	];
-	loadFeeds(sources, 65, "Värske info allikatest <b>Telegram, Vanglaplaneet, Fonte.news, In5D, Ryan Cropper, David Icke, SurvivorManly, John Rose</b>:");
-});
+	initSources.push(
+		"https://www.telegram.ee/feed",
+		"https://vanglaplaneet.ee/feed/",
+		"https://fonte.news/feed/",
+		"https://in5d.com/feed/",
+		"AsBuR5iq0d9ioZ1tUJUwyQ",
+		//"https://www.youtube.com/feeds/videos.xml?channel_id=UCcYzLCs3zrQIBVHYA1sK2sw",
+		"https://www.bitchute.com/feeds/rss/channel/davidicke/",
+		"R5c_uKtoeia44F372UWJ0A",
+		"tVzqLs8gPbwhFATIk4dyDA",
+		"aC3wrQpIfsn4G8stxQEbDQ"
+	);
 	</script>
 </head>
 <body><header></header><div id="feeds"></div><footer></footer></body>

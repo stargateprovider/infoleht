@@ -11,9 +11,10 @@
 	<link rel="icon" type="image/png" href="images/iconc16.png" sizes="16x16" />
 	<script>
 colors.alt.link="#BF7937";colors.default.link=colors.default.border=colors.alt.border="#8F4401";loadTemplate(2);
-window.addEventListener("load", ()=>{
-	const sources = [
+n = 180;
+initSources.push(
 	//"https://stolenhistory.net/forums/-/index.rss",
+	"https://stolenhistory.net/ewr-porta/index.rss",
 	"4TjXPVIYz9Z13SB3vxKuZQ",
 	"5vXBfxN7rxKeJHJxS8dNDw",
 	"IZoTgebXiFVoyqnXyS7GoA",
@@ -27,11 +28,8 @@ window.addEventListener("load", ()=>{
 	//"GiFJNwxpxTR5enwfKxNh0w", Flat Earth Nation
 	"ucqZKVEvZ9v32-BbHa-ttg",
 	"C9JHVPm-4P5QDp9vk8EH-A",
-	"Op-_-lVkj9MO1VPLAyHvYQ",
-	];
-	for (var i = 0; i < sources.length; i++) sources[i] = "https://www.youtube.com/feeds/videos.xml?channel_id=UC" + sources[i];
-	loadFeeds(sources, 180, "Uued videod kanalitest <b>Mind Unveiled, Jon Levi, Philipp Druzhinin, Conspiracy-R-Us, AutoDidactic, Kurimeo Ahau, PraveenMohan, Exploring Tartaria, Flat Earth British, UAP, Tartarian Zephyr, Mystery History</b>:");
-});
+	//"Op-_-lVkj9MO1VPLAyHvYQ",
+);
 	</script>
 	<style>
 		header,header *{color:black!important;}

@@ -8,6 +8,16 @@
 .tooltipBox:hover>.tooltipText{visibility:visible;opacity:1}
 .tooltipText>img{width:100%;}
 
+.feedSources summary{padding-left:5px;}
+.feedSources li{padding:2px 0 2px 0;}
+.feedSources li>*{vertical-align:middle;}
+.feedSources li>span{margin-left:1em;}
+.feedSources label{display:inline-block;min-width:8em;width:15%;}
+@media screen and (max-width:500px){.feedSources label{width:100%;}}
+.feedSources input[type="text"]{min-width:180px;width:22%;}
+.deleteBtn{background:none;border:none;color:red;font-size:16px;font-weight:bold;margin-left:10px;padding:0;vertical-align:top;}
+.deleteBtn:hover{color:darkred;}
+
 .spinner {
 	margin: 100px auto;
 	width: 50px;

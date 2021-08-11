@@ -88,16 +88,22 @@ function loadTemplate(template) {
 	xhttp.overrideMimeType('text/html');
 
 	xhttp.onload = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			for(let elem of elements){
-				let docElement = document.getElementsByTagName(elem)[0];
-				if (docElement) {
-					let importElement = this.responseXML.getElementsByTagName(elem)[0];
-					docElement.innerHTML += importElement.innerHTML;
+		if (this.status == 200) {
+			const importContent = () => {
+				for(let elem of elements){
+					let docElement = document.getElementsByTagName(elem)[0];
+					if (docElement) {
+						let importElement = this.responseXML.getElementsByTagName(elem)[0];
+						docElement.innerHTML += importElement.innerHTML;
+					}
 				}
-			}
-			attachListeners();
-			document.querySelector("link[href$='main.css']").addEventListener("load", afterCSS);
+				attachListeners();
+				document.querySelector("link[href$='main.css']").addEventListener("load", afterCSS);
+			};
+
+			if (document.readyState !== "loading") importContent();
+			else document.addEventListener("DOMContentLoaded", importContent);
+
 		} else console.error("Could not load template page");
 	}
 	xhttp.open("GET", "assets/template" + (template||"") + ".html");
