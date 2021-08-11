@@ -54,15 +54,13 @@ function afterCSS() {
 	$(location.hash.slice(1)) && $(location.hash.slice(1)).scrollIntoView();
 
 	// Add last modified date
-	if ($("siteDate")) {
-		fetch("https://stargateprovider.github.io/infoleht", {method: "HEAD"}).then(resp => {
-			let lastModified = new Date(resp.headers.get('Last-Modified')),
-				timeStr = new Intl.DateTimeFormat('et', {
-					year: 'numeric', month: '2-digit', day: '2-digit',
-					hour: 'numeric', minute: 'numeric', second: 'numeric'})
-					.format(lastModified);
-			$("siteDate").innerHTML += " | Viimati muudetud " + timeStr.replaceAll(".", "/");
-		});
+	if ($("siteDate") && location.host !== "infoleht.vercel.app") {
+		let lastModified = new Date(document.lastModified),
+			timeStr = new Intl.DateTimeFormat('et', {
+				year: 'numeric', month: '2-digit', day: '2-digit',
+				hour: 'numeric', minute: 'numeric', second: 'numeric'})
+				.format(lastModified);
+		$("siteDate").innerHTML += " | Viimati muudetud " + timeStr.replaceAll(".", "/");
 	}
 }
 
