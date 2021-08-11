@@ -55,12 +55,14 @@ function afterCSS() {
 
 	// Add last modified date
 	if ($("siteDate")) {
-		let lastModified = new Date(document.lastModified),
-			timeStr = new Intl.DateTimeFormat('et', {
-				year: 'numeric', month: '2-digit', day: '2-digit',
-				hour: 'numeric', minute: 'numeric', second: 'numeric'})
-				.format(lastModified);
-		$("siteDate").innerHTML += timeStr.replaceAll(".", "/");
+		fetch("https://stargateprovider.github.io/infoleht", {method: "HEAD"}).then(resp => {
+			let lastModified = new Date(resp.headers.get('Last-Modified')),
+				timeStr = new Intl.DateTimeFormat('et', {
+					year: 'numeric', month: '2-digit', day: '2-digit',
+					hour: 'numeric', minute: 'numeric', second: 'numeric'})
+					.format(lastModified);
+			$("siteDate").innerHTML += " | Viimati muudetud " + timeStr.replaceAll(".", "/");
+		});
 	}
 }
 
