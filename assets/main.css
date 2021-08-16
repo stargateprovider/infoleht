@@ -227,7 +227,7 @@ a[href*="telegram.ee"],
 a[href*="fonte.news"],
 a[href*="in5d.com"]:not([href$=".jpg"]),
 a[href*="stolenhistory."]:not([class="afterNote"]),
-a[href^="ajalugu"],
+a[href$="ajalugu.html"],
 a[href^="filo.htm"]{
 	background-position: left center;
 	background-repeat: no-repeat;
@@ -252,7 +252,7 @@ a[href*="in5d.com"]:not([href$=".jpg"]){
 a[href*="stolenhistory."]:not([class="afterNote"]){
 	background-image: url("https://stolenhistory.net/styles/default/xenforo/favicon.png");
 }
-a[href^="ajalugu"]{
+a[href$="ajalugu.html"]{
 	background-image: url("../images/iconc16.png");
 }
 a[href^="filo.htm"]{

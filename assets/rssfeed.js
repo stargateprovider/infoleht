@@ -14,8 +14,7 @@ document.head.appendChild(cssLink);
 }
 
 function getTitle(el) {
-	let name = el.getElementsByTagName("title")[0].textContent;
-	return name;
+	return el.getElementsByTagName("title")[0].textContent;
 }
 
 async function fetchFeeds() {
@@ -58,7 +57,7 @@ async function fetchFeeds() {
 		a = _("a");
 		a.className = "tooltipBox";
 		a.href = link.innerHTML || link.getAttribute("href");
-		a.append(item.getElementsByTagName("title")[0].textContent);
+		a.append(getTitle(item));
 
 		tooltip = _("div");
 		tooltip.className = "tooltipText";
