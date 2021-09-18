@@ -1,9 +1,8 @@
-!_ && (_=e=>document.createElement(e));
+if(typeof _!="function")_=e=>document.createElement(e);
 //Proxyd: https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
 const proxy = "https://api.allorigins.win/raw?url=";
 const initSources = [];
 const sources = [];
-let n = 65;
 
 { //Load CSS
 const cssLink = _("link");
@@ -17,8 +16,8 @@ function getTitle(el) {
 	return el.getElementsByTagName("title")[0].textContent;
 }
 
-async function fetchFeeds() {
-	const findDate = el => el.querySelector("pubDate,published").innerHTML,
+async function fetchFeeds(n) {
+	const findDate = el => el.querySelector("pubDate,published,updated").innerHTML,
 		  parser = new DOMParser(),
 		  promises = [],
 		  dataArray = [],
@@ -53,7 +52,7 @@ async function fetchFeeds() {
 		li.setAttribute("data-class", srcNames[dataArray[i].i]);
 		sources[dataArray[i].i].hidden && li.classList.add("hidden");
 
-		link = item.getElementsByTagName("link")[0];
+		link = item.getElementsByTagName("link")[0] || item.getElementsByTagName("guid")[0];
 		a = _("a");
 		a.className = "tooltipBox";
 		a.href = link.innerHTML || link.getAttribute("href");
@@ -139,7 +138,7 @@ async function loadFeeds() {
 	feedsContainer.appendChild(spinner);
 
 	// Too sisu
-	const {ul, srcNames} = await fetchFeeds();
+	const {ul, srcNames} = await fetchFeeds(sources.length>10 ? 14*sources.length : 65);
 
 	// Allikate vaade
 	feedsContainer.innerHTML = "<details class=\"feedSources\"><summary class=\"link\">Vali allikad</summary></details>";

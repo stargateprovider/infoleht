@@ -33,25 +33,6 @@ function attachListeners() {
 		searchbar.addEventListener("keypress", e => (e.key === "Enter")&&searchHTML());
 		searchbar.nextSibling.addEventListener("click", searchHTML);
 	}
-}
-
-function afterCSS() {
-	displayBody();
-
-	// Remove bullet where there is image or details
-	const links = document.querySelectorAll("li>a:first-child,li>details:first-child");
-	for (var i = 0; i < links.length; i++) {
-		let elem = links[i];
-		if (getComputedStyle(elem).backgroundImage != "none" && elem.parentNode.firstChild === elem || elem.nodeName === "DETAILS") {
-			elem.parentNode.className = "noBullet";
-		}
-	}
-
-	// Create navigation sidebar
-	if (root.scrollHeight-300 > window.outerHeight && !$("sitemap")) {
-		createSidebar();
-	}
-	$(location.hash.slice(1)) && $(location.hash.slice(1)).scrollIntoView();
 
 	// Add last modified date
 	if ($("siteDate")) {
@@ -71,6 +52,25 @@ function afterCSS() {
 			setSiteDate(document.lastModified);
 		}
 	}
+}
+
+function afterCSS() {
+	displayBody();
+
+	// Remove bullet where there is image or details
+	const links = document.querySelectorAll("li>a:first-child,li>details:first-child");
+	for (var i = 0; i < links.length; i++) {
+		let elem = links[i];
+		if (getComputedStyle(elem).backgroundImage != "none" && elem.parentNode.firstChild === elem || elem.nodeName === "DETAILS") {
+			elem.parentNode.className = "noBullet";
+		}
+	}
+
+	// Create navigation sidebar
+	if (root.scrollHeight-300 > window.outerHeight && !$("sitemap")) {
+		createSidebar();
+	}
+	$(location.hash.slice(1)) && $(location.hash.slice(1)).scrollIntoView();
 }
 
 function loadTemplate(template) {
