@@ -9,6 +9,26 @@
 header{background-color:var(--main_border_color);}
 #switch:checked+label[for=switch]{background-color:#1F305E;}
 
+a:hover, summary:hover{
+	background-color: rgba(150,150,150,.25);
+}
+main{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	max-width: 50%;
+	text-align: center;
+}
+main ul {
+	text-align: left;
+}
+summary {
+	list-style: none;
+	text-decoration: underline;
+}
+summary:hover {
+	cursor: pointer;
+}
 .video {
 	list-style-type: disclosure-closed;
 }
@@ -20,26 +40,6 @@ header{background-color:var(--main_border_color);}
 }
 .taskBlue {
 	color: #189fff;
-}
-a:hover{
-	background-color: rgba(150,150,150,.4);
-}
-main{
-	display: flex;
-	flex-direction: column;
-	margin: auto;
-	max-width: 50%;
-	text-align: center;
-}
-/*main > :first-child {
-	margin-top: 5vh;
-	margin-bottom: 5vh;
-}*/
-h4 {
-	white-space: nowrap;
-}
-main ul {
-	text-align: left;
 }
 </style>
 </head>
@@ -53,15 +53,41 @@ main ul {
 <ul>
 	<li><a href="index.html">Koduleht (õpik)</a></li>
 	<li><a href="https://ut-ee.zoom.us/j/8512771468?pwd=ZUFwTjR3YTBJR2JoTk1tcFVyYnVpQT09">Zoomi link</a></li>
-	<li><a href="https://owncloud.ut.ee/owncloud/index.php/s/tnaxYfAMpHbp3Ds">Salvestatud loengud ja slaidid</a> (parool on Messengeri grupi nimi)</li>
+	<li><a href="https://owncloud.ut.ee/owncloud/index.php/s/tnaxYfAMpHbp3Ds">Loenguvideote kataloog</a> (parool on Messengeri grupi nimi)</li>
 	<!--li><a href="https://owncloud.ut.ee/owncloud/index.php/s/ekKD6g3YsyWoxb6">2020. aasta loengusalvestus</a> (sama parool)</li-->
 	<li><a href="https://docs.google.com/spreadsheets/d/1iZ8ScMwTLNOJsWl10QATFMXFsmaDFHSumVMBxmhtuXY/edit?usp=sharing">Loenguaegade tabel</a></li>
 </ul>
-<h3>1. Loeng. Teemade ja õpiku tutvustus (16.10.21)</h3><ul>
-	<!--li class="video"><a href="">Loenguvideo</a></li>
-	<li class="video"><a href="">Loenguvideo veebilehte tutvustav osa parema heliga ja lühemalt</a></li-->
+<h3>1. loeng. Teemade ja õpiku tutvustus (16.10.21)</h3><ul>
+	<li class="video"><a href="https://owncloud.ut.ee/owncloud/index.php/s/cPjp6cJAqberbm7">Loenguvideo</a>
+		<details><summary>Ajatemplid</summary>
+		<div>00:00 - 14:20 Sissejuhatus ja küsitluse tutvustus</div>
+		<div>14:20 - 20:25 Kodulehe (õpiku) tuuri algus, üldallikad</div>
+		<div>20:25 - 22:50 Kodulehe sisukaart, ajalooteema alamleht, filosoofia leht</div>
+		<div>22:50 - 25:15 Koroonateemade leht</div>
+		<div>25:15 - 26:39 Praktiliste teemade leht, Schumanni resonantsi leht</div>
+		<div>26:40 - 29:30 RSS leht, teadvuse muutmise, maagia leht</div>
+		<div>29:30 - 48:15 Teooriate leht </div>
+		<div>48:15 - 48:55 Varia leht</div>
+		<div>48:55 - 50:50 Järgmisest loengust ja teemade otsingufunktsioonist</div>
+		<div>50:50 - 52:31 1939. a Eesti toortoidu raamatu reklaam ja lõpetus</div>
+	</details></li>
+	<li class="video"><a href="https://owncloud.ut.ee/owncloud/index.php/s/7E8QdmACM2FXRkZ">Kodulehte tutvustava osa parema heliga salvestus</a> (kuulatav 2x kiirusega)
+		<details><summary>Ajatemplid</summary>
+		<div>00:00 - 01:30 Sissejuhatus</div>
+		<div>01:30 - 10:55 Kodulehe (õpiku) tuuri algus, üldallikad</div>
+		<div>10:55 - 15:10 Kodulehe sisukaart, ajalooteema alamleht</div>
+		<div>15:10 - 17:10 Filosoofia leht</div>
+		<div>17:10 - 21:10 Koroonateemade leht</div>
+		<div>21:10 - 24:30 Praktiliste teemade leht</div>
+		<div>24:30 - 26:55 RSS leht, Schumanni resonantsi leht, vandenõude sissejuhatuse leht</div>
+		<div>26:55 - 30:30 Teadvuse muutmise, maagia leht</div>
+		<div>30:30 - 55:50 Teooriate leht</div>
+		<div>55:50 - 57:00 Tsitaadid, Varia leht</div>
+		<div>57:00 - 58:25 Kodulehe otsingufunktsiooni tutvustus</div>
+		<div>58:55 - 01:00:42 Reklaamid, lõpetus</div>
+	</details></li>
 	<li class="magenta"><a href="https://forms.gle/g1Bhx2Z7ezcCnsHq9">Küsitlus</a></li>
-	<li class="taskBlue">Ülesanne?</li>
+	<li class="taskBlue"><a href="https://forms.gle/MPLcHBEMou1f5atc9">Ülesanne</a></li>
 	<li>Reklaam: <a href="https://www.telegram.ee/eesti/telegrami-podcast-57-raagime-suurest-meeleavaldusest-kulas-varro-vooglaid">23.10. "Suur meeleavaldus" Vabaduse väljakul</a></li>
 	<li>Reklaam: <a href="https://www.facebook.com/events/1021912188583912/">31.10. Tsikuni harjutamine koos Vladimiriga video vahendusel</a> (tasuline)</li>
 </ul>
