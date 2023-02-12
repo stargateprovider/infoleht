@@ -3,7 +3,7 @@ if(typeof _!="function")_=e=>document.createElement(e);
 //Proxyd: https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
 let proxy = "";
 const proxies = [
-	"https://thingproxy-nine.vercel.app/fetch/",
+	"https://vcorsproxy.vercel.app/",
 	"https://api.codetabs.com/v1/proxy?quest=",
 	"https://cors-proxy.htmldriven.com/",
 	"https://proxy.cors.sh/",
