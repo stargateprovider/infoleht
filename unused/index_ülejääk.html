@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="UTF-8">
+	<title>Infoleht</title>
+	<script src="assets/main.js"></script>
+	<script>loadTemplate();</script>
+	<style>
+.heldByEris{
+	display:flex;
+	flex-wrap:nowrap;
+	justify-content:center;
+	line-height:32px;
+	text-align:center;
+}
+.heldByEris p{
+	line-height:initial;
+	text-align:inherit;
+}
+.heldByEris:before, .heldByEris:after{
+	content: "";
+	background: url("../images/handoferis.png") center no-repeat;
+	min-width: 32px;
+	min-height: 32px;
+}
+.heldByEris:before{
+	padding-right: 15px;
+}
+.heldByEris:after{
+	padding-left: 15px;
+}
+main{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	max-width: 50%;
+	text-align: center;
+}
+main > :first-child {
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+}
+h4 {
+	white-space: nowrap;
+}
+main ul {
+	text-align: left;
+	white-space: nowrap;
+	margin-left: -10%;
+}
+main li{
+	list-style-type: none;
+	margin-bottom: 10px;
+	
+}
+li img {
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 300px;
+	max-height: 80px;
+	margin: auto;
+}
+@media screen and (max-width:900px){
+	main{
+		max-width: 90%;
+	}
+	ul{
+		padding-left: 20px;
+	}
+}
+@media screen and (max-width:780px){
+	main{
+		max-width: 95%;
+	}
+}
+@media screen and (min-width:500px) and (min-height:600px) and (max-height:790px){
+	main > :first-child {
+		margin-top: 3vh;
+		height: 80vh;
+	}
+	h4 {
+		position: sticky;
+		bottom: 15px;
+	}
+	h4:before, h4:after {
+		content: "\2B9F";
+	}
+}
+	</style>
+</head>
+<body>
+<header>Infoleht</header>
+
+<main>
+<div>
+	<h2 class="heldByEris">Tervist ja olgu tervitatud Discordia!</h2>
+	<img src="images/pope.gif" alt="tervituskaart" border="1px" width="269px">
+	<div class="heldByEris"><p>Kogun siia saidile huvitavaid infokilde ja allikaid teatud teemadel, muuhulgas selliseid, mida võib-olla ise ei oskaks uuesti leida või otsida. Niisiis on siin võimalus tutvuda nende teemade ja ideedega, alusta nt. <strong><a href="sitemap.html" target="_self">sisukaardilt</a></strong>. Täiendan lehte ebaregulaarselt. Tagasisidet või soovitusi lehe kujunduse, sisu või millegi muu osas saab anda <a href="https://form.jotformeu.com/92081751957364"><b>siin</b></a>.</p></div>
+	<div id="siteDate">Leht loodud 28/06/2019 | Viimati muudetud </div>
+</div>
+
+<h4> Mõned üldallikad ja sarnased veebilehed </h4>
+<div>
+	<span><i>...aitab ehk põhjalikumalt uurida-otsida enamikke teemasid, kui muudest linkidest väheseks jääb.</i></span>
+	<h4 class="hidden">Mõned üldallikad ja sarnased veebilehed</h4>
+	<ul>
+		<li><a href="https://www.sacred-texts.com/eso/"><img src="https://www.sacred-texts.com/img/menu.jpg">Sacred-texts</a> - Müstika, okultismi, filosoofia, paranormaalsete tekstide arhiiv</li>
+		<li><a href="http://metaphysicspirit.com/"><img src="http://metaphysicspirit.com/images/logo.png">Metaphysicspririt</a> - Suur raamatute arhiiv kõikidel alternatiivteemadel</li>
+		<li><a href="https://isitreallyflat.com/">Isitreallyflat</a> - Palju lamemaa teemalisi jm esoteerilisi materjale ning e-raamatuid</li>
+		<li><a href="https://nextexx.com/pages-by-category/">Nextexx</a> - Artiklid: teadus, anomaaliad, vandenõud, vt. ka <a href="https://nextexx.com/">väike nimekiri sarnastest veebilehtedest</a></li>
+		<li><a href="https://educate-yourself.org/intro.shtml">Educate-Yourself</a> - teemad vist peaaegu kõige kohta</li>
+		<li><a href="https://www.crystalinks.com/"><img src="https://www.crystalinks.com/BannerWheel3.png">Crystalinks</a></li>
+		<li><a href="https://occult-world.com/"><img src="https://occult-world.com/wp-content/uploads/2020/03/logo-occult-world.png">Occult World</a> - maagia, mütoloogia, salaseltsid jm</li>
+		<li><a href="https://www.mysterypile.com/"><img src="https://images.mysterypile.com/mysterypile-banner.jpg">Mysterypile</a> - Alternatiivajalugu, paranormaalsed nähtused, asukohad, krüptiidid, müstika</li>
+		<li><a href="https://et.greatplainsparanormal.com/">et.greatplainsparanormal.com</a> - alternatiivne maailmavaade, anomaaliad, ajalugu, vandenõud jm</li>
+		<li><a href="http://www.truthseekertv.com/links/"><img src="http://www.truthseekertv.com//images/links_header.jpg">TruthseekerTV</a></li>
+		<li><a href="https://www.whatonearthishappening.com/videos"><img src="https://www.whatonearthishappening.com/images/stories/woeih/show/woeih-show.jpg">What On Earth Is Happening</a> - Okultismiuurija Mark Passio videod. <br>Vt ka <a href="https://www.youtube.com/c/MarkPassio/videos">Youtubes</a> ja 1TB+ suurune andmevaramu <a href="https://drive.google.com/drive/folders/1p0ovK4gyzPyw4SVrY-ISFbdp7PzOj3Ky">Google Drive'is</a></li>
+		<li><a href="https://thecrowhouse.community/"><img src="https://thecrowhouse.community/styles/crowhouse/theme/images/chlogo.svg">The CrowHouse Community</a></li>
+		<li><a href="http://www.nzdl.org/cgi-bin/library.cgi?a=p&p=about&c=hdl"><img src="http://www.nzdl.org/gsdl/collect/hdl/images/hdl.gif">Human Development Library</a></li>
+		<li><a href="https://in5d.com/todays-live-schumann-resonance-charts-and-resources/"><img src="https://in5d.com/wp-content/uploads/2019/02/rheherh.jpg">In5D</a> - vahel on kasulikku nt Schumanni resonantsi kohta.</li>
+		<li><a href="https://londonreal.tv/"><img src="https://londonreal.tv/wp-content/uploads/2019/09/LondonReal-scaled-900x206.png">LondonReal.tv</a> | Brian Rose</li>
+		<li><a href="http://www.para-web.org/"><img src="https://www.para-web.org/images/uus/logo.gif">Para web foorum</a></li>
+		<li><a href="https://www.sites.google.com/site/alternatiivuudised/">Erinevad Eesti alternatiivmeedialehed, -uudised, lingid</a></li>
+		<li><a href="https://www.youtube.com/c/MAATRlKStv/videos">Maatriks</a> - kunagine Tallinna TV saade</li>
+		<li><a href="https://www.youtube.com/channel/UCBiyvrox4Nt4tfPUVea6AhQ/videos">Terve Elu Telepilt</a></li>
+		<li><a href="http://www.fractalu.com/">Halvasti vormindatud suvaliste infokildude kogumik</a></li>
+	</ul>
+</div>
+</main>
+
+<footer></footer>
+</body>
+</html>
+
+
+#sidebar, #sidebarBtn, #sidebarBtn:before{
+	float: right;
+	right: 0;
+	top: 0;
+	position: sticky;
+}
+#sidebar{
+	contain: strict;
+	box-sizing: border-box;
+	width: var(--sidebar_width);
+	height: 100vh;
+	margin-top: -20px;
+	padding-top: 20px;
+	padding-bottom: 35px;
+
+	border-left: 3px solid var(--main_border_color);
+	box-shadow: inset 10px 0px 15px -7px var(--main_border_color);
+	overflow: hidden;
+}
+
+#sidebarBtn{
+	-moz-appearance: initial;
+	-webkit-appearance: initial;
+	left: 100%;
+	height: 0;
+	margin-top: -2px;
+	top: 18px;
+	z-index: 1;
+}
+#sidebarBtn:before{
+	border: 1px solid grey;
+	border-radius: 3px;
+	border-right: none;
+	color: var(--main_elem_color);
+	content: "\2630";
+	font-weight: bold;
+	margin-right: -1px;
+	padding: 2px 3px 4px 5px;
+	transition-property: border-color;
+}
+/*#sidebarBtn:checked:before{
+	content: "\25C0";
+	content: "\1438";
+}*/
+#sidebarBtn:not(:checked):before{
+	border-color: rgba(0,0,0,0);
+	/*content: "\25B6";
+	content: "\2716";
+	content: "\1433";
+	content: "\2630";*/
+}

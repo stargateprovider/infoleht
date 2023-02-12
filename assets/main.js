@@ -160,7 +160,7 @@ function searchHTML() {
 		return [listItem, subList];
 	}
 
-	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "filo", "vandenou_sissejuhatus", "europa_allikad", "praktiline", "muu"];
+	let listItem, subList, sites = ["index", "charts", "teadvus", "kuiv", "ajalugu", "corona", "filo", "vandenou_sissejuhatus", "grupid_sündmused", "europa_allikad", "praktiline", "muu"];
 	const regex = new RegExp("("+query+")", "ig"),
 		  replacement = "<span class='highlight'>$&</span>",
 		  parser = new DOMParser(),
