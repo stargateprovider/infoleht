@@ -3,7 +3,7 @@ if(typeof _!="function")_=e=>document.createElement(e);
 //Proxyd: https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
 let proxy = "";
 const proxies = [
-	"https://vcorsproxy.vercel.app/",
+	"https://vcorsproxy.vercel.app/api?url=",
 	"https://api.codetabs.com/v1/proxy?quest=",
 	"https://cors-proxy.htmldriven.com/",
 	"https://proxy.cors.sh/",
@@ -449,7 +449,16 @@ async function loadFeeds() {
 window.addEventListener("load", async()=>{
 	for (proxy of proxies) {
 		try {
-			const testResponse = await fetch(proxy + "https://www.youtube.com/");
+			const testResponse = await fetch(proxy + "https://www.youtube.com/", {
+				// method: "POST",
+				// referrerPolicy: "no-referrer-when-downgrade",
+				// cache: "no-cache",
+				// headers: {
+				// 	'Accept': 'application/json',
+				// 	'Content-Type': 'application/json',
+				// },
+				// body: JSON.stringify({url: "https://www.youtube.com/"})
+			});
 			if (testResponse.ok) {
 				break;
 			}
